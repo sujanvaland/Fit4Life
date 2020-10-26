@@ -12,6 +12,12 @@ import * as navigationActions from '../actions/navigationActions';
 import AuthLoadingScreen from 'app/screens/Login/AuthLoading';
 import Login from 'app/screens/Login';
 import Home from 'app/screens/Home';
+import MyProfile from 'app/screens/Home';
+import Calendar from 'app/screens/Home';
+import HealthProfile from 'app/screens/Home';
+import Contracts from 'app/screens/Home';
+import Payments from 'app/screens/Home';
+import Logout from 'app/screens/Home';
 
 
 const LoginApp = createStackNavigator({
@@ -42,10 +48,142 @@ const HomeApp = createStackNavigator({
     },
 });
 
+const MyProfileApp = createStackNavigator({
+    MyProfile: {
+        screen: MyProfile,
+        navigationOptions: ({ navigation }) => {
+            return {
+                header: () => (
+                    <HeaderComponent navigation={navigation} menu={true} />
+                ),
+
+
+                gestureEnabled: true,
+            };
+        },
+    },
+});
+
+const CalendarApp = createStackNavigator({
+    Calendar: {
+        screen: Calendar,
+        navigationOptions: ({ navigation }) => {
+            return {
+                header: () => (
+                    <HeaderComponent navigation={navigation} menu={true} />
+                ),
+
+
+                gestureEnabled: true,
+            };
+        },
+    },
+});
+
+const HealthProfileApp = createStackNavigator({
+    HealthProfile: {
+        screen: HealthProfile,
+        navigationOptions: ({ navigation }) => {
+            return {
+                header: () => (
+                    <HeaderComponent navigation={navigation} menu={true} />
+                ),
+
+
+                gestureEnabled: true,
+            };
+        },
+    },
+});
+
+const ContractsApp = createStackNavigator({
+    Contracts: {
+        screen: Contracts,
+        navigationOptions: ({ navigation }) => {
+            return {
+                header: () => (
+                    <HeaderComponent navigation={navigation} menu={true} />
+                ),
+
+
+                gestureEnabled: true,
+            };
+        },
+    },
+});
+
+const PaymentsApp = createStackNavigator({
+    Payments: {
+        screen: Payments,
+        navigationOptions: ({ navigation }) => {
+            return {
+                header: () => (
+                    <HeaderComponent navigation={navigation} menu={true} />
+                ),
+
+
+                gestureEnabled: true,
+            };
+        },
+    },
+});
+
+const LogoutApp = createStackNavigator({
+    Logout: {
+        screen: Logout,
+        navigationOptions: ({ navigation }) => {
+            return {
+                header: () => (
+                    <HeaderComponent navigation={navigation} menu={true} />
+                ),
+
+
+                gestureEnabled: true,
+            };
+        },
+    },
+});
+
 const RNApp = createDrawerNavigator(
     {
         Home: {
             screen: HomeApp,
+            navigationOptions: {
+
+            },
+        },
+        MyProfile: {
+            screen: MyProfileApp,
+            navigationOptions: {
+
+            },
+        },
+        Calendar: {
+            screen: CalendarApp,
+            navigationOptions: {
+
+            },
+        },
+        HealthProfile: {
+            screen: HealthProfileApp,
+            navigationOptions: {
+
+            },
+        },
+        Contracts: {
+            screen: ContractsApp,
+            navigationOptions: {
+
+            },
+        },
+        Payments: {
+            screen: PaymentsApp,
+            navigationOptions: {
+
+            },
+        },
+        Logout: {
+            screen: LogoutApp,
             navigationOptions: {
 
             },
