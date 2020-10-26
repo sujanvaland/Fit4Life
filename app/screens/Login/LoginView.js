@@ -100,7 +100,9 @@ class LoginView extends Component {
     this.props.forgotPassword();
   }
 
-
+  navigateToSignup = () => {
+    this.props.Signup();
+  }
 
   updateState = (fieldName, value) => {
 
@@ -203,6 +205,12 @@ class LoginView extends Component {
                     disabled={this.submitted}
                     style={loginStyles.loginButton}
                   />
+                </View>
+                <Text style={loginStyles.accountText}>Not having Account</Text>
+                <View style={loginStyles.flexBox}>
+                  <TouchableOpacity style={loginStyles.signButton} onPress={this.navigateToSignup}>
+                    <Text style={loginStyles.signText}>Sign Up</Text>
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>

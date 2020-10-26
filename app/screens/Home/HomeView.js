@@ -16,9 +16,9 @@ class HomeView extends Component {
         super(props);
         this.state = {
             images: [
-                require('../../assets/images/img_slide1.jpg'),
-                require('../../assets/images/img_slide2.jpg'),
-                require('../../assets/images/img_slide3.jpg'),
+                // require('../../assets/images/img_slide1.jpg'),
+                // require('../../assets/images/img_slide2.jpg'),
+                // require('../../assets/images/img_slide3.jpg'),
             ]
         }
     }

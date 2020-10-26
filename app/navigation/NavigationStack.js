@@ -11,6 +11,7 @@ import * as navigationActions from '../actions/navigationActions';
 
 import AuthLoadingScreen from 'app/screens/Login/AuthLoading';
 import Login from 'app/screens/Login';
+import Signup from 'app/screens/Signup';
 import Home from 'app/screens/Home';
 import MyProfile from 'app/screens/Home';
 import Calendar from 'app/screens/Home';
@@ -32,6 +33,19 @@ const LoginApp = createStackNavigator({
     },
 });
 
+const SignupApp = createStackNavigator({
+    Signup: {
+        screen: Signup,
+        navigationOptions: ({ navigation }) => {
+            return {
+                header: () => <HeaderComponent iname={"ios-arrow-back"}
+                back={true} navigation={navigation} />,
+                gestureEnabled: false
+            }
+        }
+    },
+});
+
 const HomeApp = createStackNavigator({
     Home: {
         screen: Home,
@@ -40,8 +54,6 @@ const HomeApp = createStackNavigator({
                 header: () => (
                     <HeaderComponent navigation={navigation} menu={true} />
                 ),
-
-
                 gestureEnabled: true,
             };
         },
@@ -56,8 +68,6 @@ const MyProfileApp = createStackNavigator({
                 header: () => (
                     <HeaderComponent navigation={navigation} menu={true} />
                 ),
-
-
                 gestureEnabled: true,
             };
         },
@@ -72,8 +82,6 @@ const CalendarApp = createStackNavigator({
                 header: () => (
                     <HeaderComponent navigation={navigation} menu={true} />
                 ),
-
-
                 gestureEnabled: true,
             };
         },
@@ -88,8 +96,6 @@ const HealthProfileApp = createStackNavigator({
                 header: () => (
                     <HeaderComponent navigation={navigation} menu={true} />
                 ),
-
-
                 gestureEnabled: true,
             };
         },
@@ -104,8 +110,6 @@ const ContractsApp = createStackNavigator({
                 header: () => (
                     <HeaderComponent navigation={navigation} menu={true} />
                 ),
-
-
                 gestureEnabled: true,
             };
         },
@@ -120,8 +124,6 @@ const PaymentsApp = createStackNavigator({
                 header: () => (
                     <HeaderComponent navigation={navigation} menu={true} />
                 ),
-
-
                 gestureEnabled: true,
             };
         },
@@ -136,8 +138,6 @@ const LogoutApp = createStackNavigator({
                 header: () => (
                     <HeaderComponent navigation={navigation} menu={true} />
                 ),
-
-
                 gestureEnabled: true,
             };
         },
@@ -146,6 +146,18 @@ const LogoutApp = createStackNavigator({
 
 const RNApp = createDrawerNavigator(
     {
+        Login: {
+            screen: LoginApp,
+            navigationOptions: {
+                drawerLabel: () => null
+            },
+        },
+        Signup: {
+            screen: SignupApp,
+            navigationOptions: {
+                drawerLabel: () => null
+            },
+        },
         Home: {
             screen: HomeApp,
             navigationOptions: {

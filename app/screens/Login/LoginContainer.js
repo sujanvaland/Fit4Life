@@ -29,6 +29,10 @@ class LoginContainer extends Component {
         navigationActions.navigateToForgotPassword();
     }
 
+    navigateToSignup = () => {
+        navigationActions.navigateToSignup();
+    }
+
     _retrieveData = async (key) => {
         try {
           const value = await AsyncStorage.getItem('TDMDeliveryApp:'+key);
@@ -40,7 +44,7 @@ class LoginContainer extends Component {
       };
 
     render() {
-        return <LoginView {...this.props} forgotPassword={this.navigateToForgotPassword}/>;
+        return <LoginView {...this.props} forgotPassword={this.navigateToForgotPassword} Signup={this.navigateToSignup}/>;
     }
 }
 

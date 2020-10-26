@@ -3,3 +3,4 @@ export * from "./TextBoxElement";
 export * from "./LinkButton";
 export * from "./ButtonElement";
 export * from './OverlayActivityIndicator';
+export * from "./PhoneTextBoxElement";
