@@ -83,7 +83,7 @@ const HeaderStyles = StyleSheet.create({
         width: '100%',
         zIndex: 99,
         paddingHorizontal: 0,
-        backgroundColor: '#00b1d6'
+        backgroundColor: '#a80f19'
     },
     notificationBox: {
         position: 'relative',

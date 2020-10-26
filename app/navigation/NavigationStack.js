@@ -195,10 +195,14 @@ const RNApp = createDrawerNavigator(
         draweOpenRoute: 'DrawerOpen',
         drawerCloseRoute: 'DrawerClose',
         drawerToggleRoute: 'DrawerToggle',
+        drawerBackgroundColor: "#000000",
         contentOptions: {
-            TintColor: '#000000',
-            activeTintColor: '#ED3237',
-            activeBackgroundColor: '#f5f5f5',
+            labelStyle: {
+                color: 'white',
+            },
+            TintColor: '#a80f19',
+            activeTintColor: '#a80f19',
+            activeBackgroundColor: '#a80f19',
             //  fontFamily: Styles.Typography.FONT_LIGHT
         },
     });
@@ -208,16 +212,16 @@ const RNApp = createDrawerNavigator(
 
 export default createAppContainer(
     createSwitchNavigator(
-      {
-        AuthLoading: AuthLoadingScreen,
-        App: RNApp,
-        Auth: LoginApp,
-      },
-      {
-        initialRouteName: 'AuthLoading',
-      }
+        {
+            AuthLoading: AuthLoadingScreen,
+            App: RNApp,
+            Auth: LoginApp,
+        },
+        {
+            initialRouteName: 'AuthLoading',
+        }
     )
-  );
+);
 
 
 const NavigationStyles = StyleSheet.create({
