@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-               BuildableName = "flitech-tvOS.app"
-               BlueprintName = "flitech-tvOS"
-               ReferencedContainer = "container:flitech.xcodeproj">
+               BuildableName = "fit4life-tvOS.app"
+               BlueprintName = "fit4life-tvOS"
+               ReferencedContainer = "container:fit4life.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "flitech-tvOSTests.xctest"
-               BlueprintName = "flitech-tvOSTests"
-               ReferencedContainer = "container:flitech.xcodeproj">
+               BuildableName = "fit4life-tvOSTests.xctest"
+               BlueprintName = "fit4life-tvOSTests"
+               ReferencedContainer = "container:fit4life.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "flitech-tvOS.app"
-            BlueprintName = "flitech-tvOS"
-            ReferencedContainer = "container:flitech.xcodeproj">
+            BuildableName = "fit4life-tvOS.app"
+            BlueprintName = "fit4life-tvOS"
+            ReferencedContainer = "container:fit4life.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "flitech-tvOS.app"
-            BlueprintName = "flitech-tvOS"
-            ReferencedContainer = "container:flitech.xcodeproj">
+            BuildableName = "fit4life-tvOS.app"
+            BlueprintName = "fit4life-tvOS"
+            ReferencedContainer = "container:fit4life.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -1,4 +1,4 @@
-package com.flitech;
+package com.fit4life;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
@@ -15,7 +15,7 @@ public class MainActivity extends ReactActivity {
   @Override
   protected String getMainComponentName() {
      SplashScreen.show(this);  // here 
-    return "flitech";
+    return "fit4life";
   }
 
    @Override
