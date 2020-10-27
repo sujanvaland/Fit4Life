@@ -18,3 +18,11 @@ export function navigateToSignup(params) {
 export function navigateToForgotPassword(params) {
     NavigationService.navigate('Forgotpassword', params);
 }
+
+export function navigateToChangePassword(params) {
+    NavigationService.navigate('ChangePassword', params);
+}
+
+export function navigateToPersonalDetail(params) {
+    NavigationService.navigate('MyProfile', params);
+}

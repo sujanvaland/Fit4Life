@@ -12,12 +12,15 @@ import * as navigationActions from '../actions/navigationActions';
 import AuthLoadingScreen from 'app/screens/Login/AuthLoading';
 import Login from 'app/screens/Login';
 import Signup from 'app/screens/Signup';
+import Forgotpassword from 'app/screens/Forgotpassword';
 import Home from 'app/screens/Home';
+//import MyProfile from 'app/screens/PersonalDetail';
 import MyProfile from 'app/screens/Home';
 import Calendar from 'app/screens/Home';
 import HealthProfile from 'app/screens/Home';
 import Contracts from 'app/screens/Home';
 import Payments from 'app/screens/Home';
+import ChangePassword from 'app/screens/ChangePassword';
 import Logout from 'app/screens/Home';
 
 
@@ -39,6 +42,20 @@ const SignupApp = createStackNavigator({
         navigationOptions: ({ navigation }) => {
             return {
                 header: () => <HeaderComponent iname={"ios-arrow-back"}
+                back={true} navigation={navigation} />,
+                gestureEnabled: false
+            }
+        }
+    },
+});
+
+const ForgotpasswordApp = createStackNavigator({
+    Forgotpassword: {
+        screen: Forgotpassword,
+        navigationOptions: ({ navigation }) => {
+            return {
+                header: () => <HeaderComponent iname={"ios-arrow-back"}
+                title={"Forgot Password"}
                 back={true} navigation={navigation} />,
                 gestureEnabled: false
             }
@@ -130,14 +147,27 @@ const PaymentsApp = createStackNavigator({
     },
 });
 
+const ChangePasswordApp = createStackNavigator({
+    ChangePassword: {
+        screen: ChangePassword,
+        navigationOptions: ({ navigation }) =>
+        {
+            return {
+                header: () => <HeaderComponent iname={"chevron-back"}
+                title={"Change Password"}
+                back={true} navigation={navigation} />,
+                gestureEnabled: false
+            }
+        }
+    },
+});
+
 const LogoutApp = createStackNavigator({
     Logout: {
         screen: Logout,
         navigationOptions: ({ navigation }) => {
             return {
-                header: () => (
-                    <HeaderComponent navigation={navigation} menu={true} />
-                ),
+                headerShown: false,
                 gestureEnabled: true,
             };
         },
@@ -154,6 +184,12 @@ const RNApp = createDrawerNavigator(
         },
         Signup: {
             screen: SignupApp,
+            navigationOptions: {
+                drawerLabel: () => null
+            },
+        },
+        Forgotpassword: {
+            screen: ForgotpasswordApp,
             navigationOptions: {
                 drawerLabel: () => null
             },
@@ -190,6 +226,12 @@ const RNApp = createDrawerNavigator(
         },
         Payments: {
             screen: PaymentsApp,
+            navigationOptions: {
+
+            },
+        },
+        ChangePassword: {
+            screen: ChangePasswordApp,
             navigationOptions: {
 
             },

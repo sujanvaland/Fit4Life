@@ -65,38 +65,8 @@ class ForgotpassView extends Component {
     const {username,disablebtn} = this.state;
     const { loginError,loading} = this.props;
     return (
-      // <KeyboardAvoidingView style={globalStyles.container} behavior="padding" enabled>
-      // {
-      //     get(loading, 'isLoading') && <OverlayActivityIndicatorElement />
-      // } 
-     
-      //   <View style={globalStyles.loginContainer}>
-      //       <Text style={ForgotPasswordstyles.forgotPassHeadingText}>{heading.FORGOTPASS_HEAD_LINE}</Text>
-      //       <Text style={ForgotPasswordstyles.grayTxt}>{content.FORGOTPASS_TEXT}</Text>
-      //       <TextBoxElement
-      //         placeholder={'Enter Username'}
-      //         value={username}
-      //         autoCapitalize={'none'}
-      //         onBlur={value => this.validateUsername()}
-      //         onChangeText={value => this.updateState("username", value)}
-      //         style={ForgotPasswordstyles.textBox}
-      //       />
-      //       {/* <Text style={styles.errorMessage}>{loginError}</Text> */}
-      //       <View>
-      //         <ButtonElement
-      //           title={'Submit'}
-      //           onPress={this.forgotpassword}
-      //           disabled={disablebtn}
-      //         />
-      //       </View>
-      //       <View style={ForgotPasswordstyles.forgotPassBottom}>
-      //         <LinkButton title={'Login'}  onPress={this.navigateToLogin}/>
-      //       </View>
-      //   </View>
-      
-      //  </KeyboardAvoidingView >
       <View style={globalStyles.innerContainer}>
-          <Image style={ForgotPasswordstyles.loginBg} source={require('../../assets/img/login_bg.jpg')} resizeMode="cover" /> 
+          {/* <Image style={ForgotPasswordstyles.loginBg} source={require('../../assets/img/login_bg.jpg')} resizeMode="cover" />  */}
           <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={this.state.enableScroll}>
             <View style={ForgotPasswordstyles.verificationInner}>
               <View style={ForgotPasswordstyles.ImgContainer}>
