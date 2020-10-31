@@ -16,10 +16,10 @@ import Forgotpassword from 'app/screens/Forgotpassword';
 import Home from 'app/screens/Home';
 //import MyProfile from 'app/screens/PersonalDetail';
 import MyProfile from 'app/screens/Home';
-import Calendar from 'app/screens/Home';
-import HealthProfile from 'app/screens/Home';
-import Contracts from 'app/screens/Home';
-import Payments from 'app/screens/Home';
+import Calendar from 'app/screens/Calendar';
+import HealthProfile from 'app/screens/HealthProfile';
+import Contracts from 'app/screens/Contracts';
+import Payments from 'app/screens/Payments';
 import ChangePassword from 'app/screens/ChangePassword';
 import Logout from 'app/screens/Home';
 
