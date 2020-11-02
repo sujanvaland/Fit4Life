@@ -9,7 +9,8 @@ const loginStyles = StyleSheet.create({
         height: viewportHeight,
         width: viewportWidth,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+
 
     },
     loginBottom: {
@@ -27,29 +28,45 @@ const loginStyles = StyleSheet.create({
 
 
     },
+    logo: {
+        width: viewportWidth * 0.65,
+    },
     loginContainer: {
 
         height: viewportWidth,
         width: '100%',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderWidth: 0,
 
 
 
 
+    },
+    ImageBack: {
+        height: viewportHeight,
+        width: viewportWidth,
+        borderWidth: 0,
+        backgroundColor: '#ffffff',
+        display: 'flex',
+        paddingHorizontal: 0,
+        paddingVertical: 0,
+        marginVertical: 0,
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
     },
     loginButton: {
-        backgroundColor: '#a80f19'
+        backgroundColor: color.COLOR_PRIMARY
     },
     loginArea: {
-        borderWidth: 1,
-        width: '90%',
+        borderWidth: 0,
+        width: '100%',
         display: 'flex',
         justifyContent: 'center',
         paddingHorizontal: 40,
         paddingVertical: 40,
-        borderColor: '#a80f19',
+        borderColor: color.COLOR_PRIMARY,
         borderRadius: 20,
     },
     loginBg: {
@@ -109,11 +126,51 @@ const loginStyles = StyleSheet.create({
         height: viewportWidth * 0.17
     },
     textBoxContent: {
-        position: "relative"
+        position: "relative",
+        borderBottomWidth: 1,
+        borderBottomColor: '#969696',
+        marginBottom: viewportWidth * 0.05,
+
+    },
+    SocialButton: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 15,
+
+    },
+    BtnFacebook: {
+        backgroundColor: '#3a5794',
+        width: '48%',
+        paddingTop: viewportWidth * 0.030,
+        paddingBottom: viewportWidth * 0.035
+
+    },
+    BtnText: {
+        color: '#ffffff'
+    },
+    BtnInsta: {
+        backgroundColor: '#611a1f',
+        width: '48%',
+        paddingTop: viewportWidth * 0.030,
+        paddingBottom: viewportWidth * 0.035
+    },
+    SocialIcon: {
+        width: viewportWidth * 0.05,
+        height: viewportWidth * 0.05,
+        marginRight: viewportWidth * 0.02
+    },
+    SocialComonBtn: {
+        borderRadius: 100,
+        display: "flex",
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: '#ffffff'
     },
     textBoxInner: {
         position: "absolute",
-        right: viewportWidth * 0.035,
+        left: viewportWidth * 0.035,
         top: 10,
         display: 'flex',
         flexDirection: "row",
@@ -123,14 +180,14 @@ const loginStyles = StyleSheet.create({
         height: viewportWidth * 0.07,
     },
     textBoxImg: {
-        height: viewportWidth * 0.048,
+        height: viewportWidth * 0.060,
         width: viewportWidth * 0.05,
-        marginLeft: viewportWidth * 0.035
+        marginRight: viewportWidth * 0.035
     },
     passwordImg: {
-        height: viewportWidth * 0.05,
-        width: viewportWidth * 0.04,
-        marginLeft: viewportWidth * 0.035
+        height: viewportWidth * 0.06,
+        width: viewportWidth * 0.05,
+        marginRight: viewportWidth * 0.035
     },
     // signButton:{
     //     backgroundColor:color.COLOR_YELLOW,
@@ -143,8 +200,6 @@ const loginStyles = StyleSheet.create({
     },
     signText: {
         borderRadius: viewportWidth * 0.009,
-        height: 42,
-        lineHeight: 40,
         textAlign: 'center',
         fontSize: Typography.FONT_SIZE12,
         color: color.COLOR_DARKBLUE,
@@ -152,12 +207,25 @@ const loginStyles = StyleSheet.create({
         paddingHorizontal: viewportWidth * 0.07
     },
     accountText: {
-        color: color.COLOR_WHITE,
+        color: '#2a2a2a',
         fontSize: Typography.FONT_SIZE12,
-        lineHeight: 50,
         letterSpacing: 0,
         textAlign: 'center',
         fontFamily: Typography.FONT_OpenSansRegular
+    },
+    NewRegistration: {
+        display: 'flex',
+        marginTop: viewportWidth * 0.09,
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+    TextSignup: {
+        fontSize: Typography.FONT_SIZE12,
+        color: color.COLOR_PRIMARY
+    },
+    BtnSignup: {
+        fontSize: Typography.FONT_SIZE12,
+        marginLeft: viewportWidth * 0.02
     },
     LogoBox: {
         width: viewportWidth * 0.2

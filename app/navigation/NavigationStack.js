@@ -41,8 +41,9 @@ const SignupApp = createStackNavigator({
         screen: Signup,
         navigationOptions: ({ navigation }) => {
             return {
-                header: () => <HeaderComponent iname={"ios-arrow-back"}
-                back={true} navigation={navigation} />,
+                // header: () => <HeaderComponent iname={"ios-arrow-back"}
+                headerShown: false,
+                //  back={true} navigation={navigation} />,
                 gestureEnabled: false
             }
         }
@@ -55,8 +56,8 @@ const ForgotpasswordApp = createStackNavigator({
         navigationOptions: ({ navigation }) => {
             return {
                 header: () => <HeaderComponent iname={"ios-arrow-back"}
-                title={"Forgot Password"}
-                back={true} navigation={navigation} />,
+                    title={"Forgot Password"}
+                    back={true} navigation={navigation} />,
                 gestureEnabled: false
             }
         }
@@ -150,12 +151,11 @@ const PaymentsApp = createStackNavigator({
 const ChangePasswordApp = createStackNavigator({
     ChangePassword: {
         screen: ChangePassword,
-        navigationOptions: ({ navigation }) =>
-        {
+        navigationOptions: ({ navigation }) => {
             return {
                 header: () => <HeaderComponent iname={"chevron-back"}
-                title={"Change Password"}
-                back={true} navigation={navigation} />,
+                    title={"Change Password"}
+                    back={true} navigation={navigation} />,
                 gestureEnabled: false
             }
         }

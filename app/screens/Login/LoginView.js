@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import { get } from 'lodash';
-import { View, Image, Text, KeyboardAvoidingView, StatusBar, Keyboard, TouchableOpacity } from 'react-native';
+import { View, Image, Text, KeyboardAvoidingView, ImageBackground, StatusBar, Keyboard, TouchableOpacity } from 'react-native';
 import loginStyles from './loginStyles';
 import globalStyles from '../../assets/css/globalStyles';
 import PropTypes from 'prop-types';
-import { TextBoxElement, LinkButton, ButtonElement, OverlayActivityIndicatorElement } from "../../components";
+import { TextBoxElementLogin, LinkButton, ButtonElement, OverlayActivityIndicatorElement } from "../../components";
 import SplashScreen from 'react-native-splash-screen';
 import NetInfo from "@react-native-community/netinfo";
 import { ScrollView } from 'react-native-gesture-handler';
@@ -132,91 +132,109 @@ class LoginView extends Component {
   render() {
     const { username, password } = this.state;
     const { ErrorMessage, submitted, loading } = this.props;
-
+    const image = require('../../assets/img/img_loginback.png');
     return (
       <View style={loginStyles.loginView}>
-        <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={this.state.enableScroll}>
-          <KeyboardAvoidingView style={loginStyles.container} enabled>
-            {
-              get(loading, 'isLoading') && <OverlayActivityIndicatorElement />
-            }
+        <ImageBackground source={image} style={loginStyles.ImageBack} resizeMode="cover">
+          <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={this.state.enableScroll}>
+            <KeyboardAvoidingView style={loginStyles.container} enabled>
+              {
+                get(loading, 'isLoading') && <OverlayActivityIndicatorElement />
+              }
 
-            <View style={globalStyles.logoContainer}>
-              <StatusBar
-                barStyle="light-content"
-                // dark-content, light-content and default
-                hidden={false}
-                //To hide statusBar
-                backgroundColor="#a80f19"
-                //Background color of statusBar
-                translucent={false}
-                //allowing light, but not detailed shapes
-                networkActivityIndicatorVisible={true}
-              />
+              <View style={globalStyles.logoContainer}>
+                <StatusBar
+                  barStyle="light-content"
+                  // dark-content, light-content and default
+                  hidden={false}
+                  //To hide statusBar
+                  backgroundColor="#ffffff"
+                  //Background color of statusBar
+                  translucent={false}
+                  //allowing light, but not detailed shapes
+                  networkActivityIndicatorVisible={true}
+                />
 
-            </View>
+              </View>
 
-            <View style={loginStyles.loginContainer}>
-              <View style={loginStyles.loginArea}>
+              <View style={loginStyles.loginContainer}>
+                <Image source={require('../../assets/img/logo.png')} resizeMode="contain" style={loginStyles.logo} />
+                <View style={loginStyles.loginArea}>
 
-                {
-                  this.state.ShowEnvMsg == true &&
-                  <Text style={globalStyles.headingText}>Current Environment : {this.state.CurrentEnv}</Text>
-                }
-                <View style={loginStyles.textBoxContent}>
-                  <TextBoxElement
-                    placeholder={"Enter Username"}
-                    value={username}
-                    isvalidInput={this.props.loginresponse.ErrorMessage == "" || this.props.loginresponse.ErrorMessage == null}
-                    autoCapitalize={'none'}
-                    onChangeText={value => this.updateState("username", value)}
-                  />
-                  <View style={loginStyles.textBoxInner}>
-                    <Image style={loginStyles.lineImg} source={require('../../assets/img/line.png')} resizeMode="cover" />
-                    <Image style={loginStyles.textBoxImg} source={require('../../assets/img/user.png')} resizeMode="cover" />
-                  </View>
-                </View>
-                <View style={loginStyles.textBoxContent}>
-                  <TextBoxElement
-                    placeholder={"Enter Password"}
-                    secureTextEntry={true}
-                    value={password}
-                    isvalidInput={this.props.loginresponse.ErrorMessage == "" || this.props.loginresponse.ErrorMessage == null}
-                    autoCapitalize={'none'}
-                    onChangeText={value => this.updateState("password", value)}
-                  />
                   {
-                    (!(this.props.loginresponse.ErrorMessage == "" || this.props.loginresponse.ErrorMessage == undefined)) &&
-                    <View style={loginStyles.alertMainBox}>
-                      <Image style={loginStyles.alertIcon} source={require('../../assets/images/icon_alert.png')} resizeMode="contain" />
-                      <Text style={loginStyles.errorMessage}>{this.props.loginresponse.ErrorMessage}</Text>
-                    </View>
+                    this.state.ShowEnvMsg == true &&
+                    <Text style={globalStyles.headingText}>Current Environment : {this.state.CurrentEnv}</Text>
                   }
-                  <View style={loginStyles.textBoxInner}>
-                    <Image style={loginStyles.lineImg} source={require('../../assets/img/line.png')} resizeMode="cover" />
-                    <Image style={loginStyles.passwordImg} source={require('../../assets/img/password.png')} resizeMode="cover" />
+                  <View style={loginStyles.textBoxContent}>
+                    <View style={loginStyles.textBoxInner}>
+
+                      <Image style={loginStyles.textBoxImg} source={require('../../assets/img/user.png')} resizeMode="cover" />
+                      <Image style={loginStyles.lineImg} source={require('../../assets/img/line.png')} resizeMode="cover" />
+                    </View>
+                    <TextBoxElementLogin
+                      placeholder={"Username"}
+                      value={username}
+                      isvalidInput={this.props.loginresponse.ErrorMessage == "" || this.props.loginresponse.ErrorMessage == null}
+                      autoCapitalize={'none'}
+                      onChangeText={value => this.updateState("username", value)}
+                    />
+
                   </View>
-                </View>
-                <LinkButton onPress={this.navigateToForgotPassword} title={"Forgot Password?"} />
-                <View>
-                  <ButtonElement
-                    title={"Sign In"}
-                    onPress={this.navigate}
-                    disabled={this.submitted}
-                    style={loginStyles.loginButton}
-                  />
-                </View>
-                <Text style={loginStyles.accountText}>Not having Account</Text>
-                <View style={loginStyles.flexBox}>
-                  <TouchableOpacity style={loginStyles.signButton} onPress={this.navigateToSignup}>
-                    <Text style={loginStyles.signText}>Sign Up</Text>
-                  </TouchableOpacity>
+                  <View style={loginStyles.textBoxContent}>
+                    <View style={loginStyles.textBoxInner}>
+
+                      <Image style={loginStyles.passwordImg} source={require('../../assets/img/password.png')} resizeMode="cover" />
+                      <Image style={loginStyles.lineImg} source={require('../../assets/img/line.png')} resizeMode="cover" />
+                    </View>
+                    <TextBoxElementLogin
+                      placeholder={"Password"}
+                      secureTextEntry={true}
+                      value={password}
+                      isvalidInput={this.props.loginresponse.ErrorMessage == "" || this.props.loginresponse.ErrorMessage == null}
+                      autoCapitalize={'none'}
+                      onChangeText={value => this.updateState("password", value)}
+                    />
+                    {
+                      (!(this.props.loginresponse.ErrorMessage == "" || this.props.loginresponse.ErrorMessage == undefined)) &&
+                      <View style={loginStyles.alertMainBox}>
+                        <Image style={loginStyles.alertIcon} source={require('../../assets/images/icon_alert.png')} resizeMode="contain" />
+                        <Text style={loginStyles.errorMessage}>{this.props.loginresponse.ErrorMessage}</Text>
+                      </View>
+                    }
+
+                  </View>
+                  <LinkButton onPress={this.navigateToForgotPassword} title={"Forgot Password?"} />
+                  <View>
+                    <ButtonElement
+                      title={"Login"}
+                      onPress={this.navigate}
+                      disabled={this.submitted}
+                      style={loginStyles.loginButton}
+                    />
+                  </View>
+                  <View style={loginStyles.SocialButton}>
+                    <TouchableOpacity style={[loginStyles.BtnFacebook, loginStyles.SocialComonBtn]}>
+                      <Image source={require('../../assets/img/icon_facebook.png')} resizeMode="contain" style={loginStyles.SocialIcon} />
+                      <Text style={loginStyles.BtnText}>Facebok</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[loginStyles.BtnInsta, loginStyles.SocialComonBtn]}>
+                      <Image source={require('../../assets/img/icon_insta.png')} resizeMode="contain" style={loginStyles.SocialIcon} />
+                      <Text style={loginStyles.BtnText}>Instagram</Text>
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={loginStyles.NewRegistration}>
+                    <Text style={loginStyles.accountText}>New Registratoin?</Text>
+                    <TouchableOpacity style={loginStyles.BtnSignup} onPress={this.navigateToSignup}>
+                      <Text style={loginStyles.TextSignup}>Cilck here</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </View>
-            </View>
 
-          </KeyboardAvoidingView>
-        </ScrollView>
+            </KeyboardAvoidingView>
+          </ScrollView>
+        </ImageBackground>
       </View>
     );
   }

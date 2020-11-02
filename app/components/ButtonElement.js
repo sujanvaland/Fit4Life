@@ -35,15 +35,18 @@ const styles = StyleSheet.create({
     shadowOpacity: 0,
     marginTop: viewportWidth * 0.018,
     height: 50,
-    borderRadius: viewportWidth * 0.009,
+    borderRadius: 100,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '70%'
+    width: '100%',
+    paddingBottom: viewportWidth * 0.01
+
+
   },
   buttonStyleDisable: {
-    backgroundColor: "#ccc",
+    backgroundColor: "#e9c4c6",
   },
   buttonStyleActive: {
     backgroundColor: '#a80f19',

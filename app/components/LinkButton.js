@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import Styles from "../config/styles";
-const { color,Typography} = Styles;
+const { color, Typography } = Styles;
 
 export const LinkButton = props => {
   const { title, onPress, titleStyle = {}, style = {} } = props;
@@ -17,12 +17,12 @@ export const LinkButton = props => {
 };
 
 const styles = StyleSheet.create({
-  textStyle: { 
-    color: color.COLOR_BLACK,
+  textStyle: {
+    color: '#88262c',
     fontSize: Typography.FONT_SIZE12,
     lineHeight: 35,
     letterSpacing: 0,
-    textAlign:'center',
-    fontFamily:Typography.FONT_OpenSansRegular
+    textAlign: 'center',
+    fontFamily: Typography.FONT_OpenSansRegular
   }
 });

@@ -1,11 +1,11 @@
-import { StyleSheet , Dimensions } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import Styles from '../../config/styles';
 import { Row, Content } from 'native-base';
 import { clockRunning } from 'react-native-reanimated';
-const { color ,Typography} = Styles;
+const { color, Typography } = Styles;
 
 
-const { width: viewportWidth , height: viewportHeight } = Dimensions.get('window');
+const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 const cols = 2;
 const width = (Dimensions.get('window').width / cols) - 17;
 
@@ -16,25 +16,80 @@ const styles = StyleSheet.create({
         height: viewportHeight,
         width: viewportWidth,
         alignItems: 'center',
-      },
-    loginBottom:{
-        flexDirection:'row',
-        justifyContent:'space-between',
-        marginTop: viewportWidth* 0.042 
+        justifyContent: 'center',
+
+
     },
-    loginView:{
-        position:"relative"
+
+    loginBottom: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: viewportWidth * 0.042
     },
-    loginBg:{
-        position:"absolute",
-        width:viewportWidth,
-        height:viewportHeight,
-        top:0
+    loginContainer: {
+        borderWidth: 0,
+    },
+    loginView: {
+        position: "relative",
+        borderWidth: 1,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+
+
+    },
+    logo: {
+        width: viewportWidth * 0.65,
+    },
+    loginContainer: {
+
+        height: viewportWidth,
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 0,
+
+
+
+
+    },
+    ImageBack: {
+        height: viewportHeight,
+        width: viewportWidth,
+        borderWidth: 0,
+        backgroundColor: '#ffffff',
+        display: 'flex',
+        paddingHorizontal: 0,
+        paddingVertical: 0,
+        marginVertical: 0,
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+    },
+    loginButton: {
+        backgroundColor: color.COLOR_PRIMARY
+    },
+    loginArea: {
+        borderWidth: 0,
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        paddingHorizontal: 40,
+        paddingVertical: 40,
+        borderColor: color.COLOR_PRIMARY,
+        borderRadius: 20,
+    },
+    loginBg: {
+        position: "absolute",
+        width: viewportWidth,
+        height: viewportHeight,
+        top: 0
     },
     textBoxStyle: {
         marginBottom: 17,
-        paddingHorizontal:12,
-        paddingVertical:5,
+        paddingHorizontal: 12,
+        paddingVertical: 5,
         fontSize: Typography.FONT_SIZE,
         fontWeight: Typography.FONT_WEIGHT_NORMAL,
         fontStyle: Typography.FONT_STYLE_NORMAL,
@@ -44,134 +99,182 @@ const styles = StyleSheet.create({
         borderStyle: "solid",
         borderWidth: 1,
         borderColor: color.COLOR_CHECKBOX,
-        position:'relative',
-        backgroundColor:'red'
-      },
-    errorMessage:{
-        color:color.COLOR_RED,
-        fontSize:viewportWidth* 0.035,
+        position: 'relative',
+        backgroundColor: 'red'
+    },
+    errorMessage: {
+        color: color.COLOR_RED,
+        fontSize: viewportWidth * 0.035,
         fontWeight: Typography.FONT_WEIGHT_NORMAL,
-        fontStyle: Typography.FONT_STYLE_NORMAL, 
-        lineHeight: viewportWidth* 0.05,
+        fontStyle: Typography.FONT_STYLE_NORMAL,
+        lineHeight: viewportWidth * 0.05,
         letterSpacing: 0,
-        color:color.COLOR_RED,   
-        paddingLeft:0, 
-        position:"relative",
-        borderWidth:0,
-        paddingLeft:22,
-        marginBottom:24
+        color: color.COLOR_RED,
+        paddingLeft: 0,
+        position: "relative",
+        borderWidth: 0,
+        paddingLeft: 22,
+        marginBottom: 24
     },
-    logomain:{
-        width:viewportWidth* 0.5,
-        marginBottom:10
+    logomain: {
+        width: viewportWidth * 0.5,
+        marginBottom: 10
     },
-    alertIcon:{
-        width:viewportWidth*0.05,
-        height:viewportWidth*0.05,
-        position:"absolute",   
-        top:2   
+    alertIcon: {
+        width: viewportWidth * 0.05,
+        height: viewportWidth * 0.05,
+        position: "absolute",
+        top: 2
     },
-    alertMainBox:{position:"relative",
-        display:"flex",
-        flexDirection:"row",
-        justifyContent:"space-between"
+    alertMainBox: {
+        position: "relative",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between"
     },
-    logoImg:{
-        width:viewportWidth - viewportWidth*0.15,
-        height:viewportWidth*0.17
+    logoImg: {
+        width: viewportWidth - viewportWidth * 0.15,
+        height: viewportWidth * 0.17
     },
-    logoContainer: {
+    textBoxContent: {
+        position: "relative",
+        borderBottomWidth: 1,
+        borderBottomColor: '#969696',
+        marginBottom: viewportWidth * 0.05,
+
+    },
+    SocialButton: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 15,
+
+    },
+    BtnFacebook: {
+        backgroundColor: '#3a5794',
+        width: '48%',
+        paddingTop: viewportWidth * 0.030,
+        paddingBottom: viewportWidth * 0.035
+
+    },
+    BtnText: {
+        color: '#ffffff'
+    },
+    BtnInsta: {
+        backgroundColor: '#611a1f',
+        width: '48%',
+        paddingTop: viewportWidth * 0.030,
+        paddingBottom: viewportWidth * 0.035
+    },
+    SocialIcon: {
+        width: viewportWidth * 0.05,
+        height: viewportWidth * 0.05,
+        marginRight: viewportWidth * 0.02
+    },
+    SocialComonBtn: {
+        borderRadius: 100,
+        display: "flex",
+        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        minHeight: "20%",
-      },
-    textBoxContent:{
-      position:"relative"
+        color: '#ffffff'
     },
-    textBoxInner:{
-        position:"absolute",
-        right:viewportWidth*0.035,
-        top:10,
-        display:'flex',
-        flexDirection:"row",
-        alignItems:'center', 
+    textBoxInner: {
+        position: "absolute",
+        left: viewportWidth * 0.035,
+        top: 10,
+        display: 'flex',
+        flexDirection: "row",
+        alignItems: 'center',
     },
-    lineImg:{
-        height:viewportWidth*0.07, 
+    lineImg: {
+        height: viewportWidth * 0.07,
     },
-    textBoxImg:{
-        height:viewportWidth*0.04,
-        width:viewportWidth*0.042,
-        marginLeft:viewportWidth*0.035
+    textBoxImg: {
+        height: viewportWidth * 0.060,
+        width: viewportWidth * 0.05,
+        marginRight: viewportWidth * 0.035
     },
-    textBoxmailImg:{
-        height:viewportWidth*0.03,
-        width:viewportWidth*0.04,
-        marginLeft:viewportWidth*0.035
-    },
-    passwordImg:{
-        height:viewportWidth*0.046,
-        width:viewportWidth*0.036,
-        marginLeft:viewportWidth*0.035
+    passwordImg: {
+        height: viewportWidth * 0.06,
+        width: viewportWidth * 0.05,
+        marginRight: viewportWidth * 0.035
     },
     // signButton:{
     //     backgroundColor:color.COLOR_YELLOW,
     //     borderRadius:viewportWidth*0.01,
     // },
-    flexBox:{
-        display:'flex',
-        justifyContent:'center',
-        alignItems:"center",
+    flexBox: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: "center",
     },
-    signText:{
-        borderRadius:viewportWidth*0.009,
-        height:42,
-        lineHeight:40,
-        textAlign:'center',
-        fontSize:Typography.FONT_SIZE12,
-        color:color.COLOR_WHITE,
-        backgroundColor:color.COLOR_PRIMARY,
-        paddingHorizontal:viewportWidth*0.07
+    signText: {
+        borderRadius: viewportWidth * 0.009,
+        textAlign: 'center',
+        fontSize: Typography.FONT_SIZE12,
+        color: color.COLOR_DARKBLUE,
+        backgroundColor: color.COLOR_YELLOW,
+        paddingHorizontal: viewportWidth * 0.07
     },
-    accountText:{
-        color:color.COLOR_WHITE,
-        fontSize:Typography.FONT_SIZE12,
-        lineHeight: 50,
+    accountText: {
+        color: '#2a2a2a',
+        fontSize: Typography.FONT_SIZE12,
         letterSpacing: 0,
-        textAlign:'center',
-        fontFamily:Typography.FONT_OpenSansRegular
+        textAlign: 'center',
+        fontFamily: Typography.FONT_OpenSansRegular
     },
-    buttonStyle:{
-        fontSize:Typography.FONT_SIZE, 
-        textAlign:'center',
-        color:Styles.color.COLOR_BLACK,
+    NewRegistration: {
+        display: 'flex',
+        marginTop: viewportWidth * 0.09,
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+    TextSignup: {
+        fontSize: Typography.FONT_SIZE12,
+        color: color.COLOR_PRIMARY
+    },
+    BtnSignup: {
+        fontSize: Typography.FONT_SIZE12,
+        marginLeft: viewportWidth * 0.02
+    },
+    LogoBox: {
+        width: viewportWidth * 0.2
+    },
+    buttonStyle: {
+        fontSize: Typography.FONT_SIZE,
+        textAlign: 'center',
+        color: Styles.color.COLOR_WHITE,
         fontWeight: Typography.FONT_WEIGHT_BOLD,
-        textTransform:'none', 
-        shadowOpacity: 0,   
-        marginTop:viewportWidth*0.018,
-        height:50,
-        borderRadius: viewportWidth*0.009,
-        display:'flex',
-        flexDirection:'row',
-        justifyContent:'center',
-        alignItems:'center',
-        width:'70%'
-      },
-      buttonStyleDisable: {
-        backgroundColor:"#ad923c",
-      },
-      buttonStyleActive: {
-        backgroundColor:color.COLOR_YELLOW,
-      },
-      buttonStyleText:{
-        fontSize:Typography.FONT_SIZE17, 
+        textTransform: 'none',
+        shadowOpacity: 0,
+        marginTop: viewportWidth * 0.018,
+        height: 50,
+        borderRadius: 100,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        paddingBottom: viewportWidth * 0.01
+
+
+    },
+    buttonStyleDisable: {
+        backgroundColor: "#e9c4c6",
+    },
+    buttonStyleActive: {
+        backgroundColor: '#a80f19',
+    },
+    buttonStyleText: {
+        fontSize: Typography.FONT_SIZE17,
         //lineHeight:45,
-        textAlign:'center',
-        color:Styles.color.COLOR_DARKBLUE,
-        textTransform:'none', 
-        borderRadius: viewportWidth*0.009,
-      },
-      
+        textAlign: 'center',
+        color: Styles.color.COLOR_WHITE,
+        fontWeight: Typography.FONT_WEIGHT_BOLD,
+        textTransform: 'none',
+        borderRadius: viewportWidth * 0.009,
+    },
 });
 
 export default styles;
