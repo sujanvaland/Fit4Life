@@ -20,6 +20,18 @@ const styles = StyleSheet.create({
 
 
     },
+    TitleText: {
+        color: color.COLOR_PRIMARY,
+        fontSize: Typography.FONT_SIZE22,
+        textTransform: 'uppercase',
+        fontFamily: Typography.FONT_BOLD,
+        fontWeight: Typography.FONT_WEIGHT_BOLD,
+        marginBottom: 30,
+        borderWidth: 0,
+        width: '100%'
+
+
+    },
 
     loginBottom: {
         flexDirection: 'row',
@@ -31,7 +43,7 @@ const styles = StyleSheet.create({
     },
     loginView: {
         position: "relative",
-        borderWidth: 1,
+        borderWidth: 0,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
@@ -59,7 +71,7 @@ const styles = StyleSheet.create({
         height: viewportHeight,
         width: viewportWidth,
         borderWidth: 0,
-        backgroundColor: '#ffffff',
+        backgroundColor: color.COLOR_WHITE,
         display: 'flex',
         paddingHorizontal: 0,
         paddingVertical: 0,
@@ -70,6 +82,9 @@ const styles = StyleSheet.create({
     loginButton: {
         backgroundColor: color.COLOR_PRIMARY
     },
+    Mrtop20: {
+        marginTop: 20,
+    },
     loginArea: {
         borderWidth: 0,
         width: '100%',
@@ -79,6 +94,7 @@ const styles = StyleSheet.create({
         paddingVertical: 40,
         borderColor: color.COLOR_PRIMARY,
         borderRadius: 20,
+
     },
     loginBg: {
         position: "absolute",
@@ -116,6 +132,20 @@ const styles = StyleSheet.create({
         paddingLeft: 22,
         marginBottom: 24
     },
+    Chklabel: {
+        marginTop: 2,
+        display: 'flex',
+        flexWrap: 'wrap',
+        color: color.COLOR_DARTBLACK,
+        fontSize: Typography.FONT_SIZE12
+    },
+    checkboxContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        marginTop: 30,
+        borderWidth: 0,
+    },
     logomain: {
         width: viewportWidth * 0.5,
         marginBottom: 10
@@ -139,7 +169,7 @@ const styles = StyleSheet.create({
     textBoxContent: {
         position: "relative",
         borderBottomWidth: 1,
-        borderBottomColor: '#969696',
+        borderBottomColor: color.COLOR_LIGHTGRAY,
         marginBottom: viewportWidth * 0.05,
 
     },
@@ -151,17 +181,17 @@ const styles = StyleSheet.create({
 
     },
     BtnFacebook: {
-        backgroundColor: '#3a5794',
+        backgroundColor: color.COLOR_BLUE,
         width: '48%',
         paddingTop: viewportWidth * 0.030,
         paddingBottom: viewportWidth * 0.035
 
     },
     BtnText: {
-        color: '#ffffff'
+        color: color.COLOR_WHITE
     },
     BtnInsta: {
-        backgroundColor: '#611a1f',
+        backgroundColor: color.COLOR_DARKRED,
         width: '48%',
         paddingTop: viewportWidth * 0.030,
         paddingBottom: viewportWidth * 0.035
@@ -177,7 +207,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        color: '#ffffff'
+        color: color.COLOR_WHITE
     },
     textBoxInner: {
         position: "absolute",
@@ -218,7 +248,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: viewportWidth * 0.07
     },
     accountText: {
-        color: '#2a2a2a',
+        color: color.COLOR_DARTBLACK,
         fontSize: Typography.FONT_SIZE12,
         letterSpacing: 0,
         textAlign: 'center',
@@ -261,10 +291,10 @@ const styles = StyleSheet.create({
 
     },
     buttonStyleDisable: {
-        backgroundColor: "#e9c4c6",
+        backgroundColor: color.COLOR_LIGHTRED,
     },
     buttonStyleActive: {
-        backgroundColor: '#a80f19',
+        backgroundColor: color.COLOR_PRIMARY,
     },
     buttonStyleText: {
         fontSize: Typography.FONT_SIZE17,

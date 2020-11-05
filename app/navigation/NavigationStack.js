@@ -55,9 +55,10 @@ const ForgotpasswordApp = createStackNavigator({
         screen: Forgotpassword,
         navigationOptions: ({ navigation }) => {
             return {
-                header: () => <HeaderComponent iname={"ios-arrow-back"}
-                    title={"Forgot Password"}
-                    back={true} navigation={navigation} />,
+                //  header: () => <HeaderComponent iname={"ios-arrow-back"}
+                //   title={"Forgot Password"}
+                // back={true} navigation={navigation} />,
+                headerShown: false,
                 gestureEnabled: false
             }
         }
@@ -70,7 +71,7 @@ const HomeApp = createStackNavigator({
         navigationOptions: ({ navigation }) => {
             return {
                 header: () => (
-                    <HeaderComponent navigation={navigation} menu={true} />
+                    <HeaderComponent navigation={navigation} user={true} menu={true} title="Fit4Life" pagetitle={true} />
                 ),
                 gestureEnabled: true,
             };

@@ -34,7 +34,8 @@ class HeaderComponent extends Component {
             notification = false,
             backbutton = false,
             back = false,
-            carticon = false
+            carticon = false,
+            user = false
 
             //pagetitle = false,
         } = props;
@@ -54,7 +55,7 @@ class HeaderComponent extends Component {
 
                             {menu === true &&
                                 <TouchableOpacity onPress={() => this.props.navigation.openDrawer()} style={HeaderStyles.burgerMenu}>
-                                    <Image source={require('../assets/images/brgermenu.png')} resizeMode="contain" style={HeaderStyles.iconMenu} />
+                                    <Image source={require('../assets/images/icon_menu.png')} resizeMode="contain" style={HeaderStyles.iconMenu} />
                                 </TouchableOpacity>
                             }
                             {backbutton === true &&
@@ -64,6 +65,11 @@ class HeaderComponent extends Component {
                             }
                             {pagetitle === true &&
                                 <Text style={HeaderStyles.pagetitleText}>{props.title}</Text>
+                            }
+                            {user === true &&
+                                <TouchableOpacity>
+                                    <Image source={require('../assets/images/icon_user.png')} resizeMode="contain" style={HeaderStyles.userIcon} />
+                                </TouchableOpacity>
                             }
                         </View>
                     </View>
@@ -91,6 +97,9 @@ const HeaderStyles = StyleSheet.create({
         marginRight: viewportWidth * 0.02,
 
     },
+    userIcon: {
+        width: viewportWidth * 0.05
+    },
     cartNotification: {
         display: 'flex',
         flexDirection: 'row',
@@ -106,16 +115,16 @@ const HeaderStyles = StyleSheet.create({
     },
     pagetitleText: {
         //   fontFamily: Typography.FONT_SEMIBOLD,
-        fontSize: viewportWidth * 0.05,
+        fontSize: viewportWidth * 0.04,
         color: color.COLOR_WHITE,
-        width: viewportWidth * 0.6,
+        width: viewportWidth * 0.7,
         height: viewportWidth * 0.1,
-        textAlign: "left",
-        paddingLeft: viewportWidth * 0.05,
-        paddingTop: viewportWidth * 0.01,
+        textAlign: "center",
+        // paddingLeft: viewportWidth * 0.05,
+        paddingTop: viewportWidth * 0.02,
         marginTop: 0,
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 0,
@@ -211,7 +220,9 @@ const HeaderStyles = StyleSheet.create({
     LeftHeader: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'flex-start'
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '100%'
     },
     badgeText: {
         color: color.COLOR_WHITE,

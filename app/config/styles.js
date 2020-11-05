@@ -20,6 +20,14 @@ const AppStyles = {
         COLOR_DARTGRAY: '#cccccc',
         COLOR_BLUE: '#00c6f0',
         COLOR_LINKCOLOR: '#a80f19',
+        COLOR_LIGHTRED: '#e9c4c6',
+        COLOR_DARTBLACK: '#2a2a2a',
+        COLOR_DARKRED: '#611a1f',
+        COLOR_BLUE: '#3a5794',
+        COLOR_LIGHTGRAY: '#969696',
+        COLOR_DARKGRAYTWO: '#2b2b2b',
+        COLOR_INNERTITLE: '#353535'
+
 
 
     },
@@ -32,10 +40,11 @@ const AppStyles = {
         FONT_20: viewportWidth * 0.05
     },
     Typography: {
-        FONT_REGULAR: 'Poppins-Regular',
-        FONT_MEDIUM: 'Poppins-Medium',
-        FONT_BOLD: 'Poppins-Bold',
-        FONT_Italic: 'Poppins-Italic',
+        FONT_REGULAR: 'OpenSans-Regular',
+        FONT_MEDIUM: 'OpenSans-SemiBold',
+        FONT_BOLD: 'OpenSans-Bold',
+        FONT_Italic: 'OpenSans-Italic',
+        FONT_LIGHT: 'OpenSans-Light',
         FONT_LibreBaskerville: "LibreBaskerville-Regular",
         FONT_OpenSansRegular: "OpenSans-Regular",
         FONT_Roboto: 'Roboto',

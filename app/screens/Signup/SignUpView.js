@@ -5,9 +5,10 @@ import styles from './signupStyles';
 import globalStyles from '../../assets/css/globalStyles';
 import Resource_EN from '../../config/Resource_EN';
 import PropTypes from 'prop-types';
+
 import { TextBoxElement, PhoneTextBoxElement, ButtonElement, OverlayActivityIndicatorElement } from "../../components";
 import { ScrollView } from 'react-native-gesture-handler';
-import { CheckBox } from 'native-base';
+
 import SplashScreen from 'react-native-splash-screen';
 
 const { heading } = Resource_EN;
@@ -21,6 +22,7 @@ class SignUpView extends Component {
     //this.props.singupresponse.message=true;
     this.state = {
       mainpage: false,
+      isSelected: false,
       hire: false,
       work: false,
       termsChecked: false,
@@ -43,9 +45,13 @@ class SignUpView extends Component {
       isvalidemail: false,
       isvalidphone: false,
       isvalidusername: false,
-      isvalidpassword: false
+      isvalidpassword: false,
+      toggleCheckBox: false,
+
     };
   }
+
+
 
   signup = () => {
     const { userDetails, isvalidfullname, isvalidemail, isvalidphone, isvalidusername, isvalidpassword } = this.state;
@@ -74,6 +80,8 @@ class SignUpView extends Component {
       this.props.onSignUp(this.state.userDetails);
     }
   };
+
+
   componentDidMount() {
     SplashScreen.hide();
   }
@@ -244,9 +252,18 @@ class SignUpView extends Component {
     this.props.Login();
   } //redirect to Terms page
 
+
+
+
   render() {
 
+    // changevalue = () => {
+    //   console.log('hello');
+    //   this.setState({ isSelected: true });
+    // }
+
     const { userDetails } = this.state;
+    const { isSelected } = this.state;
     const { country, loading, disabled } = this.props;
     const { overlayStyle } = styles;
     const image = require('../../assets/img/img_loginback.png');
@@ -277,15 +294,16 @@ class SignUpView extends Component {
               </View>
 
               <View style={styles.loginContainer}>
-                <View style={styles.loginArea}>
 
+                <View style={styles.loginArea}>
+                  <Text style={styles.TitleText}>Create an Account</Text>
                   {
                     this.state.ShowEnvMsg == true &&
                     <Text style={globalStyles.headingText}>Current Environment : {this.state.CurrentEnv}</Text>
                   }
                   <View style={styles.textBoxContent}>
                     <TextBoxElement
-                      placeholder={"Enter Full Name"}
+                      placeholder={"Full Name"}
                       value={userDetails.fullname}
                       autoCapitalize={'none'}
                       onChangeText={value => this.updateState("fullname", value)}
@@ -301,7 +319,7 @@ class SignUpView extends Component {
                   </View>
                   <View style={styles.textBoxContent}>
                     <TextBoxElement
-                      placeholder={"Enter Email"}
+                      placeholder={"Email"}
                       value={userDetails.email}
                       autoCapitalize={'none'}
                       onChangeText={value => this.updateState("email", value)}
@@ -316,7 +334,7 @@ class SignUpView extends Component {
                   </View>
                   <View style={styles.textBoxContent}>
                     <PhoneTextBoxElement
-                      placeholder={"Enter Mobile Number"}
+                      placeholder={"Mobile Number"}
                       value={userDetails.phone}
                       autoCapitalize={'none'}
                       onChangeText={value => this.updateState("phone", value)}
@@ -331,7 +349,7 @@ class SignUpView extends Component {
                   </View>
                   <View style={styles.textBoxContent}>
                     <TextBoxElement
-                      placeholder={"Enter Username"}
+                      placeholder={"Username"}
                       value={userDetails.username}
                       autoCapitalize={'none'}
                       onChangeText={value => this.updateState("username", value)}
@@ -346,7 +364,7 @@ class SignUpView extends Component {
                   </View>
                   <View style={styles.textBoxContent}>
                     <TextBoxElement
-                      placeholder={"Enter Password"}
+                      placeholder={"Password"}
                       secureTextEntry={true}
                       value={userDetails.password}
                       onChangeText={value => this.updateState("password", value)}
@@ -360,9 +378,9 @@ class SignUpView extends Component {
             </View> */}
                   </View>
 
-                  <View style={styles.flexBox}>
+                  <View style={[styles.flexBox, styles.Mrtop20]}>
                     <TouchableOpacity onPress={this.signup} disabled={this.submitted} style={[styles.buttonStyle, (disabled) ? styles.buttonStyleDisable : styles.buttonStyleActive]}>
-                      <Text style={[styles.buttonStyleText, (disabled) ? styles.buttonStyleDisable : styles.buttonStyleActive]}>CREATE AN ACCOUNT</Text>
+                      <Text style={[styles.buttonStyleText, (disabled) ? styles.buttonStyleDisable : styles.buttonStyleActive]}>Register</Text>
                     </TouchableOpacity>
                   </View>
 
@@ -374,16 +392,11 @@ class SignUpView extends Component {
                     </TouchableOpacity>
                   </View>
 
+                  <View style={styles.checkboxContainer}>
 
-                  {/* <Text style={styles.accountText}>Already having Account</Text>
-                  <View style={styles.flexBox}>
-
-                    <TouchableOpacity style={styles.signButton}
-                      onPress={this.navigateToLogin}>
-                      <Text style={styles.signText}>Sign In</Text>
-                    </TouchableOpacity>
-
-                  </View> */}
+                    <Text style={styles.Chklabel}>By creating an account you accept the{"\n"}
+Terms  and Conditions of information use</Text>
+                  </View>
                 </View>
               </View>
 

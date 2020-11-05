@@ -11,35 +11,36 @@ class ForgotpassContainer extends Component {
     }
 
 
-    navigateToLogin = () => {
-        navigationActions.navigateToLogin();
-    }
 
     componentDidMount() {
         let currentRoute = this.props.navigation.state.routeName;
         let navigation = this.props.navigation;
-        BackHandler.addEventListener ('hardwareBackPress', function(){
-          if (currentRoute == "Login") {
-            BackHandler.exitApp();
-            return true;
-          }
-          else{
-            navigation.goBack();
-            return true;
-          }
+        BackHandler.addEventListener('hardwareBackPress', function () {
+            if (currentRoute == "Login") {
+                BackHandler.exitApp();
+                return true;
+            }
+            else {
+                navigation.goBack();
+                return true;
+            }
         });
     }
 
-    render() { 
-        return <ForgotpassView {...this.props} login={this.navigateToLogin}/>;
-    } 
+    navigateToLogin = () => {
+        navigationActions.navigateToLogin();
+    }
+
+    render() {
+        return <ForgotpassView {...this.props} login={this.navigateToLogin} />;
+    }
 }
 
 function mapStateToProps(state) {
     return {
         forgotPasswordresponse: state.forgotPasswordReducer,
         loading: state.loadingReducer
-    }; 
+    };
 }
 function mapDispatchToProps(dispatch) {
     return {
@@ -47,6 +48,6 @@ function mapDispatchToProps(dispatch) {
     };
 }
 export default connect(
-    mapStateToProps, 
+    mapStateToProps,
     mapDispatchToProps
 )(ForgotpassContainer);
