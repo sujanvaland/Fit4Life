@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import { Image, View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
-import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
+import { Image, View, Text, StyleSheet, Dimensions, TouchableOpacity, Alert, SafeAreaView } from 'react-native';
+import { createDrawerNavigator, DrawerItems, DrawerActions } from 'react-navigation-drawer';
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
+import AsyncStorage from '@react-native-community/async-storage';
 
 import { HeaderComponent } from 'app/components';
 
@@ -21,7 +22,6 @@ import HealthProfile from 'app/screens/HealthProfile';
 import Contracts from 'app/screens/Contracts';
 import Payments from 'app/screens/Payments';
 import ChangePassword from 'app/screens/ChangePassword';
-import Logout from 'app/screens/Home';
 
 
 const LoginApp = createStackNavigator({
@@ -163,18 +163,6 @@ const ChangePasswordApp = createStackNavigator({
     },
 });
 
-const LogoutApp = createStackNavigator({
-    Logout: {
-        screen: Logout,
-        navigationOptions: ({ navigation }) => {
-            return {
-                headerShown: false,
-                gestureEnabled: true,
-            };
-        },
-    },
-});
-
 const RNApp = createDrawerNavigator(
     {
         Login: {
@@ -236,16 +224,33 @@ const RNApp = createDrawerNavigator(
             navigationOptions: {
 
             },
-        },
-        Logout: {
-            screen: LogoutApp,
-            navigationOptions: {
-
-            },
         }
     },
 
     {
+        contentComponent:(props) => (
+            <View style={{flex:1}}>
+                <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
+                  <DrawerItems {...props} />
+                  <TouchableOpacity onPress={()=>
+                    Alert.alert(
+                      'Log out',
+                      'Do you want to logout?',
+                      [
+                        {text: 'Cancel', onPress: () => {return null}},
+                        {text: 'Confirm', onPress: () => {
+                          AsyncStorage.clear();
+                          props.navigation.navigate('Login')
+                        }},
+                      ],
+                      { cancelable: false }
+                    )  
+                  }>
+                    <Text style={{margin: 16,fontWeight: 'bold',color: '#fff'}}>Logout</Text>
+                  </TouchableOpacity>
+                </SafeAreaView>
+            </View>
+        ),
         initialRouteName: 'Home',
         draweOpenRoute: 'DrawerOpen',
         drawerCloseRoute: 'DrawerClose',

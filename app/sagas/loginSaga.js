@@ -6,30 +6,58 @@
  */
 import { put, call, select } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
-
 import { Alert } from 'react-native';
-// import loginUser from 'app/api/methods/loginUser';
+import AsyncStorage from '@react-native-community/async-storage';
+import loginUser from 'app/api/methods/loginUser';
 import * as loginActions from 'app/actions/loginActions';
+import * as accountActions from 'app/actions/accountActions';
 import * as navigationActions from 'app/actions/navigationActions';
 
 // Our worker Saga that logins the user
-export default function* loginAsync() {
+function* loginAsync(action) {
     yield put(loginActions.enableLoader());
-
     //how to call api
-    //const response = yield call(loginUser, action.username, action.password);
-    //mock response
-    const response = { success: true, data: { id: 1 } };
-
-    if (response.success) {
-        yield put(loginActions.onLoginResponse(response.data));
-        yield put(loginActions.disableLoader({}));
+    const response = yield call(loginUser, action.username, action.password);
+    //console.log(response);
+    if (response.id_token != "") {
+        yield put(loginActions.onLoginResponse(response));
+        _storeData("login_token",response.id_token);
+        _storeData("loginuser",action.username);
+        _storeData("password",action.password);
         yield call(navigationActions.navigateToHome);
+        yield put(loginActions.disableLoader({}));   
     } else {
-        yield put(loginActions.loginFailed());
-        yield put(loginActions.disableLoader({}));
-        setTimeout(() => {
-            Alert.alert('BoilerPlate', response.Message);
-        }, 200);
+          yield put(loginActions.loginFailed(response));
+          yield put(loginActions.disableLoader({}));  
     }
 }
+
+function* logoutAsync(){
+  _storeData("login_token","")
+  _storeData("loginuser","");
+  _storeData("password","");
+  navigationActions.navigateToLogin();
+}
+
+const _storeData = async (key,value) => {
+  try {
+    await AsyncStorage.setItem(key, value);
+    return value;
+  } catch (error) {
+    // Error saving data
+    return null;
+  }
+};
+
+_retrieveData = async (key) => {
+  try {
+    const value = await AsyncStorage.getItem(key);
+    if (value !== null) {
+      return value
+    }
+  } catch (error) {
+    // Error retrieving data
+  }
+};
+
+export { loginAsync,logoutAsync }
