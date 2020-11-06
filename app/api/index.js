@@ -70,11 +70,13 @@ async function CallApi(params,path,method){
     {
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     }
-    else{
+    else
+    {
       xhr.setRequestHeader("Content-Type", "application/json");
       //xhr.setRequestHeader("customerguid", customerguid);
-      xhr.setRequestHeader("Authorization", "bearer "+login_token);
+      xhr.setRequestHeader("Authorization", "Bearer "+login_token);
     }
+    
     xhr.send(data);
   });
 }

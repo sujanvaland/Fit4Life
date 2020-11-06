@@ -6,6 +6,7 @@ const ApiConstants = {
     SITEURL:'https://fit4life-293902.uc.r.appspot.com/',
     //API PATH
     LOGINPATH: 'authenticate',
+    EVENTLIST: 'events',
 
     // Update before build
     BUILDNO: "b01",
