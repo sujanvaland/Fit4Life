@@ -21,9 +21,53 @@ const Contractsstyles = StyleSheet.create({
         textAlign: 'right'
 
     },
+    OutlineBtn: {
+        borderWidth: 1,
+        borderRadius: viewportWidth * 0.015,
+        borderColor: color.COLOR_LINKCOLOR,
+        paddingTop: viewportWidth * 0.01,
+        paddingBottom: viewportWidth * 0.015,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        paddingVertical: viewportWidth * 0.015,
+        width: viewportWidth * 0.3,
+        marginTop: viewportWidth * 0.05,
+        marginBottom: viewportWidth * 0.02
+
+    },
+    FillBtn: {
+        borderWidth: 0,
+        borderRadius: viewportWidth * 0.015,
+        backgroundColor: color.COLOR_LINKCOLOR,
+        paddingTop: viewportWidth * 0.015,
+        paddingBottom: viewportWidth * 0.020,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        paddingVertical: viewportWidth * 0.015,
+        width: viewportWidth * 0.3,
+
+    },
+    BtnlinkText: {
+        color: color.COLOR_LINKCOLOR,
+    },
+    FillBtnlinkText: {
+        color: color.COLOR_WHITE
+    },
     ContcatsTitle: {
         fontFamily: Typography.FONT_LIGHT,
-        fontSize: Typography.FONT_SIZE22
+        fontSize: Typography.FONT_SIZE24,
+        marginBottom: viewportWidth * 0.01
+    },
+    FlexRow: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderWidth: 0,
+        marginTop: viewportWidth * 0.04,
+        marginBottom: viewportWidth * 0.02
     },
     EventDesc: {
         fontSize: Typography.FONT_SIZE12
@@ -92,7 +136,8 @@ const Contractsstyles = StyleSheet.create({
 
     },
     InnerTitleIcon: {
-        width: viewportWidth * 0.05,
+        width: viewportWidth * 0.055,
+        height: viewportWidth * 0.055,
         marginRight: viewportWidth * 0.02
     },
     InnerTitleText: {
@@ -116,7 +161,7 @@ const Contractsstyles = StyleSheet.create({
         paddingVertical: viewportWidth * 0.035,
         backgroundColor: color.COLOR_WHITE,
         borderRadius: viewportWidth * 0.01,
-        marginTop: viewportWidth * 0.035,
+        marginTop: viewportWidth * 0.045,
         shadowColor: '#d7d7d7',
         shadowOffset: {
             width: 0,
