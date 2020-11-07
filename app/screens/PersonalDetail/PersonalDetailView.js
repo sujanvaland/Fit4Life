@@ -97,7 +97,7 @@ class PersonalDetailView extends Component {
                   </TouchableOpacity>
                 </View>
               </View>
-
+              <View style={PersonalDetailstyles.Spacer}></View>
               <View style={[PersonalDetailstyles.FullWidthTitleBack, PersonalDetailstyles.PadTop5]}>
                 <View style={[PersonalDetailstyles.InnerTitle, PersonalDetailstyles.MarTopzero]}>
                   <View style={PersonalDetailstyles.CustomerFeedLeft}>

@@ -11,6 +11,7 @@ const PersonalDetailStyles = StyleSheet.create({
     backgroundColor: color.COLOR_WHITE,
     width: viewportWidth,
   },
+  Spacer: { width: '100%', height: 10, },
   InnerContainer: {
 
     borderWidth: 0,
@@ -19,6 +20,7 @@ const PersonalDetailStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexWrap: 'wrap',
+    paddingBottom: 25,
 
   },
   ProfileEdit: {
@@ -219,7 +221,8 @@ const PersonalDetailStyles = StyleSheet.create({
     textAlign: 'left',
     fontFamily: Typography.FONT_REGULAR,
     fontSize: Typography.FONT_SIZE10,
-    color: color.COLOR_INNERTITLE
+    color: color.COLOR_INNERTITLE,
+    marginBottom: viewportWidth * 0.03
   },
   DateText: {
     display: 'flex',
@@ -227,6 +230,7 @@ const PersonalDetailStyles = StyleSheet.create({
     justifyContent: 'flex-end',
     width: '100%',
     borderWidth: 0,
+    marginBottom: viewportWidth * 0.020,
     textAlign: 'right',
     fontSize: Typography.FONT_SIZE10,
     lineHeight: viewportWidth * 0.035,
