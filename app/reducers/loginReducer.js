@@ -6,6 +6,7 @@ import * as types from 'app/actions/types';
 
 const initialState = {
     isLoggedIn: false,
+    ErrorMessage:'',
     id: -1,
     username: '',
     password: ''
@@ -25,12 +26,15 @@ export const loginReducer = createReducer(initialState, {
     [types.LOGIN_RESPONSE](state, action) {
         return {
             ...state,
-            id: action.response.id
+            isLoggedIn:true,
+            login_token: action.response.id_token
         };
     },
-    [types.LOGIN_FAILED](state) {
+    [types.LOGIN_FAILED](state,action) {
         return {
             ...state,
+            ErrorMessage : "Incorrect username or password. Please try again.",
+            login_token:null,
             isLoggedIn: false
         };
     }

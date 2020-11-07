@@ -4,6 +4,7 @@ import * as navigationActions from './navigationActions';
 import * as signupActions from './signupActions';
 import * as forgotPasswordActions from './forgotPasswordActions';
 import * as accountActions from './accountActions';
+import * as eventActions from './eventActions';
 
 export const ActionCreators = Object.assign(
     {},
@@ -11,5 +12,6 @@ export const ActionCreators = Object.assign(
     navigationActions,
     signupActions,  
     forgotPasswordActions,
-    accountActions
+    accountActions,
+    eventActions
 );

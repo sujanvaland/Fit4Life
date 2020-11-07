@@ -1,8 +1,16 @@
 /* App config for apis
  */
 const ApiConstants = {
-    BASE_URL: 'http://ileaf-dev.com/',
-    LOGIN: 'api/Users/login'
+    BASE_URL: 'https://fit4life-293902.uc.r.appspot.com/api',
+    LANGUAGE: 'language',
+    SITEURL:'https://fit4life-293902.uc.r.appspot.com/',
+    //API PATH
+    LOGINPATH: 'authenticate',
+    EVENTLIST: 'events',
+
+    // Update before build
+    BUILDNO: "b01",
+    VERSION: "1.0.0"
 };
 
 export default ApiConstants;
