@@ -60,16 +60,15 @@ class HomeView extends Component {
         const { upcomingevents,pastevents,loading } = this.props;
 
         let upcomingeventsArr = [];
-        //let filteredupcomingevents = [];
-
+        let pasteventsArr = [];
         if(upcomingevents && upcomingevents.length > 0){
             //filteredupcomingevents = upcomingevents;
             upcomingevents.map((item) =>{
                 upcomingeventsArr.push(
                     <View key={item.id} style={Homestyles.WhiteBox}>
-                        <Text style={Homestyles.DateText}>{this.getParsedDate(item.startTime)}</Text>
-                        <Text style={Homestyles.EventTitle}>{item.name}</Text>
-                        <Text style={Homestyles.EventLocation}>Coordinator: {item.coordinator.firstName} {item.coordinator.lastName}</Text>
+                        <Text style={Homestyles.DateText}>{this.getParsedDate(item.event.startTime)}</Text>
+                        <Text style={Homestyles.EventTitle}>{item.event.name}</Text>
+                        <Text style={Homestyles.EventLocation}>Coordinator: {item.event.coordinator.firstName} {item.event.coordinator.lastName}</Text>
                         <View style={Homestyles.RedButtonBox}>
                             <TouchableOpacity style={Homestyles.RedButton}>
                                 <Text style={Homestyles.BtnText}>Detail</Text>
@@ -80,6 +79,31 @@ class HomeView extends Component {
             });
         }
 
+        if(pastevents && pastevents.length > 0){
+            pastevents.map((item) =>{
+                pasteventsArr.push(
+                    <View style={Homestyles.WhiteBox}>
+                        <Text style={Homestyles.LastEventText}>Yesterday, 18:00 06/11/2020{'\n'}
+                        Body building Class{'\n'}
+                            Arrive time : 18:14</Text>
+                        <View style={Homestyles.RatingBox}>
+                            <Rating
+                                type='custom'
+                                ratingImage={WATER_IMAGE}
+                                ratingColor='#c5353f'
+                                ratingBackgroundColor='#d9d9d9'
+                                ratingCount={5}
+                                imageSize={18}
+                                onFinishRating={this.ratingCompleted}
+                                style={{ paddingVertical: 8 }}
+                            />
+                        </View>
+                        <Text style={Homestyles.LastEventText}>Without Qualifications</Text>
+                    </View>
+
+                )
+            });
+        }
         const image = require('../../assets/img/img_loginback.png');
         const WATER_IMAGE = require('../../assets/img/water.png')
 
@@ -127,54 +151,17 @@ class HomeView extends Component {
                                         <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={Homestyles.InnerTitleIcon} />
                                         <Text style={Homestyles.InnerTitleText}>Last Events</Text>
                                     </View>
-                                    <Text style={Homestyles.ResultText}>211 Result</Text>
+                                    <Text style={Homestyles.ResultText}>{pastevents.length} Result</Text>
                                 </View>
                             </View>
-                            <View style={Homestyles.ContainerMargin}>
-                                <View style={Homestyles.WhiteBox}>
-                                    <Text style={Homestyles.LastEventText}>Yesterday, 18:00 06/11/2020{'\n'}
-                                    Body building Class{'\n'}
-                                        Arrive time : 18:14</Text>
-                                    <View style={Homestyles.RatingBox}>
-                                        <Rating
-                                            type='custom'
-                                            ratingImage={WATER_IMAGE}
-                                            ratingColor='#c5353f'
-                                            ratingBackgroundColor='#d9d9d9'
-                                            ratingCount={5}
-                                            imageSize={18}
-                                            onFinishRating={this.ratingCompleted}
-                                            style={{ paddingVertical: 8 }}
-                                        />
-                                    </View>
-                                    <Text style={Homestyles.LastEventText}>Without Qualifications</Text>
-
-
+                            {
+                                pastevents && pastevents.length > 0 &&
+                                <View style={Homestyles.ContainerMargin}>
+                                    {
+                                        pasteventsArr
+                                    }
                                 </View>
-
-
-                                <View style={Homestyles.WhiteBox}>
-                                    <Text style={Homestyles.LastEventText}>Today, 09:30 06/11/2020{'\n'}
-                                    Running Class{'\n'}
-                                       Note Arrive</Text>
-                                    <View style={Homestyles.RatingBox}>
-                                        <Rating
-                                            type='custom'
-                                            ratingImage={WATER_IMAGE}
-                                            ratingColor='#c5353f'
-                                            ratingBackgroundColor='#d9d9d9'
-                                            ratingCount={5}
-                                            imageSize={18}
-                                            onFinishRating={this.ratingCompleted}
-                                            style={{ paddingVertical: 8 }}
-                                        />
-                                    </View>
-                                    <Text style={Homestyles.LastEventText}>Without Qualifications</Text>
-
-
-                                </View>
-                            </View>
-
+                            }
                         </View>
                     </ScrollView>
                 </ImageBackground>
