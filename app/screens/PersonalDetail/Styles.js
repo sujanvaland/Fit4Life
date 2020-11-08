@@ -41,7 +41,7 @@ const PersonalDetailStyles = StyleSheet.create({
     width: viewportWidth,
     paddingVertical: viewportWidth * 0.05,
     position: 'relative',
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   ProfilePic: {
     borderRadius: 100,
@@ -51,9 +51,18 @@ const PersonalDetailStyles = StyleSheet.create({
     width: viewportWidth * 0.05
   },
   ProfileBox: {
+    width: viewportWidth * 0.40,
+    height: viewportWidth * 0.40,
+    backgroundColor: '#f5f5f5',
     borderRadius: 100,
     borderWidth: 4,
-    borderColor: color.COLOR_WHITE
+    borderColor: '#ffffff',
+    overflow: 'hidden',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 10,
   },
   ProfileDetail: {
     color: color.COLOR_WHITE,
