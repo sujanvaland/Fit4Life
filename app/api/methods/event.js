@@ -13,12 +13,12 @@ export  function getUpcomingEvents(action) {
   }
 
 export  function getPastEvents(action) {
-var dateobj = new Date(); 
-var isodate = dateobj.toISOString(); 
-return Api(
-    ApiConstants.EVENTLIST + '?startTime.lessThan=' + isodate,
-    null,
-    'get',
-    null
-);
+    var dateobj = new Date(); 
+    var isodate = dateobj.toISOString(); 
+    return Api(
+        ApiConstants.EVENTLIST + '?eventAttendance.event.startTime.lessThan=' + isodate,
+        null,
+        'get',
+        null
+    );
 }

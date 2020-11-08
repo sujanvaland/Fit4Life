@@ -6,15 +6,15 @@ import NetInfo from "@react-native-community/netinfo";
 
 // import RNFetchBlob from 'react-native-fetch-blob'
 export default function api(path, params, method, token) {
+    console.log(method);
     return CallApi(params,path,method).then((data) => {
-      console.log("456");
-      console.log(data);
         try {
           let response = JSON.parse(data);
           return response;
       }
       catch (e) {
         //navigationActions.navigateToLogin();
+        console.log(e);
         return {};
       }
     });
@@ -22,17 +22,8 @@ export default function api(path, params, method, token) {
 
 async function CallApi(params,path,method){
 
-//   NetInfo.fetch().then(state => {
-//     if(!state.isConnected){
-//       navigationActions.navigateToNoInternet()
-//       return;
-//     }
-//   });
-
   let env =  await retrieveData("environment");
   let login_token =  await retrieveData("login_token");
-  //let customerguid =  await retrieveData("customerguid");
-  //let location =  await retrieveData("location");
   if(env == null || env == "" || env == undefined){
     env = ApiConstants.BASE_URL;
   }
@@ -62,7 +53,6 @@ async function CallApi(params,path,method){
       }
     });
    
-    //console.log(location);
     // xhr.open("POST", ApiConstants.BASE_URL + "/" + path);
     xhr.open(method, env + "/" + path)
     xhr.setRequestHeader("Accept", "application/json");
