@@ -74,7 +74,28 @@ class ContractsView extends Component {
                                 <View style={Contractsstyles.WhiteBox}>
                                     <Text style={[Contractsstyles.ContcatsTitle, globalStyles.FontLight]}>Health Conditions</Text>
                                     <Text style={[Contractsstyles.EventDesc, globalStyles.FontRegular]}>Description of contract</Text>
+                                    <TouchableOpacity style={Contractsstyles.OutlineBtn}>
+                                        <Text style={Contractsstyles.BtnlinkText}>Detail</Text>
+                                    </TouchableOpacity>
+                                </View>
 
+                                <View style={Contractsstyles.WhiteBox}>
+                                    <Text style={[Contractsstyles.ContcatsTitle, globalStyles.FontLight]}>Equipment Use</Text>
+                                    <Text style={[Contractsstyles.EventDesc, globalStyles.FontRegular]}>Description of contract</Text>
+                                    <TouchableOpacity style={Contractsstyles.OutlineBtn}>
+                                        <Text style={Contractsstyles.BtnlinkText}>Detail</Text>
+                                    </TouchableOpacity>
+                                </View>
+
+                                <View style={Contractsstyles.WhiteBox}>
+                                    <Text style={[Contractsstyles.ContcatsTitle, globalStyles.FontLight]}>Covid 19 </Text>
+                                    <Text style={[Contractsstyles.EventDesc, globalStyles.FontRegular]}>Description of contract</Text>
+                                    <View style={Contractsstyles.FlexRow}>
+                                        <TouchableOpacity style={Contractsstyles.FillBtn}>
+                                            <Text style={Contractsstyles.FillBtnlinkText}>Signed</Text>
+                                        </TouchableOpacity>
+                                        <Text style={[Contractsstyles.EventDesc, globalStyles.FontRegular]}>06:00 08/04/2020</Text>
+                                    </View>
                                 </View>
                             </View>
 
