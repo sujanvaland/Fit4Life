@@ -21,7 +21,7 @@ class HomeContainer extends Component {
         // messaging().onTokenRefresh((token) => {
         //     this._onChangeToken(token)
         // });
-
+        console.log(this.props.accountdetail);
         const { getUpcomingEvents, getPastEvents } = this.props;
         getUpcomingEvents();
         getPastEvents();
@@ -65,6 +65,7 @@ class HomeContainer extends Component {
 
 function mapStateToProps(state) {
     return {
+        accountdetail : state.accountReducer.accountdetail,
         upcomingevents:state.eventReducer.upcomingevents,
         pastevents:state.eventReducer.pastevents,
         loading: state.loadingReducer,

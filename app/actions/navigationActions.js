@@ -26,7 +26,3 @@ export function navigateToChangePassword(params) {
 export function navigateToPersonalDetail(params) {
     NavigationService.navigate('MyProfile', params);
 }
-
-export function CustomerFeed(params) {
-    NavigationService.navigate('CustomerFeed', params);
-}
