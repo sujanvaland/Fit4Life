@@ -5,7 +5,7 @@ export  function getUpcomingEvents(action) {
     var dateobj = new Date(); 
     var isodate = dateobj.toISOString(); 
     return Api(
-        ApiConstants.EVENTLIST + '?startTime.greaterThan=' + isodate,
+        ApiConstants.EVENTLIST + '?eventAttendance.event.startTime.greaterThan=' + isodate,
         null,
         'get',
         null
