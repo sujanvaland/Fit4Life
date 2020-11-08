@@ -156,7 +156,7 @@ const HealthProfileApp = createStackNavigator({
         navigationOptions: ({ navigation }) => {
             return {
                 header: () => (
-                    <HeaderComponent navigation={navigation} menu={true} />
+                    <HeaderComponent navigation={navigation} menu={true} pagetitle={true} title="Fit4Life" user={true} />
                 ),
                 gestureEnabled: true,
             };
@@ -197,9 +197,7 @@ const ChangePasswordApp = createStackNavigator({
         screen: ChangePassword,
         navigationOptions: ({ navigation }) => {
             return {
-                header: () => <HeaderComponent iname={"chevron-back"}
-                    title={"Change Password"}
-                    back={true} navigation={navigation} />,
+                header: () => <HeaderComponent pagetitle={true} user={true} navigation={navigation} menu={true} title="Change Password" />,
                 gestureEnabled: false
             }
         }

@@ -4,7 +4,7 @@ import Styles from "../config/styles";
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 const { color, Typography } = Styles;
 
-const TextBoxElementLogin = props => {
+const TextBoxElementChangepass = props => {
   const {
     keyboardType = "default",
     autoCapitalize = "words",
@@ -66,8 +66,8 @@ const styles = StyleSheet.create({
       },
       android: {
         marginBottom: viewportWidth * 0,
-        paddingLeft: viewportWidth * 0.15,
-        paddingRight: viewportWidth * 0.35,
+        paddingLeft: viewportWidth * 0.11,
+        paddingRight: 0,
         paddingTop: viewportWidth * 0.014,
         paddingBottom: viewportWidth * 0.01,
         fontSize: Typography.FONT_SIZE14,
@@ -141,4 +141,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export { TextBoxElementLogin };
+export { TextBoxElementChangepass };

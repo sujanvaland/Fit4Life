@@ -26,7 +26,8 @@ const AppStyles = {
         COLOR_BLUE: '#3a5794',
         COLOR_LIGHTGRAY: '#969696',
         COLOR_DARKGRAYTWO: '#2b2b2b',
-        COLOR_INNERTITLE: '#353535'
+        COLOR_INNERTITLE: '#353535',
+        COLOR_LEVELCOLOR: '#dedede'
 
 
 
