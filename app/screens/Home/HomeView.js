@@ -61,7 +61,7 @@ class HomeView extends Component {
 
         let upcomingeventsArr = [];
         let pasteventsArr = [];
-        if(upcomingevents && upcomingevents.length > 0){
+        if(upcomingevents && upcomingevents != undefined){
             //filteredupcomingevents = upcomingevents;
             upcomingevents.map((item) =>{
                 upcomingeventsArr.push(
@@ -79,10 +79,10 @@ class HomeView extends Component {
             });
         }
 
-        if(pastevents && pastevents.length > 0){
+        if(pastevents && pastevents != undefined){
             pastevents.map((item) =>{
                 pasteventsArr.push(
-                    <View style={Homestyles.WhiteBox}>
+                    <View key={item.id} style={Homestyles.WhiteBox}>
                         <Text style={Homestyles.LastEventText}>Yesterday, 18:00 06/11/2020{'\n'}
                         Body building Class{'\n'}
                             Arrive time : 18:14</Text>
@@ -128,21 +128,19 @@ class HomeView extends Component {
 
                     <ScrollView>
                         <View style={Homestyles.InnerContainer}>
-                                {
-                                    upcomingevents && upcomingevents.length > 0 &&
-                                    <View style={[Homestyles.ContainerMargin, Homestyles.MarBtm20]}>
-                                        <View style={Homestyles.InnerTitle}>
-                                            <View style={Homestyles.HomeLeft}>
-                                                <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={Homestyles.InnerTitleIcon} />
-                                                <Text style={Homestyles.InnerTitleText}>Upcoming Events</Text>
-                                            </View>
-                                            <Text style={Homestyles.ResultText}>{upcomingevents.length} Result</Text>
-                                        </View>
-                                        {
-                                            upcomingeventsArr
-                                        }
+                                
+                            <View style={[Homestyles.ContainerMargin, Homestyles.MarBtm20]}>
+                                <View style={Homestyles.InnerTitle}>
+                                    <View style={Homestyles.HomeLeft}>
+                                        <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={Homestyles.InnerTitleIcon} />
+                                        <Text style={Homestyles.InnerTitleText}>Upcoming Events</Text>
                                     </View>
+                                    <Text style={Homestyles.ResultText}>{upcomingeventsArr.length} Result</Text>
+                                </View>
+                                {
+                                    upcomingeventsArr
                                 }
+                            </View>
 
                             <View style={[Homestyles.FullWidthTitleBack, Homestyles.MarTop20]}>
 
@@ -151,11 +149,11 @@ class HomeView extends Component {
                                         <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={Homestyles.InnerTitleIcon} />
                                         <Text style={Homestyles.InnerTitleText}>Last Events</Text>
                                     </View>
-                                    <Text style={Homestyles.ResultText}>{pastevents.length} Result</Text>
+                                    <Text style={Homestyles.ResultText}>{pasteventsArr.length} Result</Text>
                                 </View>
                             </View>
                             {
-                                pastevents && pastevents.length > 0 &&
+                                pasteventsArr.length > 0 &&
                                 <View style={Homestyles.ContainerMargin}>
                                     {
                                         pasteventsArr
