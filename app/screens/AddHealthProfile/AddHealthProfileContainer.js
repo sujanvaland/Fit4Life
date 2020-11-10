@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import HealthProfileView from './HealthProfileView';
+import AddHealthProfileView from './AddHealthProfileView';
 import { connect } from 'react-redux';
 
-class HealthProfileContainer extends Component {
+class AddHealthProfileContainer extends Component {
     constructor(props) {
         super(props);
     }
 
     render() {
         let DATA = [];
-        return <HealthProfileView {...this.props} Services={DATA} />;
+        return <AddHealthProfileView {...this.props} Services={DATA} />;
     }
 }
 
@@ -22,4 +22,4 @@ function mapDispatchToProps() {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(HealthProfileContainer);
+)(AddHealthProfileContainer);

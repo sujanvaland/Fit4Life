@@ -14,6 +14,13 @@ const HealthProfilestyles = StyleSheet.create({
         height: viewportHeight * 0.40,
         borderWidth: 0,
     },
+    textBoxContent: {
+        position: "relative",
+        borderBottomWidth: 1,
+        borderBottomColor: color.COLOR_LIGHTGRAY,
+        marginBottom: viewportWidth * 0.05,
+
+    },
     LinkButton: {
         paddingHorizontal: viewportWidth * 0.02,
         paddingVertical: viewportWidth * 0.02,

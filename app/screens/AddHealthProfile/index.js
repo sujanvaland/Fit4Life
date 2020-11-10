@@ -1,2 +1,2 @@
-import HealthProfileContainer from './HealthProfileContainer';
-export default HealthProfileContainer;
+import AddHealthProfileContainer from './AddHealthProfileContainer';
+export default AddHealthProfileContainer;

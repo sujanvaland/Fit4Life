@@ -26,3 +26,13 @@ export function navigateToChangePassword(params) {
 export function navigateToPersonalDetail(params) {
     NavigationService.navigate('MyProfile', params);
 }
+
+export function navigateToAddHealthProfile(params) {
+    NavigationService.navigate('AddHealthProfile', params);
+}
+
+export function navigateToCordinatorFeed(params) {
+    NavigationService.navigate('CordinatorFeed', params);
+}
+
+

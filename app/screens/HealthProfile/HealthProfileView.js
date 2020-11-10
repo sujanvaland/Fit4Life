@@ -34,8 +34,8 @@ class HealthProfileView extends Component {
         navigationActions.navigateToAirVelocity(id);
     };
 
-    navigateToAboutus = () => {
-        navigationActions.navigateToAboutus();
+    navigateToAddHealthProfile = () => {
+        navigationActions.navigateToAddHealthProfile();
     }
 
 
@@ -57,7 +57,7 @@ class HealthProfileView extends Component {
                                         <Image source={require('../../assets/img/icon_healthttl.png')} resizeMode="contain" style={HealthProfilestyles.InnerTitleIcon} />
                                         <Text style={HealthProfilestyles.InnerTitleText}>Health Profile</Text>
                                     </View>
-                                    <TouchableOpacity style={HealthProfilestyles.BtnPlus}>
+                                    <TouchableOpacity style={HealthProfilestyles.BtnPlus} onPress={() => this.navigateToAddHealthProfile()}>
                                         <Image source={require('../../assets/img/icon_plus.png')} resizeMode="contain" style={HealthProfilestyles.BtnPlusIcon} />
                                     </TouchableOpacity>
                                 </View>

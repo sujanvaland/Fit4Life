@@ -23,6 +23,10 @@ import HealthProfile from 'app/screens/HealthProfile';
 import Contracts from 'app/screens/Contracts';
 import Payments from 'app/screens/Payments';
 import ChangePassword from 'app/screens/ChangePassword';
+import AddHealthProfile from 'app/screens/AddHealthProfile';
+import CordinatorFeed from 'app/screens/CordinatorFeed';
+
+
 
 
 const LoginApp = createStackNavigator({
@@ -120,6 +124,19 @@ const HealthProfileApp = createStackNavigator({
             };
         },
     },
+
+    AddHealthProfile: {
+        screen: AddHealthProfile,
+        navigationOptions: ({ navigation }) => {
+            return {
+                header: () => (
+                    <HeaderComponent navigation={navigation} backbutton={true} menu={false} pagetitle={true} title="Fit4Life" user={true} />
+                ),
+                gestureEnabled: true,
+            };
+        },
+    },
+
 });
 
 const ContractsApp = createStackNavigator({
@@ -142,7 +159,22 @@ const PaymentsApp = createStackNavigator({
         navigationOptions: ({ navigation }) => {
             return {
                 header: () => (
-                    <HeaderComponent navigation={navigation} menu={true} />
+                    <HeaderComponent navigation={navigation} backbutton={false} menu={true} pagetitle={true} title="Fit4Life" user={true} />
+                ),
+                gestureEnabled: true,
+            };
+        },
+    },
+});
+
+
+const CordinatorFeedApp = createStackNavigator({
+    CordinatorFeed: {
+        screen: CordinatorFeed,
+        navigationOptions: ({ navigation }) => {
+            return {
+                header: () => (
+                    <HeaderComponent navigation={navigation} backbutton={false} menu={true} pagetitle={true} title="Fit4Life" user={true} />
                 ),
                 gestureEnabled: true,
             };
@@ -216,6 +248,18 @@ const RNApp = createDrawerNavigator(
                 ),
             },
         },
+
+        CordinatorFeed: {
+            screen: CordinatorFeedApp,
+            navigationOptions: {
+                drawerLabel: 'Cordinator Feed',
+                drawerIcon: () => (
+                    <Image source={require('../assets/img/icon_healthprofile_menu.png')} resizeMode="contain" style={NavigationStyles.MenuIcon} />
+                ),
+            },
+        },
+
+
         Contracts: {
             screen: ContractsApp,
             navigationOptions: {
@@ -281,7 +325,7 @@ const RNApp = createDrawerNavigator(
 
             </View>
         ),
-        initialRouteName: 'Home',
+        initialRouteName: 'Payments',
         draweOpenRoute: 'DrawerOpen',
         drawerCloseRoute: 'DrawerClose',
         drawerToggleRoute: 'DrawerToggle',
@@ -305,13 +349,15 @@ const RNApp = createDrawerNavigator(
 export default createAppContainer(
     createSwitchNavigator(
         {
-            AuthLoading: AuthLoadingScreen,
+            //AuthLoading: AuthLoadingScreen,
             App: RNApp,
-            Auth: LoginApp,
+            initialRouteName: 'Contracts',
+            //  Auth: LoginApp,
         },
-        {
-            initialRouteName: 'AuthLoading',
-        }
+        //  {
+        // initialRouteName: 'AuthLoading',
+        //  initialRouteName: 'Contracts',
+        // }
     )
 );
 

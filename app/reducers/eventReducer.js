@@ -9,32 +9,32 @@ const initialState = {
 
 export const eventReducer = createReducer(initialState, {
 
-    [types.GETUPCOMINGEVENTS_RESPONSE](state,action) {
+    [types.GETUPCOMINGEVENTS_RESPONSE](state, action) {
         return {
             ...state,
-            upcomingevents:action.response
+            upcomingevents: action.response
         };
     },
 
     [types.GETUPCOMINGEVENTSFAILED_RESPONSE](state) {
         return {
             ...state,
-            upcomingevents:null
+            upcomingevents: []
         };
     },
 
-    [types.GETPASTEVENTS_RESPONSE](state,action) {
+    [types.GETPASTEVENTS_RESPONSE](state, action) {
         return {
             ...state,
-            pastevents:action.response
+            pastevents: action.response
         };
     },
 
     [types.GETPASTEVENTSFAILED_RESPONSE](state) {
         return {
             ...state,
-            pastevents:null
+            pastevents: []
         };
     },
-    
+
 });
