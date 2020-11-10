@@ -25,6 +25,8 @@ import Payments from 'app/screens/Payments';
 import ChangePassword from 'app/screens/ChangePassword';
 import AddHealthProfile from 'app/screens/AddHealthProfile';
 import CordinatorFeed from 'app/screens/CordinatorFeed';
+import CustomerDetailEvent from 'app/screens/CustomerDetailEvent';
+import CordinatorDetailEvent from 'app/screens/CordinatorDetailEvent';
 
 
 
@@ -182,6 +184,34 @@ const CordinatorFeedApp = createStackNavigator({
     },
 });
 
+const CordinatorDetailEventdApp = createStackNavigator({
+    CordinatorDetailEvent: {
+        screen: CordinatorDetailEvent,
+        navigationOptions: ({ navigation }) => {
+            return {
+                header: () => (
+                    <HeaderComponent navigation={navigation} backbutton={false} menu={true} pagetitle={true} title="Fit4Life" user={true} />
+                ),
+                gestureEnabled: true,
+            };
+        },
+    },
+});
+
+const CustomerDetailEventApp = createStackNavigator({
+    CustomerDetailEvent: {
+        screen: CustomerDetailEvent,
+        navigationOptions: ({ navigation }) => {
+            return {
+                header: () => (
+                    <HeaderComponent navigation={navigation} backbutton={false} menu={true} pagetitle={true} title="Fit4Life" user={true} />
+                ),
+                gestureEnabled: true,
+            };
+        },
+    },
+});
+
 const ChangePasswordApp = createStackNavigator({
     ChangePassword: {
         screen: ChangePassword,
@@ -243,6 +273,25 @@ const RNApp = createDrawerNavigator(
             screen: HealthProfileApp,
             navigationOptions: {
                 drawerLabel: 'Health Profile',
+                drawerIcon: () => (
+                    <Image source={require('../assets/img/icon_healthprofile_menu.png')} resizeMode="contain" style={NavigationStyles.MenuIcon} />
+                ),
+            },
+        },
+        CustomerDetailEvent: {
+            screen: CustomerDetailEventApp,
+            navigationOptions: {
+                drawerLabel: 'Customer Detail Event',
+                drawerIcon: () => (
+                    <Image source={require('../assets/img/icon_healthprofile_menu.png')} resizeMode="contain" style={NavigationStyles.MenuIcon} />
+                ),
+            },
+        },
+
+        CordinatorDetailEvent: {
+            screen: CordinatorDetailEventdApp,
+            navigationOptions: {
+                drawerLabel: 'Cordinator Detail Event',
                 drawerIcon: () => (
                     <Image source={require('../assets/img/icon_healthprofile_menu.png')} resizeMode="contain" style={NavigationStyles.MenuIcon} />
                 ),

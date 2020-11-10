@@ -36,3 +36,12 @@ export function navigateToCordinatorFeed(params) {
 }
 
 
+export function navigateToCustomerDetailEvent(params) {
+    NavigationService.navigate('CustomerDetailEvent', params);
+}
+
+export function navigateToCordinatorDetailEvent(params) {
+    NavigationService.navigate('CordinatorDetailEvent', params);
+}
+
+
