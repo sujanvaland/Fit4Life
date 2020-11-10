@@ -45,25 +45,25 @@ class HomeView extends Component {
 
     getParsedDate(strDate) {//get date formate
         if (strDate != "") {
-            let month_names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            var strSplitDate = String(strDate).split('T');
-            var dateArray = strSplitDate[0].split('-');
-            let monthint = parseInt(dateArray[1]);
-            let date = month_names[monthint - 1] + " " + dateArray[2] + ", " + dateArray[0];
-            return date;
+          let month_names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          var strSplitDate = String(strDate).split('T');
+          var dateArray = strSplitDate[0].split('-');
+          let monthint = parseInt(dateArray[1]);
+          let date = month_names[monthint - 1] + " " + dateArray[2] + ", " + dateArray[0];
+          return date;
         }
         return "";
-    }
+      }
 
     render() {
 
-        const { upcomingevents, pastevents, loading } = this.props;
+        const { upcomingevents,pastevents,loading } = this.props;
 
         let upcomingeventsArr = [];
         let pasteventsArr = [];
-        if (upcomingevents && upcomingevents.length > 0) {
+        if(upcomingevents && upcomingevents != undefined){
             //filteredupcomingevents = upcomingevents;
-            upcomingevents.map((item) => {
+            upcomingevents.map((item) =>{
                 upcomingeventsArr.push(
                     <View key={item.id} style={Homestyles.WhiteBox}>
                         <Text style={Homestyles.DateText}>{this.getParsedDate(item.event.startTime)}</Text>
@@ -79,31 +79,31 @@ class HomeView extends Component {
             });
         }
 
-        // if(pastevents && pastevents.length > 0){
-        //     pastevents.map((item) =>{
-        //         pasteventsArr.push(
-        //             <View style={Homestyles.WhiteBox}>
-        //                 <Text style={Homestyles.LastEventText}>Yesterday, 18:00 06/11/2020{'\n'}
-        //                 Body building Class{'\n'}
-        //                     Arrive time : 18:14</Text>
-        //                 <View style={Homestyles.RatingBox}>
-        //                     <Rating
-        //                         type='custom'
-        //                         ratingImage={WATER_IMAGE}
-        //                         ratingColor='#c5353f'
-        //                         ratingBackgroundColor='#d9d9d9'
-        //                         ratingCount={5}
-        //                         imageSize={18}
-        //                         onFinishRating={this.ratingCompleted}
-        //                         style={{ paddingVertical: 8 }}
-        //                     />
-        //                 </View>
-        //                 <Text style={Homestyles.LastEventText}>Without Qualifications</Text>
-        //             </View>
+        if(pastevents && pastevents != undefined){
+            pastevents.map((item) =>{
+                pasteventsArr.push(
+                    <View key={item.id} style={Homestyles.WhiteBox}>
+                        <Text style={Homestyles.LastEventText}>Yesterday, 18:00 06/11/2020{'\n'}
+                        Body building Class{'\n'}
+                            Arrive time : 18:14</Text>
+                        <View style={Homestyles.RatingBox}>
+                            <Rating
+                                type='custom'
+                                ratingImage={WATER_IMAGE}
+                                ratingColor='#c5353f'
+                                ratingBackgroundColor='#d9d9d9'
+                                ratingCount={5}
+                                imageSize={18}
+                                onFinishRating={this.ratingCompleted}
+                                style={{ paddingVertical: 8 }}
+                            />
+                        </View>
+                        <Text style={Homestyles.LastEventText}>Without Qualifications</Text>
+                    </View>
 
-        //         )
-        //     });
-        // }
+                )
+            });
+        }
         const image = require('../../assets/img/img_loginback.png');
         const WATER_IMAGE = require('../../assets/img/water.png')
 
@@ -128,21 +128,19 @@ class HomeView extends Component {
 
                     <ScrollView>
                         <View style={Homestyles.InnerContainer}>
-                            {
-                                upcomingevents && upcomingevents.length > 0 &&
-                                <View style={[Homestyles.ContainerMargin, Homestyles.MarBtm20]}>
-                                    <View style={Homestyles.InnerTitle}>
-                                        <View style={Homestyles.HomeLeft}>
-                                            <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={Homestyles.InnerTitleIcon} />
-                                            <Text style={Homestyles.InnerTitleText}>Upcoming Events</Text>
-                                        </View>
-                                        <Text style={Homestyles.ResultText}>{upcomingevents.length} Result</Text>
+                                
+                            <View style={[Homestyles.ContainerMargin, Homestyles.MarBtm20]}>
+                                <View style={Homestyles.InnerTitle}>
+                                    <View style={Homestyles.HomeLeft}>
+                                        <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={Homestyles.InnerTitleIcon} />
+                                        <Text style={Homestyles.InnerTitleText}>Upcoming Events</Text>
                                     </View>
-                                    {
-                                        upcomingeventsArr
-                                    }
+                                    <Text style={Homestyles.ResultText}>{upcomingeventsArr.length} Result</Text>
                                 </View>
-                            }
+                                {
+                                    upcomingeventsArr
+                                }
+                            </View>
 
                             <View style={[Homestyles.FullWidthTitleBack, Homestyles.MarTop20]}>
 
@@ -151,17 +149,17 @@ class HomeView extends Component {
                                         <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={Homestyles.InnerTitleIcon} />
                                         <Text style={Homestyles.InnerTitleText}>Last Events</Text>
                                     </View>
-                                    <Text style={Homestyles.ResultText}>{pastevents.length} Result</Text>
+                                    <Text style={Homestyles.ResultText}>{pasteventsArr.length} Result</Text>
                                 </View>
                             </View>
-                            {/* {
-                                pastevents && pastevents.length > 0 &&
+                            {
+                                pasteventsArr.length > 0 &&
                                 <View style={Homestyles.ContainerMargin}>
                                     {
                                         pasteventsArr
                                     }
                                 </View>
-                            } */}
+                            }
                         </View>
                     </ScrollView>
                 </ImageBackground>

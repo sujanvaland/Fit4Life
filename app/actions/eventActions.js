@@ -4,9 +4,10 @@
 import * as types from './types';
 
 
-export function getUpcomingEvents() {
+export function getUpcomingEvents(action) {
     return {
-        type: types.GETUPCOMINGEVENTS_REQUEST
+        type: types.GETUPCOMINGEVENTS_REQUEST,
+        action
     };
 }
 export function ongetUpcomingEventsResponse(response) {
@@ -22,9 +23,10 @@ export function ongetUpcomingEventsFailedResponse(response) {
     };
 }
 
-export function getPastEvents() {
+export function getPastEvents(action) {
     return {
-        type: types.GETPASTEVENTS_REQUEST
+        type: types.GETPASTEVENTS_REQUEST,
+        action
     };
 }
 export function ongetPastEventsResponse(response) {

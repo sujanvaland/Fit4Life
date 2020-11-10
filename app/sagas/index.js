@@ -11,11 +11,11 @@ export default function* watch() {
     yield all([takeEvery(types.LOGIN_REQUEST, loginAsync)]);
     
     //account Saga
-    yield all([takeEvery(types.GETACCOUNT_REQUEST, getAccountDetailAsync)]);
-    yield all([takeEvery(types.UPDATEPERSONALDETAIL_REQUEST, updatePersonalDetailAsync)]);
-    yield all([takeEvery(types.UPDATEDEVICETOKEN_REQUEST, updateDeviceTokenAsync)]);
-    yield all([takeEvery(types.CHANGEPASSWORD_REQUEST, changePasswordAsync)]);
-    yield all([takeEvery(types.LOADPROFILEIMAGE_REQUEST, loadprofileimageAsync)]);
+     yield all([takeEvery(types.GETACCOUNT_REQUEST, getAccountDetailAsync)]);
+    // yield all([takeEvery(types.UPDATEPERSONALDETAIL_REQUEST, updatePersonalDetailAsync)]);
+    // yield all([takeEvery(types.UPDATEDEVICETOKEN_REQUEST, updateDeviceTokenAsync)]);
+    // yield all([takeEvery(types.CHANGEPASSWORD_REQUEST, changePasswordAsync)]);
+    // yield all([takeEvery(types.LOADPROFILEIMAGE_REQUEST, loadprofileimageAsync)]);
 
     //Event Saga
     yield all([takeEvery(types.GETUPCOMINGEVENTS_REQUEST, getUpcomingEventsAsync)]);

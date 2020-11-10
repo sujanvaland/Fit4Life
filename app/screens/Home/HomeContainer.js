@@ -21,10 +21,11 @@ class HomeContainer extends Component {
         // messaging().onTokenRefresh((token) => {
         //     this._onChangeToken(token)
         // });
-        console.log(this.props.accountdetail);
+        
+        let userId=this.props.accountdetail.id;
         const { getUpcomingEvents, getPastEvents } = this.props;
-        getUpcomingEvents();
-        getPastEvents();
+        getUpcomingEvents(userId);
+        getPastEvents(userId);
       }
   
       // and don't forget to remove the listener
@@ -75,8 +76,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getUpcomingEvents: () => dispatch(eventActions.getUpcomingEvents()),
-        getPastEvents: () => dispatch(eventActions.getPastEvents())
+        getUpcomingEvents: (userId) => dispatch(eventActions.getUpcomingEvents(userId)),
+        getPastEvents: (userId) => dispatch(eventActions.getPastEvents(userId))
     };
 }
 export default connect(
