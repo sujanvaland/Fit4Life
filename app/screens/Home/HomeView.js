@@ -55,6 +55,17 @@ class HomeView extends Component {
         return "";
       }
 
+    getParsedTime(strDate) {//get date formate
+        if (strDate != "") {
+          var strSplitTime = String(strDate).split('T');
+          var TimeArray = strSplitTime[1];
+          var newstrSplitTime = String(TimeArray).split('Z');
+          var newtimeArray = newstrSplitTime[0];
+          return newtimeArray;
+        }
+        return "";
+      }
+
     render() {
 
         const { upcomingevents,pastevents,loading } = this.props;
@@ -83,9 +94,9 @@ class HomeView extends Component {
             pastevents.map((item) =>{
                 pasteventsArr.push(
                     <View key={item.id} style={Homestyles.WhiteBox}>
-                        <Text style={Homestyles.LastEventText}>Yesterday, 18:00 06/11/2020{'\n'}
-                        Body building Class{'\n'}
-                            Arrive time : 18:14</Text>
+                        <Text style={Homestyles.LastEventText}>{this.getParsedTime(item.event.startTime)} {this.getParsedDate(item.event.startTime)}{'\n'}
+                        {item.event.name}{'\n'}
+                            Arrive time : {this.getParsedTime(item.customerArrivalTime)}</Text>
                         <View style={Homestyles.RatingBox}>
                             <Rating
                                 type='custom'
@@ -98,7 +109,7 @@ class HomeView extends Component {
                                 style={{ paddingVertical: 8 }}
                             />
                         </View>
-                        <Text style={Homestyles.LastEventText}>Without Qualifications</Text>
+                        <Text style={Homestyles.LastEventText}>{item.observation}</Text>
                     </View>
 
                 )
