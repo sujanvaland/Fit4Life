@@ -209,6 +209,11 @@ const Homestyles = StyleSheet.create({
         fontSize: Typography.FONT_SIZE17,
         color: color.COLOR_INNERTITLE,
         fontFamily: Typography.FONT_MEDIUM
+    },
+    StarImage: {
+        width: 18,
+        height: 18,
+        resizeMode: 'cover',
     }
 
 });

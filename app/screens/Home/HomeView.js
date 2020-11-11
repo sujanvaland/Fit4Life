@@ -23,6 +23,11 @@ class HomeView extends Component {
                 // require('../../assets/images/img_slide3.jpg'),
             ]
         }
+
+        //Filled Star. You can also give the path from local
+        this.Star = 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/star_filled.png';
+        //Empty Star. You can also give the path from local
+        this.Star_With_Border = 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/star_corner.png';
     }
 
 
@@ -92,13 +97,57 @@ class HomeView extends Component {
 
         if(pastevents && pastevents != undefined){
             pastevents.map((item) =>{
+                
+                let default_rating=0;
+                if(item.evaluation=="ONE")
+                {
+                    default_rating=1;
+                }
+                if(item.evaluation=="TWO")
+                {
+                    default_rating=2;
+                }
+                if(item.evaluation=="THREE")
+                {
+                    default_rating=3;
+                }
+                if(item.evaluation=="FOUR")
+                {
+                    default_rating=4;
+                }
+                if(item.evaluation=="FIVE")
+                {
+                    default_rating=5;
+                }
+
+                let React_Native_Rating_Bar = [];
+                //Array to hold the filled or empty Stars
+                for (var i = 1; i <= 5; i++) {
+                    React_Native_Rating_Bar.push(
+                        <TouchableOpacity
+                        activeOpacity={0.7}
+                        key={i}
+                        >
+                        <Image
+                            style={Homestyles.StarImage}
+                            source={
+                            i <= default_rating
+                                ? { uri: this.Star }
+                                : { uri: this.Star_With_Border }
+                            }
+                        />
+                        </TouchableOpacity>
+                    );
+                }
+
                 pasteventsArr.push(
                     <View key={item.id} style={Homestyles.WhiteBox}>
                         <Text style={Homestyles.LastEventText}>{this.getParsedTime(item.event.startTime)} {this.getParsedDate(item.event.startTime)}{'\n'}
                         {item.event.name}{'\n'}
                             Arrive time : {this.getParsedTime(item.customerArrivalTime)}</Text>
                         <View style={Homestyles.RatingBox}>
-                            <Rating
+                            {React_Native_Rating_Bar}
+                            {/* <Rating
                                 type='custom'
                                 ratingImage={WATER_IMAGE}
                                 ratingColor='#c5353f'
@@ -107,7 +156,7 @@ class HomeView extends Component {
                                 imageSize={18}
                                 onFinishRating={this.ratingCompleted}
                                 style={{ paddingVertical: 8 }}
-                            />
+                            /> */}
                         </View>
                         <Text style={Homestyles.LastEventText}>{item.observation}</Text>
                     </View>
@@ -116,7 +165,7 @@ class HomeView extends Component {
             });
         }
         const image = require('../../assets/img/img_loginback.png');
-        const WATER_IMAGE = require('../../assets/img/water.png')
+        const WATER_IMAGE = require('../../assets/img/water.png');
 
         return (
             <View style={Homestyles.container}>

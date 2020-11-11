@@ -374,7 +374,7 @@ const RNApp = createDrawerNavigator(
 
             </View>
         ),
-        initialRouteName: 'Payments',
+        initialRouteName: 'Home',
         draweOpenRoute: 'DrawerOpen',
         drawerCloseRoute: 'DrawerClose',
         drawerToggleRoute: 'DrawerToggle',
