@@ -37,7 +37,7 @@ function* loadEventDetailAsync(action) {
   //how to call api
   const response = yield call(loadEventDetail, action);
   // console.log(action);
-  console.log(response);
+  //console.log(response);
   if (response) {
       yield put(eventActions.onEventdetailLoadedResponse(response));
       yield put(loginActions.disableLoader({}));

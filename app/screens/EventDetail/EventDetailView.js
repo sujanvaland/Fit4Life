@@ -71,8 +71,6 @@ class EventDetailView extends Component {
         if (eventdetail) {
         eventdata = eventdetail.length > 0 ? eventdetail[0] : {};
         }
-
-        console.log(eventdata);
         
         const image = require('../../assets/img/img_loginback.png');
         const WATER_IMAGE = require('../../assets/img/water.png');
