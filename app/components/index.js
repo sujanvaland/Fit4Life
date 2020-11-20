@@ -6,3 +6,4 @@ export * from "./ButtonElement";
 export * from './OverlayActivityIndicator';
 export * from "./PhoneTextBoxElement";
 export * from "./TextBoxElementChangepass";
+export * from "./CustomDrawerComponent";

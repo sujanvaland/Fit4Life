@@ -44,4 +44,8 @@ export function navigateToCordinatorDetailEvent(params) {
     NavigationService.navigate('CordinatorDetailEvent', params);
 }
 
+export function navigateToEventDetail(params) {
+    NavigationService.navigate('EventDetail', params);
+}
+
 

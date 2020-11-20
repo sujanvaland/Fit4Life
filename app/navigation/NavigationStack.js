@@ -7,6 +7,7 @@ const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window'
 import AsyncStorage from '@react-native-community/async-storage';
 import NavStyles from './NavigationStyle';
 import { HeaderComponent } from 'app/components';
+import { CustomDrawerComponent } from 'app/components';
 
 
 
@@ -27,8 +28,25 @@ import AddHealthProfile from 'app/screens/AddHealthProfile';
 import CordinatorFeed from 'app/screens/CordinatorFeed';
 import CustomerDetailEvent from 'app/screens/CustomerDetailEvent';
 import CordinatorDetailEvent from 'app/screens/CordinatorDetailEvent';
+import EventDetail from 'app/screens/EventDetail';
 
-
+const customDrawer = (props) => (
+    <View style={NavStyles.LeftMenuarea}>
+        <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }} style={NavStyles.SafeAeaMenu}>
+            <View style={NavStyles.UserArea}>
+                <View style={NavStyles.ProfilePic}>
+                    <Image source={require('../assets/img/img_avtar.jpg')} resizeMode="contain" style={NavStyles.PrifileImage} />
+                </View>
+                <Text style={NavStyles.UserName}>John Smith</Text>
+                <Text style={NavStyles.Location}>San Francisco, CA</Text>
+            </View>
+            <View>
+                <DrawerItems {...props} />
+                <CustomDrawerComponent />
+            </View>
+        </SafeAreaView>
+    </View>
+);
 
 
 const LoginApp = createStackNavigator({
@@ -224,6 +242,20 @@ const ChangePasswordApp = createStackNavigator({
     },
 });
 
+const EventDetailApp = createStackNavigator({
+    EventDetail: {
+        screen: EventDetail,
+        navigationOptions: ({ navigation }) => {
+            return {
+                header: () => (
+                    <HeaderComponent navigation={navigation} backbutton={false} menu={true} pagetitle={true} title="Event Detail" user={true} />
+                ),
+                gestureEnabled: true,
+            };
+        },
+    },
+});
+
 const RNApp = createDrawerNavigator(
     {
         Login: {
@@ -255,10 +287,7 @@ const RNApp = createDrawerNavigator(
         MyProfile: {
             screen: MyProfileApp,
             navigationOptions: {
-                drawerLabel: 'My Profile',
-                drawerIcon: () => (
-                    <Image source={require('../assets/img/icon_myprofile_menu.png')} resizeMode="contain" style={NavigationStyles.MenuIcon} />
-                ),
+                drawerLabel: () => null,
             },
         },
         Calendar: {
@@ -307,8 +336,6 @@ const RNApp = createDrawerNavigator(
                 ),
             },
         },
-
-
         Contracts: {
             screen: ContractsApp,
             navigationOptions: {
@@ -325,56 +352,26 @@ const RNApp = createDrawerNavigator(
                 ),
             },
         },
-        ChangePassword: {
-            screen: ChangePasswordApp,
+        // ChangePassword: {
+        //     screen: ChangePasswordApp,
+        //     navigationOptions: {
+        //         drawerLabel: 'Change Password',
+        //         drawerIcon: () => (
+        //             <Image source={require('../assets/img/icon_changepass.png')} resizeMode="contain" style={NavigationStyles.MenuIcon} />
+        //         ),
+        //     },
+        // },
+        EventDetail: {
+            screen: EventDetailApp,
             navigationOptions: {
-                drawerLabel: 'Change Password',
-                drawerIcon: () => (
-                    <Image source={require('../assets/img/icon_changepass.png')} resizeMode="contain" style={NavigationStyles.MenuIcon} />
-                ),
+                drawerLabel: () => null,
             },
-        }
+        },
     },
 
     {
-        contentComponent: (props) => (
-            <View style={NavStyles.LeftMenuarea}>
-
-                <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }} style={NavStyles.SafeAeaMenu}>
-                    <View style={NavStyles.UserArea}>
-                        <View style={NavStyles.ProfilePic}>
-                            <Image source={require('../assets/img/img_avtar.jpg')} resizeMode="contain" style={NavStyles.PrifileImage} />
-                        </View>
-                        <Text style={NavStyles.UserName}>John Smith</Text>
-                        <Text style={NavStyles.Location}>San Francisco, CA</Text>
-                    </View>
-
-                    <DrawerItems {...props} />
-                    <TouchableOpacity onPress={() =>
-                        Alert.alert(
-                            'Log out',
-                            'Do you want to logout?',
-                            [
-                                { text: 'Cancel', onPress: () => { return null } },
-                                {
-                                    text: 'Confirm', onPress: () => {
-                                        AsyncStorage.clear();
-                                        props.navigation.navigate('Login')
-                                    }
-                                },
-                            ],
-                            { cancelable: false }
-                        )
-                    } style={NavStyles.LogoutBtn}>
-
-                        <Image source={require('../assets/img/icon_logoutmenu.png')} resizeMode="contain" style={NavStyles.LogoutMenuIcon} />
-                        <Text style={NavStyles.LogoutBtnText}>Logout</Text>
-                    </TouchableOpacity>
-                </SafeAreaView>
-
-            </View>
-        ),
         initialRouteName: 'Home',
+        contentComponent: customDrawer,
         draweOpenRoute: 'DrawerOpen',
         drawerCloseRoute: 'DrawerClose',
         drawerToggleRoute: 'DrawerToggle',
@@ -397,19 +394,16 @@ const RNApp = createDrawerNavigator(
 
 export default createAppContainer(
     createSwitchNavigator(
-        {
-            //AuthLoading: AuthLoadingScreen,
-            App: RNApp,
-            initialRouteName: 'Contracts',
-            //  Auth: LoginApp,
-        },
-        //  {
-        // initialRouteName: 'AuthLoading',
-        //  initialRouteName: 'Contracts',
-        // }
+      {
+        AuthLoading: AuthLoadingScreen,
+        App: RNApp,
+        Auth: LoginApp,
+      },
+      {
+        initialRouteName: 'AuthLoading',
+      }
     )
-);
-
+  );
 
 const NavigationStyles = StyleSheet.create({
     UserName: {
@@ -430,9 +424,5 @@ const NavigationStyles = StyleSheet.create({
         borderColor: 'black',
         margin: 0,
     },
-
-
-
-
 });
 

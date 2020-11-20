@@ -36,14 +36,10 @@ class HomeView extends Component {
 
     }
 
-    navigateToAirVelocity = (id) => {
-        // console.log(id);
-        navigationActions.navigateToAirVelocity(id);
+    navigateToEventDetail = (obj) => {
+        this.props.EventDetail(obj);
     };
 
-    navigateToAboutus = () => {
-        navigationActions.navigateToAboutus();
-    }
     ratingCompleted(rating) {
         console.log("Rating is: " + rating)
     }
@@ -86,7 +82,7 @@ class HomeView extends Component {
                         <Text style={Homestyles.EventTitle}>{item.event.name}</Text>
                         <Text style={Homestyles.EventLocation}>Coordinator: {item.event.coordinator.firstName} {item.event.coordinator.lastName}</Text>
                         <View style={Homestyles.RedButtonBox}>
-                            <TouchableOpacity style={Homestyles.RedButton}>
+                            <TouchableOpacity style={Homestyles.RedButton} onPress={() => this.navigateToEventDetail({ eventid: item.id })}>
                                 <Text style={Homestyles.BtnText}>Detail</Text>
                             </TouchableOpacity>
                         </View>

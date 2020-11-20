@@ -37,4 +37,17 @@ export const eventReducer = createReducer(initialState, {
         };
     },
 
+    [types.EVENTDETAILLOADED_RESPONSE](state, action) {
+        return {
+            ...state,
+            eventdetail: action.response
+        };
+    },
+
+    [types.FAILEDLOADINGEVENTDETAIL_RESPONSE](state) {
+        return {
+            ...state
+        };
+    },
+
 });

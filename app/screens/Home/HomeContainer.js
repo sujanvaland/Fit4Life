@@ -12,6 +12,10 @@ class HomeContainer extends Component {
         super(props);
     }
 
+    navigateToEventDetail=(obj)=>{
+      navigationActions.navigateToEventDetail(obj);
+    }
+
     // define a separate function to get triggered on focus
     async onFocusFunction () {
         // messaging().getToken().then((token) => {
@@ -60,7 +64,7 @@ class HomeContainer extends Component {
     // }
 
     render() {
-        return <HomeView {...this.props} />;
+        return <HomeView {...this.props} EventDetail={this.navigateToEventDetail}/>;
     }
 }
 

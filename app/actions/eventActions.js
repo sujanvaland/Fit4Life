@@ -41,3 +41,25 @@ export function ongetPastEventsFailedResponse(response) {
         response
     };
 }
+
+export function loadEventDetailRequest(eventid) {
+    
+    return {
+        type: types.LOADEVENTDETAIL_REQUEST,
+        eventid
+    };
+}
+
+export function onEventdetailLoadedResponse(response) {
+    return {
+        type: types.EVENTDETAILLOADED_RESPONSE,
+        response
+    };
+}
+
+export function FailedLoadingEventDetail(response) {
+    return {
+        type: types.FAILEDLOADINGEVENTDETAIL_RESPONSE,
+        response
+    };
+}

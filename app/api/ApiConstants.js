@@ -8,6 +8,7 @@ const ApiConstants = {
     LOGINPATH: 'authenticate',
     ACCOUNTDETAIL:'account',
     EVENTLIST: 'event-attendances',
+    EVENT_DETAIL: 'event-attendances',
 
     // Update before build
     BUILDNO: "b01",

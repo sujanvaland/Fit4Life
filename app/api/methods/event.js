@@ -26,3 +26,13 @@ export  function getPastEvents(action) {
         null
     );
 }
+
+export function loadEventDetail(action) {
+    
+    return Api(
+        ApiConstants.EVENT_DETAIL+"?id.equals="+action.eventid,
+        null,
+        'get',
+        null
+    );
+}
