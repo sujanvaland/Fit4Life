@@ -42,12 +42,38 @@ class CustomerDetailEventView extends Component {
         console.log("Rating is: " + rating)
     }
 
+    getParsedDate(strDate) {//get date formate
+        if (strDate != "") {
+          let month_names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          var strSplitDate = String(strDate).split('T');
+          var dateArray = strSplitDate[0].split('-');
+          let monthint = parseInt(dateArray[1]);
+          let date = month_names[monthint - 1] + " " + dateArray[2] + ", " + dateArray[0];
+          return date;
+        }
+        return "";
+      }
+
+    getParsedTime(strDate) {//get date formate
+        if (strDate != "") {
+          var strSplitTime = String(strDate).split('T');
+          var TimeArray = strSplitTime[1];
+          var newstrSplitTime = String(TimeArray).split('Z');
+          var newtimeArray = newstrSplitTime[0];
+          return newtimeArray;
+        }
+        return "";
+      }
+
     render() {
 
-        let CustomerDetailEventSer = [];
-        if (this.props.Services) {
-            CustomerDetailEventSer = this.props.Services;
+        let { loading, customerEventDetail } = this.props;
+        let customereventdata = {};
+        if (customerEventDetail) {
+            customereventdata = customerEventDetail.length > 0 ? customerEventDetail[0] : {};
         }
+
+
         const image = require('../../assets/img/img_loginback.png');
         const WATER_IMAGE = require('../../assets/img/water.png')
 
@@ -75,9 +101,12 @@ class CustomerDetailEventView extends Component {
                                 <View style={[CustomerDetailEventstyles.InnerTitle, CustomerDetailEventstyles.MarTopzero]}>
                                     <View style={CustomerDetailEventstyles.CustomerDetailEventLeft}>
                                         <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={CustomerDetailEventstyles.InnerTitleIcon} />
-                                        <Text style={CustomerDetailEventstyles.InnerTitleText}>Running</Text>
+                                        {
+                                            customereventdata.name &&
+                                            <Text style={CustomerDetailEventstyles.InnerTitleText}>{customereventdata.name}</Text>
+                                        }
                                     </View>
-                                    <Text style={CustomerDetailEventstyles.ResultText}>14:30 06/04/2020</Text>
+                                    <Text style={CustomerDetailEventstyles.ResultText}>{this.getParsedTime(customereventdata.startTime)} {this.getParsedDate(customereventdata.startTime)}</Text>
                                 </View>
 
                                 <View style={[CustomerDetailEventstyles.InnerTitle, CustomerDetailEventstyles.MarTopzero]}>

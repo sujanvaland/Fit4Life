@@ -7,8 +7,11 @@ const ApiConstants = {
     //API PATH
     LOGINPATH: 'authenticate',
     ACCOUNTDETAIL:'account',
+    UPCOMING_EVENTLIST: 'events',
     EVENTLIST: 'event-attendances',
-    EVENT_DETAIL: 'event-attendances',
+    CUSTOMEREVENTDETAIL: 'events',
+    EVALUATEEVENT:'event-attendances/evaluate',
+    
 
     // Update before build
     BUILDNO: "b01",

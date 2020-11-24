@@ -5,7 +5,7 @@ import { takeEvery, all } from 'redux-saga/effects';
 import * as types from '../actions/types';
 import { loginAsync } from './loginSaga';
 import { getAccountDetailAsync,updatePersonalDetailAsync,updateDeviceTokenAsync,changePasswordAsync, loadprofileimageAsync } from './accountSaga';
-import { getUpcomingEventsAsync, getPastEventsAsync, loadEventDetailAsync } from './eventSaga';
+import { getUpcomingEventsAsync, getPastEventsAsync, loadcustomereventdetailAsync, sendFeedbackAsync} from './eventSaga';
 
 export default function* watch() {
     yield all([takeEvery(types.LOGIN_REQUEST, loginAsync)]);
@@ -20,5 +20,6 @@ export default function* watch() {
     //Event Saga
     yield all([takeEvery(types.GETUPCOMINGEVENTS_REQUEST, getUpcomingEventsAsync)]);
     yield all([takeEvery(types.GETPASTEVENTS_REQUEST, getPastEventsAsync)]);
-    yield all([takeEvery(types.LOADEVENTDETAIL_REQUEST, loadEventDetailAsync)]);
+    yield all([takeEvery(types.LOADCUSTOMEREVENTDETAIL_REQUEST, loadcustomereventdetailAsync)]);
+    yield all([takeEvery(types.SENDFEEDBACK_REQUEST, sendFeedbackAsync)]);
 }

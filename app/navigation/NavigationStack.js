@@ -28,7 +28,6 @@ import AddHealthProfile from 'app/screens/AddHealthProfile';
 import CordinatorFeed from 'app/screens/CordinatorFeed';
 import CustomerDetailEvent from 'app/screens/CustomerDetailEvent';
 import CordinatorDetailEvent from 'app/screens/CordinatorDetailEvent';
-import EventDetail from 'app/screens/EventDetail';
 
 const customDrawer = (props) => (
     <View style={NavStyles.LeftMenuarea}>
@@ -242,20 +241,6 @@ const ChangePasswordApp = createStackNavigator({
     },
 });
 
-const EventDetailApp = createStackNavigator({
-    EventDetail: {
-        screen: EventDetail,
-        navigationOptions: ({ navigation }) => {
-            return {
-                header: () => (
-                    <HeaderComponent navigation={navigation} backbutton={false} menu={true} pagetitle={true} title="Event Detail" user={true} />
-                ),
-                gestureEnabled: true,
-            };
-        },
-    },
-});
-
 const RNApp = createDrawerNavigator(
     {
         Login: {
@@ -360,13 +345,7 @@ const RNApp = createDrawerNavigator(
         //             <Image source={require('../assets/img/icon_changepass.png')} resizeMode="contain" style={NavigationStyles.MenuIcon} />
         //         ),
         //     },
-        // },
-        EventDetail: {
-            screen: EventDetailApp,
-            navigationOptions: {
-                drawerLabel: () => null,
-            },
-        },
+        // }
     },
 
     {

@@ -214,6 +214,88 @@ const Homestyles = StyleSheet.create({
         width: 18,
         height: 18,
         resizeMode: 'cover',
+    },
+    modalDocument: {
+        backgroundColor: color.COLOR_WHITE,
+        borderRadius: viewportWidth * 0.018,
+        marginVertical: viewportWidth * 0.1
+    },
+    titleModal: {
+        paddingTop: viewportWidth * 0.04,
+        paddingLeft: viewportWidth * 0.04,
+        paddingBottom: viewportWidth * 0.02
+    },
+    formSpace: {
+        paddingHorizontal: viewportWidth * 0.02
+    },
+    MainContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingTop: Platform.OS === 'ios' ? 20 : 0,
+    },
+    textStyle: {
+        textAlign: 'center',
+        fontSize: 23,
+        color: '#000',
+        marginTop: 15,
+    },
+    textStyleSmall: {
+        textAlign: 'center',
+        fontSize: 16,
+        color: '#000',
+        marginTop: 15,
+    },
+    childView: {
+        justifyContent: 'center',
+        flexDirection: 'row',
+        marginTop: 30,
+    },
+    button: {
+        justifyContent: 'center',
+        flexDirection: 'row',
+        marginTop: 30,
+        padding: 15,
+        backgroundColor: '#8ad24e',
+    },
+    StarImageforRate: {
+        width: 40,
+        height: 40,
+        resizeMode: 'cover',
+    },
+    BorderGrey: {
+        borderWidth: 1,
+        borderColor: '#cccccc'
+    },
+    formInput: {
+        paddingHorizontal: 10,
+    },
+    BorderRed: {
+        borderWidth: 1,
+        borderColor: '#ff0000'
+    },
+    pad15: {
+        paddingHorizontal: 15,
+        marginBottom: 20,
+    },
+    ButtonMain: {
+        width: '100%',
+        textAlign: 'center',
+        backgroundColor: color.COLOR_DARKBLUE,
+        paddingVertical: viewportWidth * 0.035,
+        marginTop: viewportWidth * 0.01,
+    },
+    resetText: {
+        color: color.COLOR_WHITE,
+        width: '100%',
+        textAlign: 'center'
+    },
+    ButtonMainBlack: {
+        width: '100%',
+        textAlign: 'center',
+        backgroundColor: color.COLOR_BLACK,
+        paddingVertical: viewportWidth * 0.035,
+        marginTop: viewportWidth * 0.01,
     }
 
 });

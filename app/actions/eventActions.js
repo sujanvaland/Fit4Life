@@ -42,24 +42,45 @@ export function ongetPastEventsFailedResponse(response) {
     };
 }
 
-export function loadEventDetailRequest(eventid) {
-    
+export function loadCustomerEventDetailRequest(eventid) {
     return {
-        type: types.LOADEVENTDETAIL_REQUEST,
+        type: types.LOADCUSTOMEREVENTDETAIL_REQUEST,
         eventid
     };
 }
 
-export function onEventdetailLoadedResponse(response) {
+export function onCustomerEventDetailLoadedResponse(response) {
     return {
-        type: types.EVENTDETAILLOADED_RESPONSE,
+        type: types.CUSTOMEREVENTDETAILLOADED_RESPONSE,
         response
     };
 }
 
-export function FailedLoadingEventDetail(response) {
+export function FailedLoadingCustomerEventDetail(response) {
     return {
-        type: types.FAILEDLOADINGEVENTDETAIL_RESPONSE,
+        type: types.FAILEDLOADINGCUSTOMEREVENTDETAIL_RESPONSE,
         response
+    };
+}
+
+//Send Feedback
+export function sendFeedback(action,eventAttendanceID) {
+    return {
+        type: types.SENDFEEDBACK_REQUEST,
+        action,
+        eventAttendanceID
+    };
+}
+
+export function sendFeedbackResponse(data) {
+    return {
+        type: types.SENDFEEDBACK_RESPONSE,
+        data
+    };
+}
+
+export function sendFeedbackFailed() {
+    return {
+        type: types.SENDFEEDBACK_FAILED
     };
 }

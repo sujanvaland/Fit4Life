@@ -37,17 +37,28 @@ export const eventReducer = createReducer(initialState, {
         };
     },
 
-    [types.EVENTDETAILLOADED_RESPONSE](state, action) {
+    [types.CUSTOMEREVENTDETAILLOADED_RESPONSE](state,action) {
         return {
             ...state,
-            eventdetail: action.response
+            customereventdetail:action.response
         };
     },
 
-    [types.FAILEDLOADINGEVENTDETAIL_RESPONSE](state) {
+    [types.FAILEDLOADINGCUSTOMEREVENTDETAIL_RESPONSE](state) {
         return {
             ...state
         };
     },
 
+    // Send Feedback
+    [types.SENDFEEDBACK_FAILED](state) {
+        return {
+            ...state
+        };
+    },
+    [types.SENDFEEDBACK_RESPONSE](state,action) {
+        return {
+            ...state
+        };
+    },
 });

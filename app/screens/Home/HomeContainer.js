@@ -12,10 +12,6 @@ class HomeContainer extends Component {
         super(props);
     }
 
-    navigateToEventDetail=(obj)=>{
-      navigationActions.navigateToEventDetail(obj);
-    }
-
     // define a separate function to get triggered on focus
     async onFocusFunction () {
         // messaging().getToken().then((token) => {
@@ -28,8 +24,12 @@ class HomeContainer extends Component {
         
         let userId=this.props.accountdetail.id;
         const { getUpcomingEvents, getPastEvents } = this.props;
-        getUpcomingEvents(userId);
-        getPastEvents(userId);
+        if(userId > 0)
+        {
+          getUpcomingEvents(userId);
+          getPastEvents(userId);
+        }
+        
       }
   
       // and don't forget to remove the listener
@@ -55,6 +55,16 @@ class HomeContainer extends Component {
             this.onFocusFunction();
           })
     } 
+
+    // static getDerivedStateFromProps(props, state){
+    //   let userId=props.accountdetail.id;
+    //   const { getUpcomingEvents, getPastEvents } = props;
+    //   if(userId > 0)
+    //   {
+    //     getUpcomingEvents(userId);
+    //     getPastEvents(userId);
+    //   }
+    // }
   
     // _onChangeToken = async (token) => {
     //   await AsyncStorage.setItem("DEVICE_TOKEN", token);
@@ -64,7 +74,7 @@ class HomeContainer extends Component {
     // }
 
     render() {
-        return <HomeView {...this.props} EventDetail={this.navigateToEventDetail}/>;
+        return <HomeView {...this.props}/>;
     }
 }
 
@@ -81,7 +91,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         getUpcomingEvents: (userId) => dispatch(eventActions.getUpcomingEvents(userId)),
-        getPastEvents: (userId) => dispatch(eventActions.getPastEvents(userId))
+        getPastEvents: (userId) => dispatch(eventActions.getPastEvents(userId)),
+        sendFeedback: (feedbacktosend,eventAttendanceID) => dispatch(eventActions.sendFeedback(feedbacktosend,eventAttendanceID))
     };
 }
 export default connect(

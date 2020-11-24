@@ -1,7 +1,7 @@
 import { put, call, select } from 'redux-saga/effects';
 import * as loginActions from 'app/actions/loginActions';
 import * as eventActions from 'app/actions/eventActions';
-import { getUpcomingEvents, getPastEvents, loadEventDetail } from 'app/api/methods/event';
+import { getUpcomingEvents, getPastEvents, loadCustomerEventDetail, sendFeedback} from 'app/api/methods/event';
 import * as navigationActions from 'app/actions/navigationActions';
 import { Alert } from 'react-native';
 
@@ -31,20 +31,35 @@ function* getPastEventsAsync(action) {
   }
 }
 
-function* loadEventDetailAsync(action) {
-
+function* loadcustomereventdetailAsync(action) {
+    
   yield put(loginActions.enableLoader());
   //how to call api
-  const response = yield call(loadEventDetail, action);
-  // console.log(action);
+  const response = yield call(loadCustomerEventDetail,action);
   //console.log(response);
   if (response) {
-      yield put(eventActions.onEventdetailLoadedResponse(response));
+    yield put(eventActions.onCustomerEventDetailLoadedResponse(response));
       yield put(loginActions.disableLoader({}));
   } else {
-      yield put(eventActions.FailedLoadingEventDetail(response));
+      yield put(eventActions.FailedLoadingCustomerEventDetail(response));
       yield put(loginActions.disableLoader({}));
   }
 }
 
-export { getUpcomingEventsAsync, getPastEventsAsync, loadEventDetailAsync }
+// Send Feedback
+function* sendFeedbackAsync(action) {
+  yield put(loginActions.enableLoader());
+  //how to call api
+  let response = yield call(sendFeedback,action);
+  //console.log(response);
+  if (response) {
+      navigationActions.navigateToHome();
+      yield put(eventActions.sendFeedbackResponse(response));
+      yield put(loginActions.disableLoader({}));
+  } else {
+      yield put(eventActions.sendFeedbackFailed(response));
+      yield put(loginActions.disableLoader({}));
+  }
+}
+
+export { getUpcomingEventsAsync, getPastEventsAsync, loadcustomereventdetailAsync, sendFeedbackAsync}
