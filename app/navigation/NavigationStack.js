@@ -286,55 +286,39 @@ const RNApp = createDrawerNavigator(
         HealthProfile: {
             screen: HealthProfileApp,
             navigationOptions: {
-                drawerLabel: 'Health Profile',
-                drawerIcon: () => (
-                    <Image source={require('../assets/img/icon_healthprofile_menu.png')} resizeMode="contain" style={NavigationStyles.MenuIcon} />
-                ),
+                drawerLabel: () => null,
             },
         },
         CustomerDetailEvent: {
             screen: CustomerDetailEventApp,
             navigationOptions: {
-                drawerLabel: 'Customer Detail Event',
-                drawerIcon: () => (
-                    <Image source={require('../assets/img/icon_healthprofile_menu.png')} resizeMode="contain" style={NavigationStyles.MenuIcon} />
-                ),
+                drawerLabel: () => null,
             },
         },
 
         CordinatorDetailEvent: {
             screen: CordinatorDetailEventdApp,
             navigationOptions: {
-                drawerLabel: 'Cordinator Detail Event',
-                drawerIcon: () => (
-                    <Image source={require('../assets/img/icon_healthprofile_menu.png')} resizeMode="contain" style={NavigationStyles.MenuIcon} />
-                ),
+                drawerLabel: () => null,
             },
         },
 
         CordinatorFeed: {
             screen: CordinatorFeedApp,
             navigationOptions: {
-                drawerLabel: 'Cordinator Feed',
-                drawerIcon: () => (
-                    <Image source={require('../assets/img/icon_healthprofile_menu.png')} resizeMode="contain" style={NavigationStyles.MenuIcon} />
-                ),
+                drawerLabel: () => null,
             },
         },
         Contracts: {
             screen: ContractsApp,
             navigationOptions: {
-                drawerIcon: () => (
-                    <Image source={require('../assets/img/icon_contracts_menu.png')} resizeMode="contain" style={NavigationStyles.MenuIcon} />
-                ),
+                drawerLabel: () => null,
             },
         },
         Payments: {
             screen: PaymentsApp,
             navigationOptions: {
-                drawerIcon: () => (
-                    <Image source={require('../assets/img/icon_peyments_menu.png')} resizeMode="contain" style={NavigationStyles.MenuIcon} />
-                ),
+                drawerLabel: () => null,
             },
         },
         // ChangePassword: {

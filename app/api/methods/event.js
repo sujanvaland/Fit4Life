@@ -36,6 +36,15 @@ export function loadCustomerEventDetail(action) {
     );
   }
 
+export function loadEventAttendances(action) {
+    return Api(
+        ApiConstants.EVENTATTENDANCES + '?eventId.equals=' + action.eventid,
+        null,
+        'get',
+        null
+    );
+}
+
 export function sendFeedback(action) {
     let default_rating="";
     if(action.action.default_rating==1)
@@ -67,4 +76,13 @@ export function sendFeedback(action) {
       'post',
       null
   );
-  }
+}
+
+export function loadSubscribeNow(action) {
+    return Api(
+        ApiConstants.SUBSCRIBENOW + '/' + action.EventId,
+        null,
+        'post',
+        null
+    );
+}

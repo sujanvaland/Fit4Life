@@ -63,6 +63,27 @@ export function FailedLoadingCustomerEventDetail(response) {
     };
 }
 
+export function loadEventAttendancesRequest(eventid) {
+    return {
+        type: types.LOADEVENTATTENDANCES_REQUEST,
+        eventid
+    };
+}
+
+export function onEventAttendancesLoadedResponse(response) {
+    return {
+        type: types.EVENTATTENDANCESLOADED_RESPONSE,
+        response
+    };
+}
+
+export function FailedLoadingEventAttendances(response) {
+    return {
+        type: types.FAILEDLOADINGEVENTATTENDANCES_RESPONSE,
+        response
+    };
+}
+
 //Send Feedback
 export function sendFeedback(action,eventAttendanceID) {
     return {
@@ -84,3 +105,28 @@ export function sendFeedbackFailed() {
         type: types.SENDFEEDBACK_FAILED
     };
 }
+
+// Subscribe Now Request Response Start
+
+export function loadSubscribeNowRequest(EventId) {
+    return {
+        type: types.LOADSUBSCRIBENOW_REQUEST,
+        EventId
+    };
+}
+
+export function onSubscribeNowLoadedResponse(response) {
+    return {
+        type: types.SUBSCRIBENOWLOADED_RESPONSE,
+        response
+    };
+}
+
+export function FailedLoadingSubscribeNow(response) {
+    return {
+        type: types.FAILEDLOADINGSUBSCRIBENOW_RESPONSE,
+        response
+    };
+}
+
+//Subscribe Now Request Response End

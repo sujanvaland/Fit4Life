@@ -11,19 +11,19 @@ class CustomerDetailEventContainer extends Component {
 
     // define a separate function to get triggered on focus
     async onFocusFunction () {
-
-        const { loadCustomerEventDetail } = this.props;
+        const { loadCustomerEventDetail, loadEventAttendances } = this.props;
         const { params } = this.props.navigation.state;
         //console.log(params);
         //const eventid = params ? params.eventid : null;
-        const eventid = 2;
+        const eventid = 6;
         loadCustomerEventDetail(eventid);
-      }
+        loadEventAttendances(eventid);
+    }
   
-      // and don't forget to remove the listener
-      componentWillUnmount () {
-        this.focusListener.remove()
-      }
+    // and don't forget to remove the listener
+    componentWillUnmount () {
+      this.focusListener.remove()
+    }
     
     async componentDidMount(){
         let currentRoute = this.props.navigation.state.routeName;
@@ -52,6 +52,7 @@ class CustomerDetailEventContainer extends Component {
 function mapStateToProps(state) {
     return {
         customerEventDetail : state.eventReducer.customereventdetail,
+        eventAttendancesList : state.eventReducer.eventattendances,
         loading: state.loadingReducer,
         login_token:state.loginReducer.login_token
     };
@@ -59,7 +60,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        loadCustomerEventDetail:(eventid) => dispatch(eventActions.loadCustomerEventDetailRequest(eventid))
+        loadCustomerEventDetail:(eventid) => dispatch(eventActions.loadCustomerEventDetailRequest(eventid)),
+        loadEventAttendances:(eventid) => dispatch(eventActions.loadEventAttendancesRequest(eventid))
     };
 }
 export default connect(

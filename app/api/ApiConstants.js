@@ -11,6 +11,8 @@ const ApiConstants = {
     EVENTLIST: 'event-attendances',
     CUSTOMEREVENTDETAIL: 'events',
     EVALUATEEVENT:'event-attendances/evaluate',
+    EVENTATTENDANCES:'event-attendances',
+    SUBSCRIBENOW:'event-attendances/suscribe',
     
 
     // Update before build

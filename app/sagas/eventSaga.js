@@ -1,7 +1,7 @@
 import { put, call, select } from 'redux-saga/effects';
 import * as loginActions from 'app/actions/loginActions';
 import * as eventActions from 'app/actions/eventActions';
-import { getUpcomingEvents, getPastEvents, loadCustomerEventDetail, sendFeedback} from 'app/api/methods/event';
+import { getUpcomingEvents, getPastEvents, loadCustomerEventDetail, loadEventAttendances, sendFeedback, loadSubscribeNow} from 'app/api/methods/event';
 import * as navigationActions from 'app/actions/navigationActions';
 import { Alert } from 'react-native';
 
@@ -46,6 +46,21 @@ function* loadcustomereventdetailAsync(action) {
   }
 }
 
+function* loadeventattendancesAsync(action) {
+    
+  yield put(loginActions.enableLoader());
+  //how to call api
+  const response = yield call(loadEventAttendances,action);
+  //console.log(response);
+  if (response) {
+    yield put(eventActions.onEventAttendancesLoadedResponse(response));
+      yield put(loginActions.disableLoader({}));
+  } else {
+      yield put(eventActions.FailedLoadingEventAttendances(response));
+      yield put(loginActions.disableLoader({}));
+  }
+}
+
 // Send Feedback
 function* sendFeedbackAsync(action) {
   yield put(loginActions.enableLoader());
@@ -62,4 +77,20 @@ function* sendFeedbackAsync(action) {
   }
 }
 
-export { getUpcomingEventsAsync, getPastEventsAsync, loadcustomereventdetailAsync, sendFeedbackAsync}
+// Subscribe Now
+function* loadsubscribenowAsync(action) {
+    
+  yield put(loginActions.enableLoader());
+  //how to call api
+  const response = yield call(loadSubscribeNow,action);
+  console.log(response);
+  if (response) {
+      yield put(eventActions.onSubscribeNowLoadedResponse(response));
+      yield put(loginActions.disableLoader({}));
+  } else {
+      yield put(eventActions.FailedLoadingSubscribeNow(response));
+      yield put(loginActions.disableLoader({}));
+  }
+}
+
+export { getUpcomingEventsAsync, getPastEventsAsync, loadcustomereventdetailAsync, loadeventattendancesAsync, sendFeedbackAsync, loadsubscribenowAsync}

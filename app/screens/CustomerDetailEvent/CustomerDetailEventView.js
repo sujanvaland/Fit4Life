@@ -16,33 +16,16 @@ class CustomerDetailEventView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            images: [
-                // require('../../assets/images/img_slide1.jpg'),
-                // require('../../assets/images/img_slide2.jpg'),
-                // require('../../assets/images/img_slide3.jpg'),
-            ]
         }
     }
 
 
     componentDidMount() {
         SplashScreen.hide();
-
     }
 
-    navigateToAirVelocity = (id) => {
-        // console.log(id);
-        navigationActions.navigateToAirVelocity(id);
-    };
-
-    navigateToAboutus = () => {
-        navigationActions.navigateToAboutus();
-    }
-    ratingCompleted(rating) {
-        console.log("Rating is: " + rating)
-    }
-
-    getParsedDate(strDate) {//get date formate
+    getParsedDate(strDate) {
+        //get date formate
         if (strDate != "") {
           let month_names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
           var strSplitDate = String(strDate).split('T');
@@ -52,7 +35,7 @@ class CustomerDetailEventView extends Component {
           return date;
         }
         return "";
-      }
+    }
 
     getParsedTime(strDate) {//get date formate
         if (strDate != "") {
@@ -67,10 +50,37 @@ class CustomerDetailEventView extends Component {
 
     render() {
 
-        let { loading, customerEventDetail } = this.props;
+        let { loading, customerEventDetail,eventAttendancesList } = this.props;
         let customereventdata = {};
+        
         if (customerEventDetail) {
             customereventdata = customerEventDetail.length > 0 ? customerEventDetail[0] : {};
+        }
+
+        let eventAttendancesListArr = [];
+        if(eventAttendancesList && eventAttendancesList != undefined && eventAttendancesList.length > 0){
+            eventAttendancesList.map((item) =>{
+                eventAttendancesListArr.push(
+                    <View key={item.id} style={CustomerDetailEventstyles.GrayBox}>
+                        <View style={CustomerDetailEventstyles.FlexGrayBox}>
+                            <Text style={CustomerDetailEventstyles.FlexGrayBoxText1}>{item.user.firstName} {item.user.lastName}</Text>
+                            <Text style={CustomerDetailEventstyles.TimerBox}>{this.getParsedTime(item.customerArrivalTime)}</Text>
+                        </View>
+
+                        {
+                            item.fileUrl !=null &&
+                            <View style={CustomerDetailEventstyles.TouchPinBox}>
+                                <TouchableOpacity style={CustomerDetailEventstyles.NewRoutineIcon}>
+                                    <Image source={require('../../assets/img/icon_touchpin.png')} resizeMode='contain' style={CustomerDetailEventstyles.TouchPin} />
+                                </TouchableOpacity>
+                                <Text style={CustomerDetailEventstyles.NewRoutine}>New Routine</Text>
+                            </View>
+                        }
+                        
+                        
+                    </View>
+                )
+            });
         }
 
 
@@ -127,64 +137,23 @@ class CustomerDetailEventView extends Component {
                                         <Text style={CustomerDetailEventstyles.InnerTitleText}>Assistants</Text>
                                     </View>
                                     <View style={CustomerDetailEventstyles.countPlus}>
-                                        <Text style={CustomerDetailEventstyles.ResultText}>5/10</Text>
+                                        <Text style={CustomerDetailEventstyles.ResultText}>{eventAttendancesListArr.length}/{customereventdata.capacity}</Text>
                                         <TouchableOpacity style={CustomerDetailEventstyles.BtnPlus} onPress={() => this.navigateToAddHealthProfile()}>
                                             <Image source={require('../../assets/img/icon_plus.png')} resizeMode="contain" style={CustomerDetailEventstyles.BtnPlusIcon} />
                                         </TouchableOpacity>
                                     </View>
                                 </View>
                             </View>
-                            <View style={CustomerDetailEventstyles.ContainerMargin}>
-                                <View style={CustomerDetailEventstyles.WhiteBox}>
-                                    <View style={CustomerDetailEventstyles.GrayBox}>
-                                        <View style={CustomerDetailEventstyles.FlexGrayBox}>
-                                            <Text style={CustomerDetailEventstyles.FlexGrayBoxText1}>John Doe</Text>
-                                        </View>
+                            {
+                                eventAttendancesListArr.length > 0 &&
+                                <View style={CustomerDetailEventstyles.ContainerMargin}>
+                                    <View style={CustomerDetailEventstyles.WhiteBox}>
+                                        {
+                                            eventAttendancesListArr
+                                        }
                                     </View>
-                                    <View style={CustomerDetailEventstyles.GrayBox}>
-                                        <View style={CustomerDetailEventstyles.FlexGrayBox}>
-                                            <Text style={CustomerDetailEventstyles.FlexGrayBoxText1}>John Doe</Text>
-                                            <Text style={CustomerDetailEventstyles.TimerBox}>15:06</Text>
-                                        </View>
-                                        <View style={CustomerDetailEventstyles.TouchPinBox}>
-                                            <TouchableOpacity style={CustomerDetailEventstyles.NewRoutineIcon}>
-                                                <Image source={require('../../assets/img/icon_touchpin.png')} resizeMode='contain' style={CustomerDetailEventstyles.TouchPin} />
-                                            </TouchableOpacity>
-                                            <Text style={CustomerDetailEventstyles.NewRoutine}>New Routine</Text>
-                                        </View>
-                                    </View>
-
-                                    <View style={CustomerDetailEventstyles.GrayBox}>
-                                        <View style={CustomerDetailEventstyles.FlexGrayBox}>
-                                            <Text style={CustomerDetailEventstyles.FlexGrayBoxText1}>Martin Doe</Text>
-                                            <Text style={CustomerDetailEventstyles.TimerBox}>15:06</Text>
-                                        </View>
-
-                                    </View>
-
-                                    <View style={CustomerDetailEventstyles.GrayBox}>
-                                        <View style={CustomerDetailEventstyles.FlexGrayBox}>
-                                            <Text style={CustomerDetailEventstyles.FlexGrayBoxText1}>Emily Doe
-
-</Text>
-                                            <Text style={CustomerDetailEventstyles.TimerBox}>15:06</Text>
-                                        </View>
-
-                                    </View>
-
-                                    <View style={CustomerDetailEventstyles.GrayBox}>
-                                        <View style={CustomerDetailEventstyles.FlexGrayBox}>
-                                            <Text style={CustomerDetailEventstyles.FlexGrayBoxText1}>Frank Doe
-
-</Text>
-                                            <Text style={CustomerDetailEventstyles.TimerBox}>15:06</Text>
-                                        </View>
-
-                                    </View>
-
                                 </View>
-                            </View>
-
+                            }
                         </View>
                     </ScrollView>
                 </ImageBackground>

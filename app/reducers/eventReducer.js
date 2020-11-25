@@ -50,6 +50,19 @@ export const eventReducer = createReducer(initialState, {
         };
     },
 
+    [types.EVENTATTENDANCESLOADED_RESPONSE](state,action) {
+        return {
+            ...state,
+            eventattendances:action.response
+        };
+    },
+
+    [types.FAILEDLOADINGEVENTATTENDANCES_RESPONSE](state) {
+        return {
+            ...state
+        };
+    },
+
     // Send Feedback
     [types.SENDFEEDBACK_FAILED](state) {
         return {
@@ -57,6 +70,21 @@ export const eventReducer = createReducer(initialState, {
         };
     },
     [types.SENDFEEDBACK_RESPONSE](state,action) {
+        return {
+            ...state
+        };
+    },
+
+    // SubscribeNow
+
+    [types.SUBSCRIBENOWLOADED_RESPONSE](state,action) {
+        return {
+            ...state,
+            subscribenow:action.response
+        };
+    },
+
+    [types.FAILEDLOADINGSUBSCRIBENOW_RESPONSE](state) {
         return {
             ...state
         };
