@@ -68,7 +68,6 @@ function* sendFeedbackAsync(action) {
   let response = yield call(sendFeedback,action);
   //console.log(response);
   if (response) {
-      navigationActions.navigateToHome();
       yield put(eventActions.sendFeedbackResponse(response));
       yield put(loginActions.disableLoader({}));
   } else {
@@ -83,8 +82,9 @@ function* loadsubscribenowAsync(action) {
   yield put(loginActions.enableLoader());
   //how to call api
   const response = yield call(loadSubscribeNow,action);
-  console.log(response);
   if (response) {
+      yield put(eventActions.getUpcomingEvents());
+      navigationActions.navigateToHome();
       yield put(eventActions.onSubscribeNowLoadedResponse(response));
       yield put(loginActions.disableLoader({}));
   } else {

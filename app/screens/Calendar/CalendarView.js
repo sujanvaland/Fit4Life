@@ -16,6 +16,7 @@ class CalendarView extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            mindate: new Date(),
             activedate: new Date()
         }
     }
@@ -128,12 +129,11 @@ class CalendarView extends Component {
                                         <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={Calendarstyles.InnerTitleIcon} />
                                         <Text style={Calendarstyles.InnerTitleText}>Calendar</Text>
                                     </View>
-
                                 </View>
 
                                 <View style={Calendarstyles.WhiteBox}>
                                     <Calendar
-                                        minDate={this.state.activedate}
+                                        minDate={this.state.mindate}
                                         disableTouchEvent={false}
                                         theme={{
                                             selectedDayBackgroundColor: '#db5059',

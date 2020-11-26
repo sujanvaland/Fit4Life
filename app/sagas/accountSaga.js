@@ -3,15 +3,19 @@ import * as loginActions from 'app/actions/loginActions';
 import * as accountActions from 'app/actions/accountActions';
 import {getAccountDetail,updatePersonalDetail,updateDeviceToken,changePassword,loadProfileImage} from 'app/api/methods/accountDetail';
 import * as navigationActions from 'app/actions/navigationActions';
+import AsyncStorage from '@react-native-community/async-storage';
 
 // Our worker Saga that loads filter
 
 function* getAccountDetailAsync(action) {
   yield put(loginActions.enableLoader());
   const response = yield call(getAccountDetail,action);
-  //console.log(response);
+  console.log(response);
   if (response.id > 0) {
       yield put(accountActions.ongetAccountDetailResponse(response));
+      _storeData("firstname",response.firstName);
+      _storeData("lastname",response.lastName);
+      _storeData("customerimage",response.imageUrl);
       yield put(loginActions.disableLoader({}));
   } else {
       yield put(accountActions.getAccountDetailFailed(response));
@@ -103,6 +107,27 @@ function* loadprofileimageAsync(action) {
       yield put(loginActions.disableLoader({}));
   }
 }
+
+const _storeData = async (key,value) => {
+  try {
+    await AsyncStorage.setItem(key, value);
+    return value;
+  } catch (error) {
+    // Error saving data
+    return null;
+  }
+};
+
+_retrieveData = async (key) => {
+  try {
+    const value = await AsyncStorage.getItem(key);
+    if (value !== null) {
+      return value
+    }
+  } catch (error) {
+    // Error retrieving data
+  }
+};
 
 export { 
   getAccountDetailAsync,

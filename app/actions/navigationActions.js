@@ -43,3 +43,7 @@ export function navigateToCustomerDetailEvent(params) {
 export function navigateToCordinatorDetailEvent(params) {
     NavigationService.navigate('CordinatorDetailEvent', params);
 }
+
+export function navigateToCalendar(params) {
+    NavigationService.navigate('Calendar', params);
+}

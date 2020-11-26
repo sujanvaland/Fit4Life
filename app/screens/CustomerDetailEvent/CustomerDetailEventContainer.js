@@ -13,9 +13,9 @@ class CustomerDetailEventContainer extends Component {
     async onFocusFunction () {
         const { loadCustomerEventDetail, loadEventAttendances } = this.props;
         const { params } = this.props.navigation.state;
-        //console.log(params);
-        //const eventid = params ? params.eventid : null;
-        const eventid = 6;
+        console.log(params);
+        const eventid = params ? params.eventid : null;
+        //const eventid = 6;
         loadCustomerEventDetail(eventid);
         loadEventAttendances(eventid);
     }

@@ -7,6 +7,7 @@ const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window'
 import AsyncStorage from '@react-native-community/async-storage';
 import NavStyles from './NavigationStyle';
 import { HeaderComponent } from 'app/components';
+import { UserAreaComponent } from 'app/components';
 import { CustomDrawerComponent } from 'app/components';
 
 
@@ -33,11 +34,7 @@ const customDrawer = (props) => (
     <View style={NavStyles.LeftMenuarea}>
         <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }} style={NavStyles.SafeAeaMenu}>
             <View style={NavStyles.UserArea}>
-                <View style={NavStyles.ProfilePic}>
-                    <Image source={require('../assets/img/img_avtar.jpg')} resizeMode="contain" style={NavStyles.PrifileImage} />
-                </View>
-                <Text style={NavStyles.UserName}>John Smith</Text>
-                <Text style={NavStyles.Location}>San Francisco, CA</Text>
+               <UserAreaComponent />
             </View>
             <View>
                 <DrawerItems {...props} />
@@ -95,12 +92,34 @@ const HomeApp = createStackNavigator({
         navigationOptions: ({ navigation }) => {
             return {
                 header: () => (
-                    <HeaderComponent navigation={navigation} user={true} menu={true} title="Fit4Life" pagetitle={true} />
+                    <HeaderComponent navigation={navigation} user={false} menu={true} title="Fit4Life" pagetitle={true} />
                 ),
                 gestureEnabled: true,
             };
         },
     },
+    CordinatorDetailEvent: {
+        screen: CordinatorDetailEvent,
+        navigationOptions: ({ navigation }) => {
+            return {
+                header: () => (
+                    <HeaderComponent navigation={navigation} backbutton={true} menu={false} pagetitle={true} title="Cordinator Event Detail" user={false} />
+                ),
+                gestureEnabled: true,
+            };
+        },
+    },
+    CustomerDetailEvent: {
+        screen: CustomerDetailEvent,
+        navigationOptions: ({ navigation }) => {
+            return {
+                header: () => (
+                    <HeaderComponent navigation={navigation} backbutton={true} menu={false} pagetitle={true} title="Customer Event Detail" user={false} />
+                ),
+                gestureEnabled: true,
+            };
+        },
+    }
 });
 
 const MyProfileApp = createStackNavigator({
@@ -109,12 +128,21 @@ const MyProfileApp = createStackNavigator({
         navigationOptions: ({ navigation }) => {
             return {
                 header: () => (
-                    <HeaderComponent navigation={navigation} user={true} menu={true} title="Fit4Life" pagetitle={true} />
+                    <HeaderComponent navigation={navigation} user={false} menu={true} title="Fit4Life" pagetitle={true} />
                 ),
                 gestureEnabled: true,
             };
         },
     },
+    ChangePassword: {
+        screen: ChangePassword,
+        navigationOptions: ({ navigation }) => {
+            return {
+                header: () => <HeaderComponent pagetitle={true} user={true} navigation={navigation} menu={true} title="Change Password" />,
+                gestureEnabled: false
+            }
+        }
+    }
 });
 
 const CalendarApp = createStackNavigator({
@@ -201,46 +229,6 @@ const CordinatorFeedApp = createStackNavigator({
     },
 });
 
-const CordinatorDetailEventdApp = createStackNavigator({
-    CordinatorDetailEvent: {
-        screen: CordinatorDetailEvent,
-        navigationOptions: ({ navigation }) => {
-            return {
-                header: () => (
-                    <HeaderComponent navigation={navigation} backbutton={false} menu={true} pagetitle={true} title="Fit4Life" user={true} />
-                ),
-                gestureEnabled: true,
-            };
-        },
-    },
-});
-
-const CustomerDetailEventApp = createStackNavigator({
-    CustomerDetailEvent: {
-        screen: CustomerDetailEvent,
-        navigationOptions: ({ navigation }) => {
-            return {
-                header: () => (
-                    <HeaderComponent navigation={navigation} backbutton={false} menu={true} pagetitle={true} title="Fit4Life" user={true} />
-                ),
-                gestureEnabled: true,
-            };
-        },
-    },
-});
-
-const ChangePasswordApp = createStackNavigator({
-    ChangePassword: {
-        screen: ChangePassword,
-        navigationOptions: ({ navigation }) => {
-            return {
-                header: () => <HeaderComponent pagetitle={true} user={true} navigation={navigation} menu={true} title="Change Password" />,
-                gestureEnabled: false
-            }
-        }
-    },
-});
-
 const RNApp = createDrawerNavigator(
     {
         Login: {
@@ -285,19 +273,6 @@ const RNApp = createDrawerNavigator(
         },
         HealthProfile: {
             screen: HealthProfileApp,
-            navigationOptions: {
-                drawerLabel: () => null,
-            },
-        },
-        CustomerDetailEvent: {
-            screen: CustomerDetailEventApp,
-            navigationOptions: {
-                drawerLabel: () => null,
-            },
-        },
-
-        CordinatorDetailEvent: {
-            screen: CordinatorDetailEventdApp,
             navigationOptions: {
                 drawerLabel: () => null,
             },

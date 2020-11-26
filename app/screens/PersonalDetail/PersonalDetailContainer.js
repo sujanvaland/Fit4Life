@@ -56,13 +56,12 @@ function mapStateToProps(state) {
       loading: state.loadingReducer,
       login_token:state.loginReducer.login_token,
       userdetail:state.loginReducer.userdetail,
-      //accountdetail : state.accountReducer.accountdetail,
-      accountdetail : [],
+      accountdetail : state.accountReducer.accountdetail
   };
 }
 function mapDispatchToProps(dispatch) {
     return {
-      onAccount: () => dispatch(accountActions.getAccountDetail()),
+      //onAccount: () => dispatch(accountActions.getAccountDetail()),
       onUpdatePersonalDetail: (personaldetail) => dispatch(accountActions.updatePersonalDetail(personaldetail))
     };
 }

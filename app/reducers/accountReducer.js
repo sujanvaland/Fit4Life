@@ -12,6 +12,10 @@ export const accountReducer = createReducer(initialState, {
     [types.GETACCOUNT_RESPONSE](state,action) {
         return {
             ...state,
+            firstname:action.response.firstName,
+            lastname:action.response.lastName,
+            email:action.response.email,
+            customerimage:action.response.imageUrl,
             accountdetail:action.response
         };
     },

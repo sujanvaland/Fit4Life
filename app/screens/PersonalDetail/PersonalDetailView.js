@@ -38,9 +38,10 @@ class PersonalDetailView extends Component {
 
   render() {
     const image = require('../../assets/img/img_loginback.png');
-    let PersonalDetailSer = [];
-    if (this.props.Services) {
-      // PersonalDetailstyles = this.props.Services;
+    const { accountdetail } = this.props;
+    let account_detail = accountdetail;
+    if (!account_detail) {
+      account_detail = {};
     }
 
     return (
@@ -50,12 +51,23 @@ class PersonalDetailView extends Component {
           <ScrollView>
             <View style={PersonalDetailstyles.InnerContainer}>
               <View style={PersonalDetailstyles.MyprofileBox}>
-                <View style={PersonalDetailstyles.ProfileBox}>
-                  <Image source={require('../../assets/img/img_avtar.jpg')} resizeMode="contain" style={PersonalDetailstyles.ProfilePic} />
-                </View>
+                {
+                    (account_detail.customerimage == '' || account_detail.customerimage == undefined) &&
+                    <View style={PersonalDetailstyles.ProfileBox}>
+                      <Image source={require('../../assets/img/img_avtar.jpg')} resizeMode="contain" style={PersonalDetailstyles.ProfilePic} />
+                    </View>
+                }
+
+                {
+                    (account_detail.customerimage != '' && account_detail.customerimage != undefined) &&
+                    <View style={PersonalDetailstyles.ProfileBox}>
+                      <Image source={require('../../assets/img/img_avtar.jpg')} resizeMode="contain" style={PersonalDetailstyles.ProfilePic} />
+                    </View>
+                }
+                
                 <View style={PersonalDetailstyles.ProfileDetail}>
-                  <Text style={[PersonalDetailstyles.NameBox, globalStyles.FontRegular]}>John Doe</Text>
-                  <Text style={[PersonalDetailstyles.LocationBox, globalStyles.FontRegular]}>San Francisco, CA</Text>
+                  <Text style={[PersonalDetailstyles.NameBox, globalStyles.FontRegular]}>{account_detail.firstName} {account_detail.lastName}</Text>
+                  {/* <Text style={[PersonalDetailstyles.LocationBox, globalStyles.FontRegular]}>San Francisco, CA</Text> */}
                 </View>
 
                 <TouchableOpacity style={PersonalDetailstyles.btnEditProfile}>
@@ -69,7 +81,7 @@ class PersonalDetailView extends Component {
                   </TouchableOpacity>
                   <View style={PersonalDetailstyles.ProfileContactdetal}>
                     <Image source={require('../../assets/img/icon_email.png')} resizeMode="contain" style={PersonalDetailstyles.IconAddress} />
-                    <Text style={[PersonalDetailstyles.EmailText, globalStyles.FontRegular]}>John.doe@gmail.com</Text>
+                    <Text style={[PersonalDetailstyles.EmailText, globalStyles.FontRegular]}>{account_detail.email}</Text>
                   </View>
                   <View style={PersonalDetailstyles.ProfileContactdetal}>
                     <Image source={require('../../assets/img/icon_phone.png')} resizeMode="contain" style={PersonalDetailstyles.IconAddress} />
@@ -86,45 +98,50 @@ class PersonalDetailView extends Component {
                   </View>
                 </View>
               </View>
-              <View style={[PersonalDetailstyles.FullWidthTitleBack]}>
-                <View style={[PersonalDetailstyles.InnerTitle, PersonalDetailstyles.MarTopzero]}>
-                  <View style={PersonalDetailstyles.CustomerFeedLeft}>
-                    <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={PersonalDetailstyles.InnerTitleIcon} />
-                    <Text style={PersonalDetailstyles.InnerTitleText}>Health Profile</Text>
-                  </View>
-                  <TouchableOpacity style={PersonalDetailstyles.AddBtn}>
-                    <Text style={PersonalDetailstyles.AddBtnText}>+ Add</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-              <View style={PersonalDetailstyles.Spacer}></View>
-              <View style={[PersonalDetailstyles.FullWidthTitleBack, PersonalDetailstyles.PadTop5]}>
-                <View style={[PersonalDetailstyles.InnerTitle, PersonalDetailstyles.MarTopzero]}>
-                  <View style={PersonalDetailstyles.CustomerFeedLeft}>
-
-                    <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={PersonalDetailstyles.InnerTitleIcon} />
-                    <View>
-                      <Text style={[PersonalDetailstyles.InnerTitleText, PersonalDetailstyles.FullwidthBox]}>Commnets</Text>
-                      <Text style={[PersonalDetailstyles.ResultText, PersonalDetailstyles.Fnt12]}>211 Result</Text>
+              { accountdetail.authorities[0]=="ROLE_CORDINATOR" &&
+                <View style={[PersonalDetailstyles.FullWidthTitleBack]}>
+                  <View style={[PersonalDetailstyles.InnerTitle, PersonalDetailstyles.MarTopzero]}>
+                    <View style={PersonalDetailstyles.CustomerFeedLeft}>
+                      <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={PersonalDetailstyles.InnerTitleIcon} />
+                      <Text style={PersonalDetailstyles.InnerTitleText}>Health Profile</Text>
                     </View>
+                    <TouchableOpacity style={PersonalDetailstyles.AddBtn}>
+                      <Text style={PersonalDetailstyles.AddBtnText}>+ Add</Text>
+                    </TouchableOpacity>
                   </View>
-                  <TouchableOpacity style={PersonalDetailstyles.AddBtn}>
-                    <Text style={PersonalDetailstyles.AddBtnText}>+ Add</Text>
-                  </TouchableOpacity>
                 </View>
-              </View>
+              }
 
-              <View style={[PersonalDetailstyles.ContainerMargin]}>
+              <View style={PersonalDetailstyles.Spacer}></View>
 
-                <View style={PersonalDetailstyles.WhiteBox}>
-                  <Text style={PersonalDetailstyles.EventTitle}>Coordinator name: Frank Doe
-</Text>
-                  <Text style={PersonalDetailstyles.EventLocation}>Exercise and physical activity can be classified into
-                  four categories: endurance, strength, flexibility,
-and balance.</Text>
-                  <Text style={PersonalDetailstyles.DateText}>Morning 09/11/2020</Text>
+              { accountdetail.authorities[0]=="ROLE_CORDINATOR" &&
+                <View style={[PersonalDetailstyles.FullWidthTitleBack, PersonalDetailstyles.PadTop5]}>
+                  <View style={[PersonalDetailstyles.InnerTitle, PersonalDetailstyles.MarTopzero]}>
+                    <View style={PersonalDetailstyles.CustomerFeedLeft}>
+
+                      <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={PersonalDetailstyles.InnerTitleIcon} />
+                      <View>
+                        <Text style={[PersonalDetailstyles.InnerTitleText, PersonalDetailstyles.FullwidthBox]}>Commnets</Text>
+                        <Text style={[PersonalDetailstyles.ResultText, PersonalDetailstyles.Fnt12]}>211 Result</Text>
+                      </View>
+                    </View>
+                    <TouchableOpacity style={PersonalDetailstyles.AddBtn}>
+                      <Text style={PersonalDetailstyles.AddBtnText}>+ Add</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
-              </View>
+              }
+              
+              { accountdetail.authorities[0]=="ROLE_CORDINATOR" &&
+                <View style={[PersonalDetailstyles.ContainerMargin]}>
+                  <View style={PersonalDetailstyles.WhiteBox}>
+                    <Text style={PersonalDetailstyles.EventTitle}>Coordinator name: Frank Doe</Text>
+                    <Text style={PersonalDetailstyles.EventLocation}>Exercise and physical activity can be classified into
+                    four categories: endurance, strength, flexibility, and balance.</Text>
+                    <Text style={PersonalDetailstyles.DateText}>Morning 09/11/2020</Text>
+                  </View>
+                </View>
+              }
             </View>
 
           </ScrollView>

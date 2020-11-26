@@ -43,6 +43,9 @@ class CustomDrawerComponent extends Component {
         this._storeData("login_token", "")
         this._storeData("loginuser", "");
         this._storeData("password", "");
+        this._storeData("firstname", "");
+        this._storeData("lastname", "");
+        this._storeData("customerimage", "");
         navigationActions.navigateToLogin();
     }
 
@@ -123,7 +126,7 @@ class CustomDrawerComponent extends Component {
                                     ],
                                     { cancelable: false }
                                 )
-                            } style={NavStyles.LogoutBtn}>
+                            }>
 
                                 <Image source={require('../assets/img/icon_logoutmenu.png')} resizeMode="contain" style={NavStyles.LogoutMenuIcon} />
                                 <Text style={NavStyles.LogoutBtnText}>Logout</Text>

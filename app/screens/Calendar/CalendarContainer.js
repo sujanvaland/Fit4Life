@@ -38,6 +38,7 @@ function mapStateToProps(state) {
     };
 }
 
+
 function mapDispatchToProps(dispatch) {
     return {
       loadSubscribeNow : (EventId) => dispatch(eventActions.loadSubscribeNowRequest(EventId))
