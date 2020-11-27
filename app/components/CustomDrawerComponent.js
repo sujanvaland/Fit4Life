@@ -32,7 +32,7 @@ class CustomDrawerComponent extends Component {
         });
     }
 
-    async componentDidUpdate(){
+    async componentDidUpdate() {
         let login_token = await this._retrieveData("login_token");
         this.setState({
             login_token: login_token
@@ -106,7 +106,7 @@ class CustomDrawerComponent extends Component {
                     <View>
                         <View>
                             <TouchableOpacity onPress={() => this.navigateToMyProfile()} style={NavStyles.MyAccountlinks}>
-                                <Image source={require('../assets/img/icon_myprofile_menu.png')} resizeMode="contain" style={NavigationStyles.MenuIcon} />
+                                <Image source={require('../assets/img/icon_myprofile_menu.png')} resizeMode="contain" style={NavStyles.MenuIcon} />
                                 <Text style={NavStyles.AccountTextLink}>My Profile</Text>
                             </TouchableOpacity>
                         </View>
@@ -126,10 +126,10 @@ class CustomDrawerComponent extends Component {
                                     ],
                                     { cancelable: false }
                                 )
-                            }>
+                            } style={[NavStyles.MyAccountlinks, NavStyles.MarTop10]}>
 
-                                <Image source={require('../assets/img/icon_logoutmenu.png')} resizeMode="contain" style={NavStyles.LogoutMenuIcon} />
-                                <Text style={NavStyles.LogoutBtnText}>Logout</Text>
+                                <Image source={require('../assets/img/icon_logoutmenu.png')} resizeMode="contain" style={NavStyles.MenuIcon} />
+                                <Text style={NavStyles.AccountTextLink}>Logout</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

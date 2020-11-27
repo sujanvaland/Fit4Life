@@ -61,9 +61,23 @@ const NavStyles = StyleSheet.create({
         opacity: 0.6,
         borderWidth: 0,
     },
+    MenuIcon: {
+        marginLeft: viewportWidth * 0.018,
+        borderWidth: 2,
+        width: viewportWidth * 0.06,
+        height: viewportWidth * 0.06,
+        borderWidth: 0, marginRight: viewportWidth * 0.08,
+        opacity: 0.7,
+        borderColor: 'black',
+        margin: 0,
+    },
+    MarTop10: {
+        marginTop: viewportWidth * 0.022
+    },
     AccountTextLink: {
         fontWeight: "bold",
-        fontSize: viewportWidth * 0.033
+        fontSize: viewportWidth * 0.033,
+        color: color.COLOR_WHITE
     },
     LogoutBtnText: {
         marginLeft: viewportWidth * 0.08,
