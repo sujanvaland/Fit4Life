@@ -23,6 +23,66 @@ export function getAccountDetailFailed(response) {
     };
 }
 
+export function getPersonalInformation() {
+    return {
+        type: types.GETPERSONALINFORMATION_REQUEST
+    };
+}
+
+export function ongetPersonalInformationResponse(response) {
+    return {
+        type: types.GETPERSONALINFORMATION_RESPONSE,
+        response
+    };
+}
+
+export function getPersonalInformationFailed(response) {
+    return {
+        type: types.GETPERSONALINFORMATION_FAILED,
+        response
+    };
+}
+
+export function getUserPlan() {
+    return {
+        type: types.GETUSERPLAN_REQUEST
+    };
+}
+
+export function ongetUserPlanResponse(response) {
+    return {
+        type: types.GETUSERPLAN_RESPONSE,
+        response
+    };
+}
+
+export function getUserPlanFailed(response) {
+    return {
+        type: types.GETUSERPLAN_FAILED,
+        response
+    };
+}
+
+export function getPayments() {
+    return {
+        type: types.GETPAYMENTS_REQUEST
+    };
+}
+
+export function ongetPaymentsResponse(response) {
+    return {
+        type: types.GETPAYMENTS_RESPONSE,
+        response
+    };
+}
+
+export function getPaymentsFailed(response) {
+    return {
+        type: types.GETPAYMENTS_FAILED,
+        response
+    };
+}
+
 export function loadProfileImageRequest() {
     return {
         type: types.LOADPROFILEIMAGE_REQUEST

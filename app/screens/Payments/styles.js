@@ -50,7 +50,8 @@ const Paymentsstyles = StyleSheet.create({
     PaymentTtlText: {
         fontSize: Typography.FONT_SIZE30,
         fontFamily: Typography.FONT_LIGHT,
-        color: color.COLOR_WHITE
+        color: color.COLOR_WHITE,
+        textTransform: 'capitalize'
     },
     PaymentPrice: {
         fontSize: Typography.FONT_SIZE24,
@@ -77,7 +78,8 @@ const Paymentsstyles = StyleSheet.create({
     Banktransfer: {
         color: color.COLOR_WHITE,
         fontSize: Typography.FONT_SIZE15,
-        fontFamily: Typography.FONT_MEDIUM
+        fontFamily: Typography.FONT_MEDIUM,
+        textTransform: 'capitalize'
     },
     DateToend: {
         color: color.COLOR_WHITE,

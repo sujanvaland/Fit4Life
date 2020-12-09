@@ -1,7 +1,7 @@
 import { put, call, select } from 'redux-saga/effects';
 import * as loginActions from 'app/actions/loginActions';
 import * as accountActions from 'app/actions/accountActions';
-import {getAccountDetail,updatePersonalDetail,updateDeviceToken,changePassword,loadProfileImage} from 'app/api/methods/accountDetail';
+import {getAccountDetail,getPersonalInformation,getUserPlan,getPayments,updatePersonalDetail,updateDeviceToken,changePassword,loadProfileImage} from 'app/api/methods/accountDetail';
 import * as navigationActions from 'app/actions/navigationActions';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -10,15 +10,56 @@ import AsyncStorage from '@react-native-community/async-storage';
 function* getAccountDetailAsync(action) {
   yield put(loginActions.enableLoader());
   const response = yield call(getAccountDetail,action);
-  console.log(response);
+  //console.log(response);
   if (response.id > 0) {
       yield put(accountActions.ongetAccountDetailResponse(response));
-      _storeData("firstname",response.firstName);
-      _storeData("lastname",response.lastName);
-      _storeData("customerimage",response.imageUrl);
+      _storeData("userId",response.id.toString());
+      yield put(accountActions.getPersonalInformation());
       yield put(loginActions.disableLoader({}));
   } else {
       yield put(accountActions.getAccountDetailFailed(response));
+      yield put(loginActions.disableLoader({}));
+  }
+};
+
+function* getPersonalInformationAsync(action) {
+  yield put(loginActions.enableLoader());
+  const response = yield call(getPersonalInformation,action);
+  //console.log(response);
+  if (response[0].id > 0) {
+      yield put(accountActions.ongetPersonalInformationResponse(response));
+      _storeData("firstname",response[0].user.firstName);
+      _storeData("lastname",response[0].user.lastName);
+      _storeData("customerimage",response[0].profilePictureURL);
+      yield put(loginActions.disableLoader({}));
+  } else {
+      yield put(accountActions.getPersonalInformationFailed(response));
+      yield put(loginActions.disableLoader({}));
+  }
+};
+
+function* getUserPlanAsync(action) {
+  yield put(loginActions.enableLoader());
+  const response = yield call(getUserPlan,action);
+  //console.log(response);
+  if (response[0].id > 0) {
+      yield put(accountActions.ongetUserPlanResponse(response));
+      yield put(loginActions.disableLoader({}));
+  } else {
+      yield put(accountActions.getUserPlanFailed(response));
+      yield put(loginActions.disableLoader({}));
+  }
+};
+
+function* getPaymentsAsync(action) {
+  yield put(loginActions.enableLoader());
+  const response = yield call(getPayments,action);
+  //console.log(response);
+  if (response.length > 0) {
+      yield put(accountActions.ongetPaymentsResponse(response));
+      yield put(loginActions.disableLoader({}));
+  } else {
+      yield put(accountActions.getPaymentsFailed(response));
       yield put(loginActions.disableLoader({}));
   }
 };
@@ -131,6 +172,9 @@ _retrieveData = async (key) => {
 
 export { 
   getAccountDetailAsync,
+  getPersonalInformationAsync,
+  getUserPlanAsync,
+  getPaymentsAsync,
   updatePersonalDetailAsync,
   updateDeviceTokenAsync,
   changePasswordAsync,

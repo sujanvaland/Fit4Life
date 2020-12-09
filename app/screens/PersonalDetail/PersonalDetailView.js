@@ -13,13 +13,7 @@ import * as navigationActions from '../../actions/navigationActions';
 class PersonalDetailView extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      images: [
-        // require('../../assets/images/img_slide1.jpg'),
-        // require('../../assets/images/img_slide2.jpg'),
-        // require('../../assets/images/img_slide3.jpg'),
-      ]
-    }
+    this.state = {}
   }
 
 
@@ -27,22 +21,36 @@ class PersonalDetailView extends Component {
     SplashScreen.hide();
   }
 
-  navigateToAirVelocity = (id) => {
-    navigationActions.navigateToAirVelocity(id);
-  };
-
-  navigateToAboutus = () => {
-    navigationActions.navigateToAboutus();
+  getParsedDate(strDate) {//get date formate
+    if (strDate != "") {
+      var dateArray = strDate.split('-');
+      let date = dateArray[2] + "/" + dateArray[1] + "/" + dateArray[0];
+      return date;
+    }
+    return "";
   }
 
+  
 
   render() {
     const image = require('../../assets/img/img_loginback.png');
-    const { accountdetail } = this.props;
+    const { accountdetail,personalinformation, userplan } = this.props;
+
     let account_detail = accountdetail;
     if (!account_detail) {
       account_detail = {};
+    } 
+
+    let personalinformationdata = {};
+    if (personalinformation) {
+      personalinformationdata = personalinformation.length > 0 ? personalinformation[0] : {};
     }
+
+    let userplandata = {};
+    if (userplan) {
+      userplandata = userplan.length > 0 ? userplan[0] : {};
+    }
+
 
     return (
       <View style={PersonalDetailstyles.container}>
@@ -52,21 +60,21 @@ class PersonalDetailView extends Component {
             <View style={PersonalDetailstyles.InnerContainer}>
               <View style={PersonalDetailstyles.MyprofileBox}>
                 {
-                    (account_detail.customerimage == '' || account_detail.customerimage == undefined) &&
+                    (personalinformationdata.profilepictureurl == '' || personalinformationdata.profilepictureurl == undefined) &&
                     <View style={PersonalDetailstyles.ProfileBox}>
                       <Image source={require('../../assets/img/img_avtar.jpg')} resizeMode="contain" style={PersonalDetailstyles.ProfilePic} />
                     </View>
                 }
 
                 {
-                    (account_detail.customerimage != '' && account_detail.customerimage != undefined) &&
+                    (personalinformationdata.profilepictureurl != '' && personalinformationdata.profilepictureurl != undefined) &&
                     <View style={PersonalDetailstyles.ProfileBox}>
-                      <Image source={require('../../assets/img/img_avtar.jpg')} resizeMode="contain" style={PersonalDetailstyles.ProfilePic} />
+                      <Image source={{ uri: personalinformationdata.profilepictureurl }} resizeMode="contain" style={PersonalDetailstyles.ProfilePic} />
                     </View>
                 }
                 
                 <View style={PersonalDetailstyles.ProfileDetail}>
-                  <Text style={[PersonalDetailstyles.NameBox, globalStyles.FontRegular]}>{account_detail.firstName} {account_detail.lastName}</Text>
+                  <Text style={[PersonalDetailstyles.NameBox, globalStyles.FontRegular]}>{personalinformationdata.user.firstName} {personalinformationdata.user.lastName}</Text>
                   {/* <Text style={[PersonalDetailstyles.LocationBox, globalStyles.FontRegular]}>San Francisco, CA</Text> */}
                 </View>
 
@@ -81,24 +89,24 @@ class PersonalDetailView extends Component {
                   </TouchableOpacity>
                   <View style={PersonalDetailstyles.ProfileContactdetal}>
                     <Image source={require('../../assets/img/icon_email.png')} resizeMode="contain" style={PersonalDetailstyles.IconAddress} />
-                    <Text style={[PersonalDetailstyles.EmailText, globalStyles.FontRegular]}>{account_detail.email}</Text>
+                    <Text style={[PersonalDetailstyles.EmailText, globalStyles.FontRegular]}>{personalinformationdata.user.email}</Text>
                   </View>
                   <View style={PersonalDetailstyles.ProfileContactdetal}>
                     <Image source={require('../../assets/img/icon_phone.png')} resizeMode="contain" style={PersonalDetailstyles.IconAddress} />
-                    <Text style={[PersonalDetailstyles.EmailText, globalStyles.FontRegular]}>+56 92387452374</Text>
+                    <Text style={[PersonalDetailstyles.EmailText, globalStyles.FontRegular]}>{personalinformationdata.phoneNumber}</Text>
                   </View>
                   <View style={PersonalDetailstyles.ProfileContactdetal}>
                     <Image source={require('../../assets/img/icon_address.png')} resizeMode="contain" style={PersonalDetailstyles.IconAddress} />
-                    <Text style={[PersonalDetailstyles.EmailTex, globalStyles.FontRegular]}>Av. Angamos 8142</Text>
+                    <Text style={[PersonalDetailstyles.EmailTex, globalStyles.FontRegular]}>{personalinformationdata.address}</Text>
                   </View>
 
                   <View style={PersonalDetailstyles.CarBbox}>
-                    <Text style={PersonalDetailstyles.CardTitle, globalStyles.FontBold}>Plan Gold</Text>
-                    <Text style={PersonalDetailstyles.CardNumber}>01-03-2020 to 01-04-2020</Text>
+                    <Text style={PersonalDetailstyles.CardTitle, globalStyles.FontBold, {textTransform: 'capitalize'}}>{userplandata.plan.name}</Text>
+                    <Text style={PersonalDetailstyles.CardNumber}>{this.getParsedDate(userplandata.startDate)} to {this.getParsedDate(userplandata.expirationDate)}</Text>
                   </View>
                 </View>
               </View>
-              { accountdetail.authorities[0]=="ROLE_CORDINATOR" &&
+              { accountdetail.authorities[0]=="role_cordinator" &&
                 <View style={[PersonalDetailstyles.FullWidthTitleBack]}>
                   <View style={[PersonalDetailstyles.InnerTitle, PersonalDetailstyles.MarTopzero]}>
                     <View style={PersonalDetailstyles.CustomerFeedLeft}>
@@ -114,7 +122,7 @@ class PersonalDetailView extends Component {
 
               <View style={PersonalDetailstyles.Spacer}></View>
 
-              { accountdetail.authorities[0]=="ROLE_CORDINATOR" &&
+              { accountdetail.authorities[0]=="role_cordinator" &&
                 <View style={[PersonalDetailstyles.FullWidthTitleBack, PersonalDetailstyles.PadTop5]}>
                   <View style={[PersonalDetailstyles.InnerTitle, PersonalDetailstyles.MarTopzero]}>
                     <View style={PersonalDetailstyles.CustomerFeedLeft}>
@@ -132,7 +140,7 @@ class PersonalDetailView extends Component {
                 </View>
               }
               
-              { accountdetail.authorities[0]=="ROLE_CORDINATOR" &&
+              { accountdetail.authorities[0]=="role_cordinator" &&
                 <View style={[PersonalDetailstyles.ContainerMargin]}>
                   <View style={PersonalDetailstyles.WhiteBox}>
                     <Text style={PersonalDetailstyles.EventTitle}>Coordinator name: Frank Doe</Text>

@@ -4,7 +4,8 @@
 import { takeEvery, all } from 'redux-saga/effects';
 import * as types from '../actions/types';
 import { loginAsync } from './loginSaga';
-import { getAccountDetailAsync,updatePersonalDetailAsync,updateDeviceTokenAsync,changePasswordAsync, loadprofileimageAsync } from './accountSaga';
+import { getAccountDetailAsync,getPersonalInformationAsync,getUserPlanAsync,getPaymentsAsync,
+    updatePersonalDetailAsync,updateDeviceTokenAsync,changePasswordAsync, loadprofileimageAsync } from './accountSaga';
 import { getUpcomingEventsAsync, getPastEventsAsync, loadcustomereventdetailAsync, 
     loadeventattendancesAsync, 
     sendFeedbackAsync,
@@ -15,6 +16,9 @@ export default function* watch() {
     
     //account Saga
      yield all([takeEvery(types.GETACCOUNT_REQUEST, getAccountDetailAsync)]);
+     yield all([takeEvery(types.GETPERSONALINFORMATION_REQUEST, getPersonalInformationAsync)]);
+     yield all([takeEvery(types.GETUSERPLAN_REQUEST, getUserPlanAsync)]);
+     yield all([takeEvery(types.GETPAYMENTS_REQUEST, getPaymentsAsync)]);
     // yield all([takeEvery(types.UPDATEPERSONALDETAIL_REQUEST, updatePersonalDetailAsync)]);
     // yield all([takeEvery(types.UPDATEDEVICETOKEN_REQUEST, updateDeviceTokenAsync)]);
     // yield all([takeEvery(types.CHANGEPASSWORD_REQUEST, changePasswordAsync)]);

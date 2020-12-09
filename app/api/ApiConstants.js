@@ -7,6 +7,9 @@ const ApiConstants = {
     //API PATH
     LOGINPATH: 'authenticate',
     ACCOUNTDETAIL:'account',
+    PERSONALINFORMATION:'personal-informations',
+    USERPLAN:'user-plans',
+    PAYMENTS:'payments',
     UPCOMING_EVENTLIST: 'events',
     EVENTLIST: 'event-attendances',
     CUSTOMEREVENTDETAIL: 'events',

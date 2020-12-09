@@ -19,6 +19,9 @@ class PersonalDetailContainer extends Component {
       // do some stuff on every screen focus
       /*const { onAccount } = this.props;
       onAccount();*/
+      const { getPersonalInformation,getUserPlan } = this.props;
+      getPersonalInformation();
+      getUserPlan();
     }
 
     // and don't forget to remove the listener
@@ -55,13 +58,16 @@ function mapStateToProps(state) {
   return {
       loading: state.loadingReducer,
       login_token:state.loginReducer.login_token,
-      userdetail:state.loginReducer.userdetail,
-      accountdetail : state.accountReducer.accountdetail
+      accountdetail : state.accountReducer.accountdetail,
+      personalinformation : state.accountReducer.personalinformation,
+      userplan : state.accountReducer.userplan
   };
 }
 function mapDispatchToProps(dispatch) {
     return {
       //onAccount: () => dispatch(accountActions.getAccountDetail()),
+      getPersonalInformation: () => dispatch(accountActions.getPersonalInformation()),
+      getUserPlan: () => dispatch(accountActions.getUserPlan()),
       onUpdatePersonalDetail: (personaldetail) => dispatch(accountActions.updatePersonalDetail(personaldetail))
     };
 }

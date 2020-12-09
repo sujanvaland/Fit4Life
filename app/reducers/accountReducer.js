@@ -25,6 +25,45 @@ export const accountReducer = createReducer(initialState, {
         };
     },
 
+    [types.GETPERSONALINFORMATION_RESPONSE](state,action) {
+        return {
+            ...state,
+            personalinformation:action.response
+        };
+    },
+    [types.GETPERSONALINFORMATION_FAILED](state) {
+        return {
+            ...state,
+            personalinformation:null
+        };
+    },
+
+    [types.GETUSERPLAN_RESPONSE](state,action) {
+        return {
+            ...state,
+            userplan:action.response
+        };
+    },
+    [types.GETUSERPLAN_FAILED](state) {
+        return {
+            ...state,
+            userplan:null
+        };
+    },
+
+    [types.GETPAYMENTS_RESPONSE](state,action) {
+        return {
+            ...state,
+            payments:action.response
+        };
+    },
+    [types.GETPAYMENTS_FAILED](state) {
+        return {
+            ...state,
+            payments:null
+        };
+    },
+
     //  Update Personal Detail
 
     [types.UPDATEPERSONALDETAIL_RESPONSE](state,action) {

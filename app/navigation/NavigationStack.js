@@ -293,7 +293,9 @@ const RNApp = createDrawerNavigator(
         Payments: {
             screen: PaymentsApp,
             navigationOptions: {
-                drawerLabel: () => null,
+                drawerIcon: () => (
+                    <Image source={require('../assets/img/icon_calendar_menu.png')} resizeMode="contain" style={NavigationStyles.MenuIcon} />
+                ),
             },
         },
         // ChangePassword: {
