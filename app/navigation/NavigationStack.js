@@ -29,6 +29,8 @@ import AddHealthProfile from 'app/screens/AddHealthProfile';
 import CordinatorFeed from 'app/screens/CordinatorFeed';
 import CustomerDetailEvent from 'app/screens/CustomerDetailEvent';
 import CordinatorDetailEvent from 'app/screens/CordinatorDetailEvent';
+import UpdateProfile from 'app/screens/UpdateProfile';
+import EditProfileImage from '../screens/EditProfileImage';
 
 const customDrawer = (props) => (
     <View style={NavStyles.LeftMenuarea}>
@@ -138,7 +140,37 @@ const MyProfileApp = createStackNavigator({
         screen: ChangePassword,
         navigationOptions: ({ navigation }) => {
             return {
-                header: () => <HeaderComponent pagetitle={true} user={true} navigation={navigation} menu={true} title="Change Password" />,
+                header: () => <HeaderComponent pagetitle={true} user={false} navigation={navigation} menu={true} title="Change Password" />,
+                gestureEnabled: false
+            }
+        }
+    },
+
+    UpdateProfile: {
+        screen: UpdateProfile,
+        navigationOptions: ({ navigation }) => {
+            return {
+                header: () => (
+                    <HeaderComponent title="Update Profile" backbutton={true} menu={false} pagetitle={true} navigation={navigation} carticon={false} />
+                ),
+
+                gestureEnabled: true,
+            };
+        },
+    },
+
+    EditProfileImage: {
+        screen: EditProfileImage,
+        navigationOptions: ({ navigation }) => {
+            return {
+                header: () => (
+                    <HeaderComponent title="Profile Photo"
+                        backbutton={true}
+                        menu={false}
+                        pagetitle={true}
+                        navigation={navigation}
+                        carticon={false} />
+                ),
                 gestureEnabled: false
             }
         }
@@ -151,7 +183,7 @@ const CalendarApp = createStackNavigator({
         navigationOptions: ({ navigation }) => {
             return {
                 header: () => (
-                    <HeaderComponent navigation={navigation} menu={true} pagetitle={true} title="Fit4Life" user={true} />
+                    <HeaderComponent navigation={navigation} menu={true} pagetitle={true} title="Fit4Life" user={false} />
                 ),
                 gestureEnabled: true,
             };
@@ -165,7 +197,7 @@ const HealthProfileApp = createStackNavigator({
         navigationOptions: ({ navigation }) => {
             return {
                 header: () => (
-                    <HeaderComponent navigation={navigation} menu={true} pagetitle={true} title="Fit4Life" user={true} />
+                    <HeaderComponent navigation={navigation} menu={true} pagetitle={true} title="Fit4Life" user={false} />
                 ),
                 gestureEnabled: true,
             };
@@ -177,7 +209,7 @@ const HealthProfileApp = createStackNavigator({
         navigationOptions: ({ navigation }) => {
             return {
                 header: () => (
-                    <HeaderComponent navigation={navigation} backbutton={true} menu={false} pagetitle={true} title="Fit4Life" user={true} />
+                    <HeaderComponent navigation={navigation} backbutton={true} menu={false} pagetitle={true} title="Fit4Life" user={false} />
                 ),
                 gestureEnabled: true,
             };
@@ -206,7 +238,7 @@ const PaymentsApp = createStackNavigator({
         navigationOptions: ({ navigation }) => {
             return {
                 header: () => (
-                    <HeaderComponent navigation={navigation} backbutton={false} menu={true} pagetitle={true} title="Fit4Life" user={true} />
+                    <HeaderComponent navigation={navigation} backbutton={false} menu={true} pagetitle={true} title="Fit4Life" user={false} />
                 ),
                 gestureEnabled: true,
             };
@@ -221,7 +253,7 @@ const CordinatorFeedApp = createStackNavigator({
         navigationOptions: ({ navigation }) => {
             return {
                 header: () => (
-                    <HeaderComponent navigation={navigation} backbutton={false} menu={true} pagetitle={true} title="Fit4Life" user={true} />
+                    <HeaderComponent navigation={navigation} backbutton={false} menu={true} pagetitle={true} title="Fit4Life" user={false} />
                 ),
                 gestureEnabled: true,
             };
@@ -274,7 +306,9 @@ const RNApp = createDrawerNavigator(
         HealthProfile: {
             screen: HealthProfileApp,
             navigationOptions: {
-                drawerLabel: () => null,
+                drawerIcon: () => (
+                    <Image source={require('../assets/img/icon_calendar_menu.png')} resizeMode="contain" style={NavigationStyles.MenuIcon} />
+                ),
             },
         },
 

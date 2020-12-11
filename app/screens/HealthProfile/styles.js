@@ -153,6 +153,7 @@ const HealthProfilestyles = StyleSheet.create({
         lineHeight: viewportWidth * 0.035,
         color: color.COLOR_INNERTITLE,
         fontFamily: Typography.FONT_REGULAR,
+        marginVertical: viewportWidth * 0.04
     },
     BtnPlus: {
         borderWidth: 0,
@@ -176,7 +177,8 @@ const HealthProfilestyles = StyleSheet.create({
 
     },
     LevelBoxText: {
-        fontSize: Typography.FONT_SIZE14
+        fontSize: Typography.FONT_SIZE14,
+        textTransform: 'capitalize'
     },
     HealthDetail: {
         marginVertical: viewportWidth * 0.04

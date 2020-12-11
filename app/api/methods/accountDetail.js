@@ -53,20 +53,12 @@ export  async function getPayments(action) {
   );
 }
 
-export  function updatePersonalDetail(action) {
+export  async function getHealthparameters(action) {
+  let userId =  await retrieveData("userId");
   return Api(
-      ApiConstants.UPDATEPERSONALDETAIL,
-      {
-        firstname:action.personaldetail.firstname,
-        lastname:action.personaldetail.lastname,
-        birthdate:action.personaldetail.birthdate,
-        gender:action.personaldetail.gender,
-        email:action.personaldetail.email,
-        phone:action.personaldetail.phone,
-        vehicalno:action.personaldetail.vehicalno,
-        role_id:'2'
-      },
-      'post',
+      ApiConstants.HEALTHPARAMETERS + '?userId.equals=' + userId,
+      null,
+      'get',
       null
   );
 }
@@ -99,6 +91,19 @@ export  function loadProfileImage(action) {
       ApiConstants.PROFILEIMAGE,
       null,
       'get',
+      null
+  );
+}
+
+export  function updateUserProfile(profiledetail) {
+  
+  return Api(
+      ApiConstants.UPDATEUSERPROFILE,
+      {
+        address:profiledetail.profiledetail.address,
+        phoneNumber:profiledetail.profiledetail.phonenumber
+      },
+      'post',
       null
   );
 }

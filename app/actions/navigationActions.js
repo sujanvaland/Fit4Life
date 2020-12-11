@@ -47,3 +47,11 @@ export function navigateToCordinatorDetailEvent(params) {
 export function navigateToCalendar(params) {
     NavigationService.navigate('Calendar', params);
 }
+
+export function navigateToUpdateProfile(params) {
+    NavigationService.navigate('UpdateProfile', params);
+}
+
+export function navigateToEditProfileImage(params) {
+    NavigationService.navigate('EditProfileImage', params);
+}

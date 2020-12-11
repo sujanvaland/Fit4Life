@@ -16,6 +16,14 @@ class PersonalDetailView extends Component {
     this.state = {}
   }
 
+  navigateToUpdateProfile = () => {
+    navigationActions.navigateToUpdateProfile();
+  }
+
+  navigateToEditProfileImage = () => {
+      navigationActions.navigateToEditProfileImage();
+  }
+
 
   componentDidMount() {
     SplashScreen.hide();
@@ -78,13 +86,13 @@ class PersonalDetailView extends Component {
                   {/* <Text style={[PersonalDetailstyles.LocationBox, globalStyles.FontRegular]}>San Francisco, CA</Text> */}
                 </View>
 
-                <TouchableOpacity style={PersonalDetailstyles.btnEditProfile}>
+                <TouchableOpacity style={PersonalDetailstyles.btnEditProfile} onPress={this.navigateToEditProfileImage}>
                   <Image source={require('../../assets/img/icon_profileedit.png')} resizeMode="contain" style={PersonalDetailstyles.ProfileEdit} />
                 </TouchableOpacity>
               </View>
               <View style={[PersonalDetailstyles.ContainerMargin]}>
                 <View style={PersonalDetailstyles.WhiteBox}>
-                  <TouchableOpacity style={PersonalDetailstyles.btnEditProfile}>
+                  <TouchableOpacity style={PersonalDetailstyles.btnEditProfile} onPress={() => this.navigateToUpdateProfile()}>
                     <Image source={require('../../assets/img/icon_contactedit.png')} resizeMode="contain" style={[PersonalDetailstyles.ProfileEdit, PersonalDetailstyles.ProfileEditSmall]} />
                   </TouchableOpacity>
                   <View style={PersonalDetailstyles.ProfileContactdetal}>

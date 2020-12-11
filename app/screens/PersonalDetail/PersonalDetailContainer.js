@@ -17,9 +17,8 @@ class PersonalDetailContainer extends Component {
     // define a separate function to get triggered on focus
     async onFocusFunction () {
       // do some stuff on every screen focus
-      /*const { onAccount } = this.props;
-      onAccount();*/
-      const { getPersonalInformation,getUserPlan } = this.props;
+      const { onAccount, getPersonalInformation, getUserPlan } = this.props;
+      onAccount();
       getPersonalInformation();
       getUserPlan();
     }
@@ -65,10 +64,9 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-      //onAccount: () => dispatch(accountActions.getAccountDetail()),
+      onAccount: () => dispatch(accountActions.getAccountDetail()),
       getPersonalInformation: () => dispatch(accountActions.getPersonalInformation()),
-      getUserPlan: () => dispatch(accountActions.getUserPlan()),
-      onUpdatePersonalDetail: (personaldetail) => dispatch(accountActions.updatePersonalDetail(personaldetail))
+      getUserPlan: () => dispatch(accountActions.getUserPlan())
     };
 }
 export default connect(

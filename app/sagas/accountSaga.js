@@ -1,7 +1,9 @@
 import { put, call, select } from 'redux-saga/effects';
+import { Alert } from 'react-native';
 import * as loginActions from 'app/actions/loginActions';
 import * as accountActions from 'app/actions/accountActions';
-import {getAccountDetail,getPersonalInformation,getUserPlan,getPayments,updatePersonalDetail,updateDeviceToken,changePassword,loadProfileImage} from 'app/api/methods/accountDetail';
+import {getAccountDetail,getPersonalInformation,getUserPlan,getPayments,getHealthparameters,updateDeviceToken,changePassword,
+  loadProfileImage,updateUserProfile} from 'app/api/methods/accountDetail';
 import * as navigationActions from 'app/actions/navigationActions';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -64,21 +66,18 @@ function* getPaymentsAsync(action) {
   }
 };
 
-// Update Persona Detail
-function* updatePersonalDetailAsync(action) {
+function* getHealthparametersAsync(action) {
   yield put(loginActions.enableLoader());
-  //how to call api
-  const response = yield call(updatePersonalDetail,action);
+  const response = yield call(getHealthparameters,action);
   //console.log(response);
-  if (response.Message === "success") {
-      yield put(accountActions.onupdatePersonalDetailResponse(response));
-      yield put(accountActions.getAccountDetail());
+  if (response.length > 0) {
+      yield put(accountActions.ongetHealthparametersResponse(response));
       yield put(loginActions.disableLoader({}));
   } else {
-      yield put(accountActions.onupdatePersonalDetailFailedResponse(response));
+      yield put(accountActions.getHealthparametersFailed(response));
       yield put(loginActions.disableLoader({}));
   }
-}
+};
 
 // Update Device Token
 function* updateDeviceTokenAsync(action) {
@@ -149,6 +148,45 @@ function* loadprofileimageAsync(action) {
   }
 }
 
+// UPDATE PROFILE
+function* updateUserProfileAsync(action) {
+  yield put(loginActions.enableLoader());
+  //how to call api
+  
+  const response = yield call(updateUserProfile,action);
+  console.log(response);
+  if (response) {
+
+      Alert.alert(
+          'Success',
+          'Profile Updated Successfully.',
+          [
+            {
+              text: "Ok", style: 'destructive'
+            }
+          ]
+        );
+      yield put(accountActions.getAccountDetail());
+      yield put(accountActions.getPersonalInformation());
+      yield put(accountActions.onProfileUpdatedResponse(response));
+      yield put(loginActions.disableLoader({}));
+      
+      //console.log(response);
+  } else {
+  
+      Alert.alert(
+          'Fail',
+          'Profile Updated Failed :' + response.status,
+          [
+            {text: 'OK'},
+          ]
+        );
+      yield put(accountActions.FailedUpdateUserProfile(response));
+      yield put(loginActions.disableLoader({}));
+  }
+  
+}
+
 const _storeData = async (key,value) => {
   try {
     await AsyncStorage.setItem(key, value);
@@ -175,8 +213,9 @@ export {
   getPersonalInformationAsync,
   getUserPlanAsync,
   getPaymentsAsync,
-  updatePersonalDetailAsync,
+  getHealthparametersAsync,
   updateDeviceTokenAsync,
   changePasswordAsync,
-  loadprofileimageAsync 
+  loadprofileimageAsync ,
+  updateUserProfileAsync
 }

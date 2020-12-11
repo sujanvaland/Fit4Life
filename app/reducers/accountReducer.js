@@ -64,18 +64,16 @@ export const accountReducer = createReducer(initialState, {
         };
     },
 
-    //  Update Personal Detail
-
-    [types.UPDATEPERSONALDETAIL_RESPONSE](state,action) {
+    [types.GETHEALTHPARAMETERS_RESPONSE](state,action) {
         return {
             ...state,
-            updatepersonaldetail:action.response
+            healthparameters:action.response
         };
     },
-    [types.UPDATEPERSONALDETAILFAILED_RESPONSE](state,action) {
+    [types.GETHEALTHPARAMETERS_FAILED](state) {
         return {
             ...state,
-            updatepersonaldetail:null
+            healthparameters:null
         };
     },
 
@@ -116,6 +114,18 @@ export const accountReducer = createReducer(initialState, {
     },
 
     [types.FAILEDLOADINGPROFILEIMAGE_RESPONSE](state) {
+        return {
+            ...state
+        };
+    },
+
+    [types.PROFILEUPDATED_RESPONSE](state,action) {
+        return {
+            ...state
+        };
+    },
+
+    [types.FAILEDUPDATEPROFILE_RESPONSE](state) {
         return {
             ...state
         };

@@ -83,22 +83,22 @@ export function getPaymentsFailed(response) {
     };
 }
 
-export function loadProfileImageRequest() {
+export function getHealthparameters() {
     return {
-        type: types.LOADPROFILEIMAGE_REQUEST
+        type: types.GETHEALTHPARAMETERS_REQUEST
     };
 }
 
-export function onProfileImageLoadedResponse(response) {
+export function ongetHealthparametersResponse(response) {
     return {
-        type: types.PROFILEIMAGELOADED_RESPONSE,
+        type: types.GETHEALTHPARAMETERS_RESPONSE,
         response
     };
 }
 
-export function FailedLoadingProfileImage(response) {
+export function getHealthparametersFailed(response) {
     return {
-        type: types.FAILEDLOADINGPROFILEIMAGE_RESPONSE,
+        type: types.GETHEALTHPARAMETERS_FAILED,
         response
     };
 }
@@ -123,25 +123,6 @@ export function onChangePasswordFailedResponse(response) {
     };
 }
 
-export function updatePersonalDetail(personaldetail) {
-    return {
-        type: types.UPDATEPERSONALDETAIL_REQUEST,
-        personaldetail
-    };
-}
-export function onupdatePersonalDetailResponse(response) {
-    return {
-        type: types.UPDATEPERSONALDETAIL_RESPONSE,
-        response
-    };
-}
-export function onupdatePersonalDetailFailedResponse(response) {
-    return {
-        type: types.UPDATEPERSONALDETAILFAILED_RESPONSE,
-        response
-    };
-}
-
 export function updateDeviceToken(devicetoken) {
     return {
         type: types.UPDATEDEVICETOKEN_REQUEST,
@@ -157,6 +138,50 @@ export function onupdateDeviceTokenResponse(response) {
 export function onupdateDeviceTokenFailedResponse(response) {
     return {
         type: types.UPDATEDEVICETOKENFAILED_RESPONSE,
+        response
+    };
+}
+
+
+export function loadProfileImageRequest() {
+    return {
+        type: types.LOADPROFILEIMAGE_REQUEST
+    };
+}
+
+export function onProfileImageLoadedResponse(response) {
+    return {
+        type: types.PROFILEIMAGELOADED_RESPONSE,
+        response
+    };
+}
+
+export function FailedLoadingProfileImage(response) {
+    return {
+        type: types.FAILEDLOADINGPROFILEIMAGE_RESPONSE,
+        response
+    };
+}
+
+
+
+export function requestUpdateprofileRequest(profiledetail) {
+    return {
+        type: types.UPDATEUSERPROFILE_REQUEST,
+        profiledetail
+    };
+}
+
+export function onProfileUpdatedResponse(response) {
+    return {
+        type: types.PROFILEUPDATED_RESPONSE,
+        response
+    };
+}
+
+export function FailedUpdateUserProfile(response) {
+    return {
+        type: types.FAILEDUPDATEPROFILE_RESPONSE,
         response
     };
 }
