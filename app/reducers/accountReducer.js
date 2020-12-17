@@ -130,5 +130,18 @@ export const accountReducer = createReducer(initialState, {
             ...state
         };
     },
+
+    [types.LOADALLHEALTHPARAMETER_RESPONSE](state,action) {
+        return {
+            ...state,
+            allhealthparameter:action.response
+        };
+    },
+    [types.LOADALLHEALTHPARAMETER_FAILED](state) {
+        return {
+            ...state,
+            allhealthparameter:null
+        };
+    },
     
 });

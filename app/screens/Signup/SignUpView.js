@@ -10,10 +10,8 @@ import { TextBoxElement, PhoneTextBoxElement, ButtonElement, OverlayActivityIndi
 import { ScrollView } from 'react-native-gesture-handler';
 
 import SplashScreen from 'react-native-splash-screen';
+import * as navigationActions from '../../actions/navigationActions';
 
-const { heading } = Resource_EN;
-const { content } = Resource_EN;
-const { button } = Resource_EN;
 class SignUpView extends Component {
 
   constructor(props) {
@@ -21,59 +19,37 @@ class SignUpView extends Component {
     //this.props.singupresponse.result ="";
     //this.props.singupresponse.message=true;
     this.state = {
-      mainpage: false,
-      isSelected: false,
-      hire: false,
-      work: false,
-      termsChecked: false,
-      newsChecked: false,
-      showNewsCheckbox: true,
-      isvalidTextInput: true,
       userDetails: {
-        fullname: "",
+        firstname: "",
+        lastname: "",
         email: "",
-        phone: "",
-        username: "",
         password: "",
-        isvalidfullname: true,
+        isvalidfirstname: true,
+        isvalidlastname: true,
         isvalidemail: true,
-        isvalidphone: true,
-        isvalidusername: true,
         isvalidpassword: true,
       },
-      isvalidfullname: false,
+      isvalidfirstname: false,
+      isvalidlastname: false,
       isvalidemail: false,
-      isvalidphone: false,
-      isvalidusername: false,
-      isvalidpassword: false,
-      toggleCheckBox: false,
+      isvalidpassword: false
 
     };
   }
 
-
-
   signup = () => {
-    const { userDetails, isvalidfullname, isvalidemail, isvalidphone, isvalidusername, isvalidpassword } = this.state;
+    const { isvalidfirstname, isvalidlastname, isvalidemail, isvalidpassword } = this.state;
     let allInputsValidated = false;
 
-    //console.log(isvalidfullname,isvalidemail,isvalidphone,isvalidusername,isvalidpassword)
-    if (isvalidfullname && isvalidemail && isvalidphone && isvalidusername && isvalidpassword) {
+    //console.log(isvalidfirstname, isvalidlastname, isvalidemail,isvalidphone,isvalidpassword)
+    if (isvalidfirstname && isvalidlastname && isvalidemail && isvalidpassword) {
       allInputsValidated = true;
     }
     else {
-      this.updateState("isvalidfullname", isvalidfullname);
+      this.updateState("isvalidfirstname", isvalidfirstname);
+      this.updateState("isvalidlastname", isvalidlastname);
       this.updateState("isvalidemail", isvalidemail);
-      this.updateState("isvalidphone", isvalidphone);
-      this.updateState("isvalidusername", isvalidusername);
       this.updateState("isvalidpassword", isvalidpassword);
-    }
-
-    if (allInputsValidated) {
-      // if(!this.state.termsChecked){
-      //   ToastAndroid.show("Please agree to Terms of Use", ToastAndroid.SHORT);
-      //   allInputsValidated = false;
-      // }
     }
 
     if (allInputsValidated) {
@@ -84,6 +60,15 @@ class SignUpView extends Component {
 
   componentDidMount() {
     SplashScreen.hide();
+    this.setState(prevState => ({
+      userDetails: {                   // object that we want to update
+        ...prevState.userDetails,    // keep all other key-value pairs
+        firstname: '',
+        lastname: '',
+        email: '',
+        password: ''
+      }
+    }));
   }
   validateEmail = (value) => {
     if (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g.test(value)) {
@@ -111,20 +96,38 @@ class SignUpView extends Component {
 
 
   validateInputs = (fieldName) => {
-    if (fieldName == "fullname") {
-      if (this.state.userDetails.fullname == "") {
-        this.updateState("isvalidfullname", false);
-        this.setState({ isvalidfullname: false });
+    if (fieldName == "firstname") {
+      if (this.state.userDetails.firstname == "") {
+        this.updateState("isvalidfirstname", false);
+        this.setState({ isvalidfirstname: false });
       }
       else {
-        if (this.state.userDetails.fullname.length >= 3 && this.state.userDetails.fullname.length <= 50) {
-          this.updateState("isvalidfullname", true);
-          this.setState({ isvalidfullname: true });
+        if (this.state.userDetails.firstname.length >= 3 && this.state.userDetails.firstname.length <= 50) {
+          this.updateState("isvalidfirstname", true);
+          this.setState({ isvalidfirstname: true });
         }
         else {
-          ToastAndroid.show("Fullname should have min 3 chars and max 50", ToastAndroid.SHORT);
-          this.updateState("isvalidfullname", false);
-          this.setState({ isvalidfullname: false });
+          ToastAndroid.show("firstname should have min 3 chars and max 50", ToastAndroid.SHORT);
+          this.updateState("isvalidfirstname", false);
+          this.setState({ isvalidfirstname: false });
+        }
+      }
+    }
+
+    if (fieldName == "lastname") {
+      if (this.state.userDetails.lastname == "") {
+        this.updateState("isvalidlastname", false);
+        this.setState({ isvalidlastname: false });
+      }
+      else {
+        if (this.state.userDetails.lastname.length >= 3 && this.state.userDetails.lastname.length <= 50) {
+          this.updateState("isvalidlastname", true);
+          this.setState({ isvalidlastname: true });
+        }
+        else {
+          ToastAndroid.show("lastname should have min 3 chars and max 50", ToastAndroid.SHORT);
+          this.updateState("isvalidlastname", false);
+          this.setState({ isvalidlastname: false });
         }
       }
     }
@@ -147,50 +150,6 @@ class SignUpView extends Component {
       }
     }
 
-    if (fieldName == "phone") {
-      if (this.state.userDetails.phone == "") {
-        this.updateState("isvalidphone", false);
-        this.setState({ isvalidphone: false });
-      }
-      else {
-        let reg = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s/0-9]*$/g;
-        if (reg.test(this.state.userDetails.phone) === true) {
-          if (this.state.userDetails.phone.length >= 10 && this.state.userDetails.phone.length <= 15) {
-            this.updateState("isvalidphone", true);
-            this.setState({ isvalidphone: true });
-          }
-          else {
-            ToastAndroid.show("Phone Number length should be 10 to 15 digits", ToastAndroid.SHORT);
-            this.updateState("isvalidphone", false);
-            this.setState({ isvalidphone: false });
-          }
-        }
-        else {
-          ToastAndroid.show("Phone Number is not valid", ToastAndroid.SHORT);
-          this.updateState("isvalidphone", false);
-          this.setState({ isvalidphone: false });
-        }
-      }
-    }
-
-    if (fieldName == "username") {
-      if (this.state.userDetails.username == "") {
-        this.updateState("isvalidusername", false);
-        this.setState({ isvalidusername: false });
-      }
-      else {
-        if (this.validateAlphanumeric(this.state.userDetails.username)) {
-          this.updateState("isvalidusername", true);
-          this.setState({ isvalidusername: true });
-        }
-        else {
-          ToastAndroid.show("Username should have min 3 and max 30 char", ToastAndroid.SHORT);
-          this.updateState("isvalidusername", false);
-          this.setState({ isvalidusername: false });
-        }
-      }
-    }
-
     if (fieldName == "password") {
       if (this.state.userDetails.password == "") {
         this.updateState("isvalidpassword", false);
@@ -208,30 +167,10 @@ class SignUpView extends Component {
         }
       }
     }
-
-    if (fieldName == "company") {
-      if (this.state.userDetails.company != "") {
-        if (this.state.userDetails.company.length > 200) {
-          ToastAndroid.show("Company name should be less then 200 char", ToastAndroid.SHORT);
-          this.updateState("isvalidcompany", false);
-          this.setState({ isvalidpassword: false });
-        }
-        else {
-          this.updateState("isvalidcompany", true);
-          this.setState({ isvalidcompany: true });
-        }
-      }
-      else {
-        this.updateState("isvalidcompany", true);
-        this.setState({ isvalidcompany: true });
-      }
-    }
   };
 
   updateState = (fieldName, value) => {
-    if (fieldName == "username") {
-      value = value.toLowerCase();//To convert Lower Case
-    }
+
     this.setState(prevState => ({
       userDetails: {                   // object that we want to update
         ...prevState.userDetails,    // keep all other key-value pairs
@@ -239,7 +178,7 @@ class SignUpView extends Component {
       }
     }));
 
-    if (this.state.username != '' && this.state.password != '' && this.state.fullname != '' && this.state.phone != '' && this.state.email != '') {
+    if (this.state.password != '' && this.state.firstname != '' && this.state.lastname != '' && this.state.email != '') {
       this.submitted = false;
     } else {
       this.submitted = true;
@@ -249,23 +188,14 @@ class SignUpView extends Component {
 
 
   navigateToLogin = () => {
-    this.props.Login();
-  } //redirect to Terms page
-
-
+    navigationActions.navigateToLogin();
+  }
 
 
   render() {
 
-    // changevalue = () => {
-    //   console.log('hello');
-    //   this.setState({ isSelected: true });
-    // }
-
     const { userDetails } = this.state;
-    const { isSelected } = this.state;
-    const { country, loading, disabled } = this.props;
-    const { overlayStyle } = styles;
+    const { loading, disabled } = this.props;
     const image = require('../../assets/img/img_loginback.png');
 
     return (
@@ -290,32 +220,35 @@ class SignUpView extends Component {
                   //allowing light, but not detailed shapes
                   networkActivityIndicatorVisible={true}
                 />
-                {/* <Image style={styles.logoImg} source={require('../../assets/img/logo1.png')} resizeMode="cover" />  */}
               </View>
 
               <View style={styles.loginContainer}>
 
                 <View style={styles.loginArea}>
                   <Text style={styles.TitleText}>Create an Account</Text>
-                  {
-                    this.state.ShowEnvMsg == true &&
-                    <Text style={globalStyles.headingText}>Current Environment : {this.state.CurrentEnv}</Text>
-                  }
                   <View style={styles.textBoxContent}>
                     <TextBoxElement
-                      placeholder={"Full Name"}
-                      value={userDetails.fullname}
+                      placeholder={"First Name"}
+                      value={userDetails.firstname}
                       autoCapitalize={'none'}
-                      onChangeText={value => this.updateState("fullname", value)}
-                      isvalidInput={userDetails.isvalidfullname}
-                      onEndEditing={() => this.validateInputs("fullname")}
+                      onChangeText={value => this.updateState("firstname", value)}
+                      isvalidInput={userDetails.isvalidfirstname}
+                      onEndEditing={() => this.validateInputs("firstname")}
                       maxLength={50}
                       style={styles.TextBox}
                     />
-                    {/* <View style={styles.textBoxInner}>
-                  <Image style={styles.lineImg} source={require('../../assets/img/line.png')} resizeMode="cover" />
-                  <Image style={styles.textBoxImg} source={require('../../assets/img/user.png')} resizeMode="cover" />
-                </View> */}
+                  </View>
+                  <View style={styles.textBoxContent}>
+                    <TextBoxElement
+                      placeholder={"Last Name"}
+                      value={userDetails.lastname}
+                      autoCapitalize={'none'}
+                      onChangeText={value => this.updateState("lastname", value)}
+                      isvalidInput={userDetails.isvalidlastname}
+                      onEndEditing={() => this.validateInputs("lastname")}
+                      maxLength={50}
+                      style={styles.TextBox}
+                    />
                   </View>
                   <View style={styles.textBoxContent}>
                     <TextBoxElement
@@ -326,41 +259,11 @@ class SignUpView extends Component {
                       isvalidInput={userDetails.isvalidemail}
                       onEndEditing={() => this.validateInputs("email")}
                       maxLength={200}
+                      caretHidden
+                      autoCorrect={false}
+                      keyboardType='email-address'
+                      autoCompleteType='email'
                     />
-                    {/* <View style={styles.textBoxInner}>
-                <Image style={styles.lineImg} source={require('../../assets/img/line.png')} resizeMode="cover" /> 
-                <Image style={styles.textBoxmailImg} source={require('../../assets/img/mail.png')} resizeMode="cover" /> 
-              </View> */}
-                  </View>
-                  <View style={styles.textBoxContent}>
-                    <PhoneTextBoxElement
-                      placeholder={"Mobile Number"}
-                      value={userDetails.phone}
-                      autoCapitalize={'none'}
-                      onChangeText={value => this.updateState("phone", value)}
-                      isvalidInput={userDetails.isvalidphone}
-                      onEndEditing={() => this.validateInputs("phone")}
-                      maxLength={15}
-                    />
-                    {/* <View style={styles.textBoxInner}>
-                <Image style={styles.lineImg} source={require('../../assets/img/line.png')} resizeMode="cover" /> 
-                <Image style={styles.textBoxImg} source={require('../../assets/img/phone.png')} resizeMode="cover" /> 
-              </View> */}
-                  </View>
-                  <View style={styles.textBoxContent}>
-                    <TextBoxElement
-                      placeholder={"Username"}
-                      value={userDetails.username}
-                      autoCapitalize={'none'}
-                      onChangeText={value => this.updateState("username", value)}
-                      isvalidInput={userDetails.isvalidusername}
-                      onEndEditing={() => this.validateInputs("username")}
-                      maxLength={200}
-                    />
-                    {/* <View style={styles.textBoxInner}>
-              <Image style={styles.lineImg} source={require('../../assets/img/line.png')} resizeMode="cover" /> 
-              <Image style={styles.textBoxImg} source={require('../../assets/img/user.png')} resizeMode="cover" /> 
-            </View> */}
                   </View>
                   <View style={styles.textBoxContent}>
                     <TextBoxElement
@@ -372,10 +275,6 @@ class SignUpView extends Component {
                       onEndEditing={() => this.validateInputs("password")}
                       autoCapitalize={'none'}
                     />
-                    {/* <View style={styles.textBoxInner}>
-              <Image style={styles.lineImg} source={require('../../assets/img/line.png')} resizeMode="cover" /> 
-              <Image style={styles.passwordImg} source={require('../../assets/img/password.png')} resizeMode="cover" /> 
-            </View> */}
                   </View>
 
                   <View style={[styles.flexBox, styles.Mrtop20]}>
@@ -387,16 +286,15 @@ class SignUpView extends Component {
 
                   <View style={styles.NewRegistration}>
                     <Text style={styles.accountText}>Already having Account?</Text>
-                    <TouchableOpacity style={styles.BtnSignup} onPress={this.navigateToLogin}>
+                    <TouchableOpacity style={styles.BtnSignup} onPress={() => this.navigateToLogin()}>
                       <Text style={styles.TextSignup}>Sign In</Text>
                     </TouchableOpacity>
                   </View>
 
-                  <View style={styles.checkboxContainer}>
-
+                  {/* <View style={styles.checkboxContainer}>
                     <Text style={styles.Chklabel}>By creating an account you accept the{"\n"}
-Terms  and Conditions of information use</Text>
-                  </View>
+                      Terms  and Conditions of information use</Text>
+                  </View> */}
                 </View>
               </View>
 

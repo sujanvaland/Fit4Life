@@ -185,3 +185,23 @@ export function FailedUpdateUserProfile(response) {
         response
     };
 }
+
+export function loadAllHealthparameterRequest() {
+    return {
+        type: types.LOADALLHEALTHPARAMETER_REQUEST
+    };
+}
+
+export function onloadAllHealthparameterResponse(response) {
+    return {
+        type: types.LOADALLHEALTHPARAMETER_RESPONSE,
+        response
+    };
+}
+
+export function loadAllHealthparameterFailed(response) {
+    return {
+        type: types.LOADALLHEALTHPARAMETER_FAILED,
+        response
+    };
+}

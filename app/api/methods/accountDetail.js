@@ -100,10 +100,22 @@ export  function updateUserProfile(profiledetail) {
   return Api(
       ApiConstants.UPDATEUSERPROFILE,
       {
+        firstName:profiledetail.profiledetail.firstname,
+        lastName:profiledetail.profiledetail.lastname,
         address:profiledetail.profiledetail.address,
-        phoneNumber:profiledetail.profiledetail.phonenumber
+        phoneNumber:profiledetail.profiledetail.phonenumber,
+        profilePictureFile:""
       },
       'post',
+      null
+  );
+}
+
+export  async function loadAllHealthparameter(action) {
+  return Api(
+      ApiConstants.ALLHEALTHPARAMETER,
+      null,
+      'get',
       null
   );
 }

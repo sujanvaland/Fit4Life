@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 import * as loginActions from 'app/actions/loginActions';
 import * as accountActions from 'app/actions/accountActions';
 import {getAccountDetail,getPersonalInformation,getUserPlan,getPayments,getHealthparameters,updateDeviceToken,changePassword,
-  loadProfileImage,updateUserProfile} from 'app/api/methods/accountDetail';
+  loadProfileImage,updateUserProfile,loadAllHealthparameter} from 'app/api/methods/accountDetail';
 import * as navigationActions from 'app/actions/navigationActions';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -187,6 +187,19 @@ function* updateUserProfileAsync(action) {
   
 }
 
+function* loadAllHealthparameterAsync(action) {
+  yield put(loginActions.enableLoader());
+  const response = yield call(loadAllHealthparameter,action);
+  //console.log(response);
+  if (response.length > 0) {
+      yield put(accountActions.onloadAllHealthparameterResponse(response));
+      yield put(loginActions.disableLoader({}));
+  } else {
+      yield put(accountActions.loadAllHealthparameterFailed(response));
+      yield put(loginActions.disableLoader({}));
+  }
+};
+
 const _storeData = async (key,value) => {
   try {
     await AsyncStorage.setItem(key, value);
@@ -217,5 +230,6 @@ export {
   updateDeviceTokenAsync,
   changePasswordAsync,
   loadprofileimageAsync ,
-  updateUserProfileAsync
+  updateUserProfileAsync,
+  loadAllHealthparameterAsync
 }

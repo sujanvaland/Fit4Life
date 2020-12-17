@@ -18,11 +18,14 @@ class UpdateProfileView extends Component {
         super(props);
         this.state = {
             postUpdateprofile: {
+              firstname: "",
+              lastname: "",
               address: "",
               phonenumber: "",
             },
+            isvalidfirstname: true,
+            isvalidlastname: true,
             isvalidaddress: true,
-            isvalidemail: true,
             isvalidphonenumber: true
           }
 
@@ -40,6 +43,8 @@ class UpdateProfileView extends Component {
         
         if(personalinformationdata)
         {
+            newpostUpdateprofile.firstname = personalinformationdata.user.firstName;
+            newpostUpdateprofile.lastname = personalinformationdata.user.lastName;
             newpostUpdateprofile.address = personalinformationdata.address;
             newpostUpdateprofile.phonenumber = personalinformationdata.phoneNumber;
          
@@ -58,7 +63,7 @@ class UpdateProfileView extends Component {
         }), function () {
         });
     
-        if (this.state.address != ''  &&   this.state.phonenumber != '') {
+        if (this.state.firstname != ''  && this.state.lastname != ''  && this.state.address != ''  &&   this.state.phonenumber != '') {
           this.submitted = false;
         } else {
           this.submitted = true;
@@ -69,7 +74,43 @@ class UpdateProfileView extends Component {
       
 
     validateInputs = (fieldName) => {
-    if (fieldName == "address") {
+
+      if (fieldName == "firstname") {
+        if (this.state.postUpdateprofile.firstname == "") {
+          this.onValueChange("isvalidfirstname", false);
+          this.setState({ isvalidfirstname: false });
+        }
+        else {
+          if (this.state.postUpdateprofile.firstname.length >= 3 && this.state.postUpdateprofile.firstname.length <= 50) {
+            this.onValueChange("isvalidfirstname", true);
+            this.setState({ isvalidfirstname: true });
+          }
+          else {
+            ToastAndroid.show("First Name should have min 3 chars and max 50", ToastAndroid.SHORT);
+            this.onValueChange("isvalidfirstname", false);
+            this.setState({ isvalidfirstname: false });
+          }
+        }
+      }
+
+      if (fieldName == "lastname") {
+        if (this.state.postUpdateprofile.lastname == "") {
+          this.onValueChange("isvalidlastname", false);
+          this.setState({ isvalidlastname: false });
+        }
+        else {
+          if (this.state.postUpdateprofile.lastname.length >= 3 && this.state.postUpdateprofile.lastname.length <= 50) {
+            this.onValueChange("isvalidlastname", true);
+            this.setState({ isvalidlastname: true });
+          }
+          else {
+            ToastAndroid.show("Last Name should have min 3 chars and max 50", ToastAndroid.SHORT);
+            this.onValueChange("isvalidlastname", false);
+            this.setState({ isvalidlastname: false });
+          }
+        }
+      }
+      if (fieldName == "address") {
         if (this.state.postUpdateprofile.address == "") {
           this.onValueChange("isvalidaddress", false);
           this.setState({ isvalidaddress: false });
@@ -80,7 +121,7 @@ class UpdateProfileView extends Component {
             this.setState({ isvalidaddress: true });
           }
           else {
-            ToastAndroid.show("First Name should have min 3 chars and max 50", ToastAndroid.SHORT);
+            ToastAndroid.show("Address should have min 3 chars and max 50", ToastAndroid.SHORT);
             this.onValueChange("isvalidaddress", false);
             this.setState({ isvalidaddress: false });
           }
@@ -122,11 +163,35 @@ class UpdateProfileView extends Component {
 
   validatePersonalDetail=()=>{
     //====== title ======//
+   let isvalidfirstname;
+   let isvalidlastname;
    let isvalidaddress;
    let isvalidphonenumber;
   
 
    let allInputsValidated;
+
+   if (this.state.postUpdateprofile.firstname == '') {
+    isvalidfirstname = false;
+   } else {
+     if (this.state.postUpdateprofile.firstname.length >= 3 && this.state.postUpdateprofile.firstname.length <= 50) {
+      isvalidfirstname = true;
+     } else {
+       ToastAndroid.show("First Name should have min 3 chars and max 50", ToastAndroid.SHORT);
+       isvalidfirstname = false;
+     }
+   }
+
+   if (this.state.postUpdateprofile.lastname == '') {
+    isvalidlastname = false;
+   } else {
+     if (this.state.postUpdateprofile.lastname.length >= 3 && this.state.postUpdateprofile.lastname.length <= 50) {
+      isvalidlastname = true;
+     } else {
+       ToastAndroid.show("Last Name should have min 3 chars and max 50", ToastAndroid.SHORT);
+       isvalidlastname = false;
+     }
+   }
    
    if (this.state.postUpdateprofile.address == '') {
     isvalidaddress = false;
@@ -134,7 +199,7 @@ class UpdateProfileView extends Component {
      if (this.state.postUpdateprofile.address.length >= 3 && this.state.postUpdateprofile.address.length <= 50) {
       isvalidaddress = true;
      } else {
-       ToastAndroid.show("First Name should have min 3 chars and max 50", ToastAndroid.SHORT);
+       ToastAndroid.show("Address should have min 3 chars and max 50", ToastAndroid.SHORT);
        isvalidaddress = false;
      }
    }
@@ -159,7 +224,7 @@ class UpdateProfileView extends Component {
       }
   }
 
-  if(isvalidaddress && 
+  if(isvalidfirstname && isvalidlastname && isvalidaddress && 
     isvalidphonenumber ) 
    {
       allInputsValidated = true;
@@ -170,6 +235,8 @@ class UpdateProfileView extends Component {
    }
    
    this.setState({ 
+    isvalidfirstname: isvalidfirstname,
+    isvalidlastname: isvalidlastname,
     isvalidaddress: isvalidaddress,
     isvalidphonenumber: isvalidphonenumber,
     });
@@ -197,6 +264,30 @@ class UpdateProfileView extends Component {
                         <View style={[UpdateProfileStyles.ServicesOoptionBox, UpdateProfileStyles.ContianerHeight]}>
                             <View>
                                 <View style={UpdateProfileStyles.FormArea}>
+                                    <Text>Firstname</Text>
+                                    <View style={UpdateProfileStyles.TextBoxContainer}>
+                                       
+                                        <TextBoxElement
+                                        placeholder={'Firstname'}
+                                        value={this.state.postUpdateprofile.firstname}
+                                        onChangeText={value => this.onValueChange("firstname", value)}
+                                        isvalidInput={this.state.isvalidfirstname}
+                                        onEndEditing={() => this.validateInputs("firstname")}
+                                        maxLength={50}
+                                        />
+                                    </View>
+                                    <Text>Lastname</Text>
+                                    <View style={UpdateProfileStyles.TextBoxContainer}>
+                                       
+                                        <TextBoxElement
+                                        placeholder={'Lastname'}
+                                        value={this.state.postUpdateprofile.lastname}
+                                        onChangeText={value => this.onValueChange("lastname", value)}
+                                        isvalidInput={this.state.isvalidlastname}
+                                        onEndEditing={() => this.validateInputs("lastname")}
+                                        maxLength={50}
+                                        />
+                                    </View>
                                     <Text>Address</Text>
                                     <View style={UpdateProfileStyles.TextBoxContainer}>
                                        

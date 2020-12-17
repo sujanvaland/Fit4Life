@@ -6,6 +6,7 @@ const ApiConstants = {
     SITEURL:'https://fit4life-293902.uc.r.appspot.com/',
     //API PATH
     LOGINPATH: 'authenticate',
+    SIGNUPPATH:'register',
     ACCOUNTDETAIL:'account',
     PERSONALINFORMATION:'personal-informations',
     USERPLAN:'user-plans',
@@ -13,6 +14,7 @@ const ApiConstants = {
     UPDATEPROFILEIMAGE:'personal-information',
     PAYMENTS:'payments',
     HEALTHPARAMETERS:'user-health-parameters',
+    ALLHEALTHPARAMETER:'health-parameters',
     UPCOMING_EVENTLIST: 'events',
     EVENTLIST: 'event-attendances',
     CUSTOMEREVENTDETAIL: 'events',

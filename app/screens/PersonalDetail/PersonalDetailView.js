@@ -59,6 +59,8 @@ class PersonalDetailView extends Component {
       userplandata = userplan.length > 0 ? userplan[0] : {};
     }
 
+    //console.log(userplandata);
+
 
     return (
       <View style={PersonalDetailstyles.container}>
@@ -108,10 +110,12 @@ class PersonalDetailView extends Component {
                     <Text style={[PersonalDetailstyles.EmailTex, globalStyles.FontRegular]}>{personalinformationdata.address}</Text>
                   </View>
 
-                  <View style={PersonalDetailstyles.CarBbox}>
-                    <Text style={PersonalDetailstyles.CardTitle, globalStyles.FontBold, {textTransform: 'capitalize'}}>{userplandata.plan.name}</Text>
-                    <Text style={PersonalDetailstyles.CardNumber}>{this.getParsedDate(userplandata.startDate)} to {this.getParsedDate(userplandata.expirationDate)}</Text>
-                  </View>
+                  {userplan.length > 0 &&
+                    <View style={PersonalDetailstyles.CarBbox}>
+                      <Text style={PersonalDetailstyles.CardTitle, globalStyles.FontBold, {textTransform: 'capitalize'}}>{userplandata.plan.name}</Text>
+                      <Text style={PersonalDetailstyles.CardNumber}>{this.getParsedDate(userplandata.startDate)} to {this.getParsedDate(userplandata.expirationDate)}</Text>
+                    </View>
+                  }
                 </View>
               </View>
               { accountdetail.authorities[0]=="role_cordinator" &&

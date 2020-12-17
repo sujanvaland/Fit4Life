@@ -1,29 +1,21 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView, ImageBackground, Image, TouchableOpacity } from 'react-native';
-
+import { Picker, Item } from "native-base";
 import AddHealthProfilestyles from './styles';
-import { SliderBox } from "react-native-image-slider-box";
-import { Avatar, Button, IconButton, Card, Title, Paragraph, List } from 'react-native-paper';
 import globalStyles from '../../assets/css/globalStyles';
 import Icon from 'react-native-ionicons';
 import SplashScreen from 'react-native-splash-screen';
 import * as navigationActions from '../../actions/navigationActions';
-
-
 import { TextBoxElement } from '../../components';
-
 
 
 class AddHealthProfileView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
-            images: [
-                // require('../../assets/images/img_slide1.jpg'),
-                // require('../../assets/images/img_slide2.jpg'),
-                // require('../../assets/images/img_slide3.jpg'),
-            ]
+            postData: {
+                healthparameter: ''
+            }
         }
     }
 
@@ -33,21 +25,22 @@ class AddHealthProfileView extends Component {
 
     }
 
-    navigateToAirVelocity = (id) => {
-        // console.log(id);
-        navigationActions.navigateToAirVelocity(id);
-    };
-
-    navigateToAboutus = () => {
-        navigationActions.navigateToAboutus();
+    addhealthparameterValues = (itemValue) => {
+        this.setState(prevState => ({
+            postData: {                   // object that we want to update
+                ...prevState.postData, // keep all other key-value pairs
+                healthparameter: itemValue
+            }
+        }), function () {
+        });
     }
-
 
     render() {
         const image = require('../../assets/img/img_loginback.png');
-        let AddHealthProfileSer = [];
-        if (this.props.Services) {
-            AddHealthProfileSer = this.props.Services;
+        const { allhealthparameter } = this.props;
+        let allhealthparameter_data = [];
+        if (allhealthparameter) {
+            allhealthparameter_data = allhealthparameter;
         }
 
         return (
@@ -66,8 +59,22 @@ class AddHealthProfileView extends Component {
                                 <View style={[AddHealthProfilestyles.WhiteBox, AddHealthProfilestyles.PadTopZero]}>
                                     <View style={AddHealthProfilestyles.HealthDetail}>
                                         <Text style={[AddHealthProfilestyles.DateText, globalStyles.FontRegular]}>01-04-2020</Text>
-                                        <View>
-
+                                        <View style={AddHealthProfilestyles.TimePickerbtn}>
+                                            <Item picker style={AddHealthProfilestyles.TimePicker}>
+                                                <Picker
+                                                    selectedValue={this.state.postData.healthparameter}
+                                                    style={AddHealthProfilestyles.PickerDropdownFloor}
+                                                    mode="dropdown"
+                                                    iosIcon={<Icon name="ios-arrow-down" style={{fontSize:15, color:'#333333'}}/>}
+                                                    placeholder="Select Health Parameter"
+                                                    onValueChange={(itemValue) => this.addhealthparameterValues(itemValue)}
+                                                >
+                                                    <Picker.Item value="" label="Select Health Parameter" />
+                                                    {allhealthparameter_data.map((item, i) => {
+                                                        return <Picker.Item key={i} value={item.name} label={item.name} />
+                                                    })}
+                                                </Picker>
+                                            </Item>
                                         </View>
                                         <View style={AddHealthProfilestyles.textBoxContent}>
                                             <TextBoxElement
