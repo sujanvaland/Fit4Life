@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, ImageBackground, Image, StatusBar, TouchableOpacity } from 'react-native';
-
+import { View, Text, ScrollView, ImageBackground, Image, StatusBar, TouchableOpacity, RefreshControl } from 'react-native';
 import Contractsstyles from './styles';
-import { SliderBox } from "react-native-image-slider-box";
-import { Avatar, Button, IconButton, Card, Title, Paragraph, List } from 'react-native-paper';
 import globalStyles from '../../assets/css/globalStyles';
-import Icon from 'react-native-ionicons';
 import SplashScreen from 'react-native-splash-screen';
 import * as navigationActions from '../../actions/navigationActions';
 
@@ -14,36 +10,33 @@ import * as navigationActions from '../../actions/navigationActions';
 class ContractsView extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            images: [
-                // require('../../assets/images/img_slide1.jpg'),
-                // require('../../assets/images/img_slide2.jpg'),
-                // require('../../assets/images/img_slide3.jpg'),
-            ]
-        }
+        this.state = {}
     }
-
 
     componentDidMount() {
         SplashScreen.hide();
 
     }
 
-    navigateToAirVelocity = (id) => {
-        // console.log(id);
-        navigationActions.navigateToAirVelocity(id);
-    };
-
-    navigateToAboutus = () => {
-        navigationActions.navigateToAboutus();
+    // ============ on page refresh============ //
+    _refreshContracts = () => {
+        // you must return Promise everytime
+        const { getContracts } = this.props;
+        return new Promise((resolve) => {
+        setTimeout(() => {
+            getContracts();
+            resolve();
+        }, 500)
+        })
     }
-
 
     render() {
         const image = require('../../assets/img/img_loginback.png');
-        let ContractsSer = [];
-        if (this.props.Services) {
-            ContractsSer = this.props.Services;
+        const { contracts } = this.props;
+
+        let contractsdata = [];
+        if (contracts) {
+            contractsdata = contracts;
         }
 
         return (
@@ -60,7 +53,9 @@ class ContractsView extends Component {
                     networkActivityIndicatorVisible={true}
                 />
                 <ImageBackground source={image} style={globalStyles.ImageBack} resizeMode="cover">
-                    <ScrollView>
+                    <ScrollView refreshControl={
+                        <RefreshControl onRefresh={() => { this._refreshContracts() }} />
+                        }>
                         <View style={Contractsstyles.InnerContainer}>
                             <View style={[Contractsstyles.ContainerMargin, Contractsstyles.MarBtm20]}>
                                 <View style={Contractsstyles.InnerTitle}>
@@ -71,32 +66,7 @@ class ContractsView extends Component {
 
                                 </View>
 
-                                <View style={Contractsstyles.WhiteBox}>
-                                    <Text style={[Contractsstyles.ContcatsTitle, globalStyles.FontLight]}>Health Conditions</Text>
-                                    <Text style={[Contractsstyles.EventDesc, globalStyles.FontRegular]}>Description of contract</Text>
-                                    <TouchableOpacity style={Contractsstyles.OutlineBtn}>
-                                        <Text style={Contractsstyles.BtnlinkText}>Detail</Text>
-                                    </TouchableOpacity>
-                                </View>
-
-                                <View style={Contractsstyles.WhiteBox}>
-                                    <Text style={[Contractsstyles.ContcatsTitle, globalStyles.FontLight]}>Equipment Use</Text>
-                                    <Text style={[Contractsstyles.EventDesc, globalStyles.FontRegular]}>Description of contract</Text>
-                                    <TouchableOpacity style={Contractsstyles.OutlineBtn}>
-                                        <Text style={Contractsstyles.BtnlinkText}>Detail</Text>
-                                    </TouchableOpacity>
-                                </View>
-
-                                <View style={Contractsstyles.WhiteBox}>
-                                    <Text style={[Contractsstyles.ContcatsTitle, globalStyles.FontLight]}>Covid 19 </Text>
-                                    <Text style={[Contractsstyles.EventDesc, globalStyles.FontRegular]}>Description of contract</Text>
-                                    <View style={Contractsstyles.FlexRow}>
-                                        <TouchableOpacity style={Contractsstyles.FillBtn}>
-                                            <Text style={Contractsstyles.FillBtnlinkText}>Signed</Text>
-                                        </TouchableOpacity>
-                                        <Text style={[Contractsstyles.EventDesc, globalStyles.FontRegular]}>06:00 08/04/2020</Text>
-                                    </View>
-                                </View>
+                                {this.rendercontractslist()}
                             </View>
 
                         </View>
@@ -104,6 +74,34 @@ class ContractsView extends Component {
                 </ImageBackground>
             </View >
         );
+    }
+
+    rendercontractslist = () => {
+        let { login_token, contracts } = this.props;
+        let contractsdata = []
+        if (contracts) {
+          contractsdata = contracts;
+        }
+        let items = [];
+        contractsdata.forEach(item => {
+          //console.log(item);
+            items.push(
+                <View key={item.id} style={Contractsstyles.WhiteBox}>
+                    <Text style={[Contractsstyles.ContcatsTitle, globalStyles.FontLight]}>Covid 19 </Text>
+                    <Text style={[Contractsstyles.EventDesc, globalStyles.FontRegular]}>Description of contract</Text>
+                    <TouchableOpacity style={Contractsstyles.OutlineBtn}>
+                        <Text style={Contractsstyles.BtnlinkText}>Detail</Text>
+                    </TouchableOpacity>
+                    <View style={Contractsstyles.FlexRow}>
+                        <TouchableOpacity style={Contractsstyles.FillBtn}>
+                            <Text style={Contractsstyles.FillBtnlinkText}>Signed</Text>
+                        </TouchableOpacity>
+                        <Text style={[Contractsstyles.EventDesc, globalStyles.FontRegular]}>06:00 08/04/2020</Text>
+                    </View>
+                </View>) //get data from AccordianElement components
+        });
+          
+        return items;
     }
 }
 

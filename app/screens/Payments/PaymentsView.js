@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, ImageBackground, Image, RefreshControl } from 'react-native';
-
 import Paymentsstyles from './styles';
-import { SliderBox } from "react-native-image-slider-box";
-import { Avatar, Button, IconButton, Card, Title, Paragraph, List } from 'react-native-paper';
-import globalStyles from '../../assets/css/globalStyles';
-import Icon from 'react-native-ionicons';
 import SplashScreen from 'react-native-splash-screen';
-import * as navigationActions from '../../actions/navigationActions';
 
 
 
@@ -129,7 +123,7 @@ class PaymentsView extends Component {
         });
           
         return items;
-      }
+    }
 }
 
 export default PaymentsView;

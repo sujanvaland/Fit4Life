@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { get } from 'lodash';
-import { View, Text, Image, TouchableOpacity, ToastAndroid} from 'react-native';
+import { View, Text, Image, TouchableOpacity} from 'react-native';
 import { ListItem, Radio } from "native-base";
 import { OverlayActivityIndicatorElement } from "../../components";
 import EditProfileImageStyles from './EditProfileImageStyles';
@@ -14,6 +14,7 @@ var RNFS = require('react-native-fs');
 import ImagePicker from 'react-native-image-crop-picker';
 import * as navigationActions from 'app/actions/navigationActions';
 import AsyncStorage from '@react-native-community/async-storage';
+import Toast from 'react-native-simple-toast';
 
 
 class EditProfileImageView extends Component {
@@ -76,7 +77,7 @@ class EditProfileImageView extends Component {
         this._setCapturePhotoDetails(image);
       }).catch((error) => {
         console.log(error);
-        ToastAndroid.show("User cancelled document picker", ToastAndroid.LONG);
+        Toast.show("User cancelled document picker", Toast.LONG);
       });
     }
 
@@ -89,7 +90,7 @@ class EditProfileImageView extends Component {
         //console.log(image);
         this._setCapturePhotoDetails(image);
       }).catch((error) => {
-        ToastAndroid.show("User cancelled document picker", ToastAndroid.LONG);
+        Toast.show("User cancelled document picker", Toast.LONG);
       });
     }
 
@@ -106,7 +107,7 @@ class EditProfileImageView extends Component {
       || image.mime == "image/pjpeg"
     ) {
       if ((image.size / 1000000) > 10) {
-        ToastAndroid.show("Photo should be of maximum 10 MB", ToastAndroid.SHORT);
+        Toast.show("Photo should be of maximum 10 MB", Toast.SHORT);
         this.setState({
           fileDetail: false,
           fileName: '',
@@ -131,7 +132,7 @@ class EditProfileImageView extends Component {
       }
     }
     else {
-      ToastAndroid.show("Invalid Photo Type", ToastAndroid.LONG);
+      Toast.show("Invalid Photo Type", Toast.LONG);
     }
   }
 
@@ -208,7 +209,7 @@ class EditProfileImageView extends Component {
       });
       //console.log(res);
       if (res.Status === "1") {
-        ToastAndroid.show("Profile Image updated successfully.", ToastAndroid.LONG);
+        Toast.show("Profile Image updated successfully.", Toast.LONG);
         this._storeData("customerimage",res.customerimage);
         this.setState({
           uploadPer: 0,
@@ -219,13 +220,13 @@ class EditProfileImageView extends Component {
         //this.navigateToMyAccount();
       }
       else {
-        ToastAndroid.show(res.Message, ToastAndroid.LONG);
+        Toast.show(res.Message, Toast.LONG);
         this.deleteFile();
       }
     })
       .catch((err) => {
         console.log(err);
-        ToastAndroid.show("Failed uploading file", ToastAndroid.SHORT);
+        Toast.show("Failed uploading file", Toast.SHORT);
         this.deleteFile();
       });
   }

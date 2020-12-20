@@ -111,9 +111,33 @@ export  function updateUserProfile(profiledetail) {
   );
 }
 
-export  async function loadAllHealthparameter(action) {
+export  function loadAllHealthparameter(action) {
   return Api(
       ApiConstants.ALLHEALTHPARAMETER,
+      null,
+      'get',
+      null
+  );
+}
+
+export  async function addtohealthparameter(action) {
+  let userId =  await retrieveData("userId");
+  return Api(
+      ApiConstants.ADDTOHEALTHPARAMETER,
+      {
+        userId: userId,
+        healthParameterId:action.healthparameteritem.healthparameter,
+        value:action.healthparameteritem.healthparameterValue
+      },
+      'post',
+      null
+  );
+}
+
+export  async function getContracts(action) {
+  let userId =  await retrieveData("userId");
+  return Api(
+      ApiConstants.CONTRACTS + '?userId.equals=' + userId,
       null,
       'get',
       null

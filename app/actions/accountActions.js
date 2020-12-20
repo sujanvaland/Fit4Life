@@ -205,3 +205,42 @@ export function loadAllHealthparameterFailed(response) {
         response
     };
 }
+
+export function addToHealthParameter(healthparameteritem) {
+    return {
+        type: types.ADDTOHEALTHPARAMETER_REQUEST,
+        healthparameteritem
+    };
+}
+export function onaddToHealthParameterResponse(response) {
+    return {
+        type: types.ADDTOHEALTHPARAMETER_RESPONSE,
+        response
+    };
+}
+export function onaddToHealthParameterFailedResponse(response) {
+    return {
+        type: types.ADDTOHEALTHPARAMETERFAILED_RESPONSE,
+        response
+    };
+}
+
+export function getContracts() {
+    return {
+        type: types.GETCONTRACTS_REQUEST
+    };
+}
+
+export function ongetContractsResponse(response) {
+    return {
+        type: types.GETCONTRACTS_RESPONSE,
+        response
+    };
+}
+
+export function getContractsFailed(response) {
+    return {
+        type: types.GETCONTRACTS_FAILED,
+        response
+    };
+}

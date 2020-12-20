@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import { ToastAndroid,View, Text, TextInput, Button, TouchableOpacity, TouchableHighlight, Picker, Image, ScrollView, FlatList, } from 'react-native';
+import {View, Text, TextInput, Button, TouchableOpacity, TouchableHighlight, Picker, Image, ScrollView, FlatList, } from 'react-native';
 import UpdateProfileStyles from './UpdateProfileStyles';
 import globalStyles from '../../assets/css/globalStyles';
 import * as navigationActions from '../../actions/navigationActions';
@@ -7,11 +7,7 @@ import { get } from 'lodash';
 import Icon from 'react-native-ionicons';
 import Modal from 'react-native-modal';
 import { TextBoxElement, OverlayActivityIndicatorElement } from '../../components';
-
-
-
-
-
+import Toast from 'react-native-simple-toast';
 
 class UpdateProfileView extends Component {
     constructor(props) {
@@ -86,7 +82,7 @@ class UpdateProfileView extends Component {
             this.setState({ isvalidfirstname: true });
           }
           else {
-            ToastAndroid.show("First Name should have min 3 chars and max 50", ToastAndroid.SHORT);
+            Toast.show("First Name should have min 3 chars and max 50", Toast.SHORT);
             this.onValueChange("isvalidfirstname", false);
             this.setState({ isvalidfirstname: false });
           }
@@ -104,7 +100,7 @@ class UpdateProfileView extends Component {
             this.setState({ isvalidlastname: true });
           }
           else {
-            ToastAndroid.show("Last Name should have min 3 chars and max 50", ToastAndroid.SHORT);
+            Toast.show("Last Name should have min 3 chars and max 50", Toast.SHORT);
             this.onValueChange("isvalidlastname", false);
             this.setState({ isvalidlastname: false });
           }
@@ -121,7 +117,7 @@ class UpdateProfileView extends Component {
             this.setState({ isvalidaddress: true });
           }
           else {
-            ToastAndroid.show("Address should have min 3 chars and max 50", ToastAndroid.SHORT);
+            Toast.show("Address should have min 3 chars and max 50", Toast.SHORT);
             this.onValueChange("isvalidaddress", false);
             this.setState({ isvalidaddress: false });
           }
@@ -141,13 +137,13 @@ class UpdateProfileView extends Component {
               this.setState({ isvalidphonenumber: true });
             }
             else {
-              ToastAndroid.show("Phone Number length should be 8 to 15 digits", ToastAndroid.SHORT);
+              Toast.show("Phone Number length should be 8 to 15 digits", Toast.SHORT);
               this.onValueChange("isvalidphonenumber", false);
               this.setState({ isvalidphonenumber: false });
             }
           }
           else {
-            ToastAndroid.show("Phone Number is not valid", ToastAndroid.SHORT);
+            Toast.show("Phone Number is not valid", Toast.SHORT);
             this.onValueChange("isvalidphonenumber", false);
             this.setState({ isvalidphonenumber: false });
           }
@@ -177,7 +173,7 @@ class UpdateProfileView extends Component {
      if (this.state.postUpdateprofile.firstname.length >= 3 && this.state.postUpdateprofile.firstname.length <= 50) {
       isvalidfirstname = true;
      } else {
-       ToastAndroid.show("First Name should have min 3 chars and max 50", ToastAndroid.SHORT);
+       Toast.show("First Name should have min 3 chars and max 50", Toast.SHORT);
        isvalidfirstname = false;
      }
    }
@@ -188,7 +184,7 @@ class UpdateProfileView extends Component {
      if (this.state.postUpdateprofile.lastname.length >= 3 && this.state.postUpdateprofile.lastname.length <= 50) {
       isvalidlastname = true;
      } else {
-       ToastAndroid.show("Last Name should have min 3 chars and max 50", ToastAndroid.SHORT);
+       Toast.show("Last Name should have min 3 chars and max 50", Toast.SHORT);
        isvalidlastname = false;
      }
    }
@@ -199,7 +195,7 @@ class UpdateProfileView extends Component {
      if (this.state.postUpdateprofile.address.length >= 3 && this.state.postUpdateprofile.address.length <= 50) {
       isvalidaddress = true;
      } else {
-       ToastAndroid.show("Address should have min 3 chars and max 50", ToastAndroid.SHORT);
+       Toast.show("Address should have min 3 chars and max 50", Toast.SHORT);
        isvalidaddress = false;
      }
    }
@@ -214,12 +210,12 @@ class UpdateProfileView extends Component {
           isvalidphonenumber = true;
         }
         else{
-          ToastAndroid.show("Phone Number have min 8 chars and max 15 digits", ToastAndroid.SHORT);
+          Toast.show("Phone Number have min 8 chars and max 15 digits", Toast.SHORT);
           isvalidphonenumber = false;
         }
       }
       else{
-          ToastAndroid.show("Phone Number is not valid", ToastAndroid.SHORT);
+          Toast.show("Phone Number is not valid", Toast.SHORT);
           isvalidphonenumber = false;
       }
   }
@@ -231,7 +227,7 @@ class UpdateProfileView extends Component {
    }
   else
    {
-      ToastAndroid.show("Please check all fields", ToastAndroid.SHORT);
+      Toast.show("Please check all fields", Toast.SHORT);
    }
    
    this.setState({ 

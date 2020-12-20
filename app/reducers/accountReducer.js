@@ -143,5 +143,29 @@ export const accountReducer = createReducer(initialState, {
             allhealthparameter:null
         };
     },
+    [types.ADDTOHEALTHPARAMETER_RESPONSE](state, action) {
+        return {
+            ...state,
+            addtohealthparameterstatus: action.response,
+        };
+    },
+    [types.ADDTOHEALTHPARAMETERFILED_RESPONSE](state) {
+        return { 
+            ...state,
+            addtohealthparameterstatus:null
+        };
+    },
+    [types.GETCONTRACTS_RESPONSE](state,action) {
+        return {
+            ...state,
+            contracts:action.response
+        };
+    },
+    [types.GETCONTRACTS_FAILED](state) {
+        return {
+            ...state,
+            contracts:null
+        };
+    },
     
 });

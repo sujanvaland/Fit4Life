@@ -191,13 +191,14 @@ const CalendarApp = createStackNavigator({
     },
 });
 
+
 const HealthProfileApp = createStackNavigator({
     HealthProfile: {
         screen: HealthProfile,
         navigationOptions: ({ navigation }) => {
             return {
                 header: () => (
-                    <HeaderComponent navigation={navigation} menu={true} pagetitle={true} title="Fit4Life" user={false} />
+                    <HeaderComponent navigation={navigation} menu={true} pagetitle={true} title="HealthProfile" user={false} />
                 ),
                 gestureEnabled: true,
             };
@@ -321,7 +322,9 @@ const RNApp = createDrawerNavigator(
         Contracts: {
             screen: ContractsApp,
             navigationOptions: {
-                drawerLabel: () => null,
+                drawerIcon: () => (
+                    <Image source={require('../assets/img/icon_calendar_menu.png')} resizeMode="contain" style={NavigationStyles.MenuIcon} />
+                ),
             },
         },
         Payments: {

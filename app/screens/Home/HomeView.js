@@ -12,6 +12,7 @@ import SplashScreen from 'react-native-splash-screen';
 import * as navigationActions from '../../actions/navigationActions';
 import Modal from "react-native-modal";
 import Styles from '../../config/styles';
+import Toast from 'react-native-simple-toast';
 
 
 
@@ -180,7 +181,7 @@ class HomeView extends Component {
       allSendFeedbackInputsValidated = true;
     }
     else {
-      ToastAndroid.show("Please check all fields", ToastAndroid.SHORT);
+      Toast.show("Please check all fields", Toast.SHORT);
     }
 
     this.setState({

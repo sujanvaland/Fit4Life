@@ -16,8 +16,6 @@ const AddHealthProfilestyles = StyleSheet.create({
     },
     textBoxContent: {
         position: "relative",
-        borderBottomWidth: 1,
-        borderBottomColor: color.COLOR_LIGHTGRAY,
         marginBottom: viewportWidth * 0.05,
 
     },
@@ -181,7 +179,52 @@ const AddHealthProfilestyles = StyleSheet.create({
     },
     HealthDetail: {
         marginVertical: viewportWidth * 0.04
-    }
+    },
+    BorderRed: {
+        borderBottomWidth: 1,
+        borderBottomColor: 'red',
+        borderRadius: viewportWidth * 0.02
+    },
+    BorderGrey: {
+        borderBottomWidth: 1,
+        borderBottomColor: color.COLOR_LIGHTGRAY
+    },
+    flexBox: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: "center",
+    },
+    Mrtop20: {
+        marginTop: 20,
+    },
+    buttonStyle: {
+        fontSize: Typography.FONT_SIZE,
+        textAlign: 'center',
+        color: Styles.color.COLOR_WHITE,
+        fontWeight: Typography.FONT_WEIGHT_BOLD,
+        textTransform: 'none',
+        shadowOpacity: 0,
+        marginTop: viewportWidth * 0.018,
+        height: 50,
+        borderRadius: 100,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        paddingBottom: viewportWidth * 0.01,
+        backgroundColor: color.COLOR_PRIMARY
+    },
+    buttonStyleText: {
+        fontSize: Typography.FONT_SIZE17,
+        //lineHeight:45,
+        textAlign: 'center',
+        color: Styles.color.COLOR_WHITE,
+        fontWeight: Typography.FONT_WEIGHT_BOLD,
+        textTransform: 'none',
+        borderRadius: viewportWidth * 0.009,
+        backgroundColor: color.COLOR_PRIMARY
+    },
 
 });
 

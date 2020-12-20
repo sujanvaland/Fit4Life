@@ -3,9 +3,10 @@ import { Alert } from 'react-native';
 import * as loginActions from 'app/actions/loginActions';
 import * as accountActions from 'app/actions/accountActions';
 import {getAccountDetail,getPersonalInformation,getUserPlan,getPayments,getHealthparameters,updateDeviceToken,changePassword,
-  loadProfileImage,updateUserProfile,loadAllHealthparameter} from 'app/api/methods/accountDetail';
+  loadProfileImage,updateUserProfile,loadAllHealthparameter, addtohealthparameter, getContracts} from 'app/api/methods/accountDetail';
 import * as navigationActions from 'app/actions/navigationActions';
 import AsyncStorage from '@react-native-community/async-storage';
+import Toast from 'react-native-simple-toast';
 
 // Our worker Saga that loads filter
 
@@ -200,6 +201,35 @@ function* loadAllHealthparameterAsync(action) {
   }
 };
 
+function* addToHealthParameterAsync(action) {
+  yield put(loginActions.enableLoader());
+  const response = yield call(addtohealthparameter,action);
+  console.log(response);
+  if (response) {
+      yield put(accountActions.getHealthparameters());
+      yield put(accountActions.onaddToHealthParameterResponse(response));
+      yield put(loginActions.disableLoader({}));
+      yield call(navigationActions.navigateToHealthParameterPage);
+  } else {
+      Toast.show(response.message, Toast.LONG);
+      yield put(accountActions.onaddToHealthParameterFailedResponse(response));
+      yield put(loginActions.disableLoader({}));
+  }
+}
+
+function* getContractsAsync(action) {
+  yield put(loginActions.enableLoader());
+  const response = yield call(getContracts,action);
+  //console.log(response);
+  if (response.length > 0) {
+      yield put(accountActions.ongetContractsResponse(response));
+      yield put(loginActions.disableLoader({}));
+  } else {
+      yield put(accountActions.getContractsFailed(response));
+      yield put(loginActions.disableLoader({}));
+  }
+};
+
 const _storeData = async (key,value) => {
   try {
     await AsyncStorage.setItem(key, value);
@@ -231,5 +261,7 @@ export {
   changePasswordAsync,
   loadprofileimageAsync ,
   updateUserProfileAsync,
-  loadAllHealthparameterAsync
+  loadAllHealthparameterAsync,
+  addToHealthParameterAsync,
+  getContractsAsync
 }

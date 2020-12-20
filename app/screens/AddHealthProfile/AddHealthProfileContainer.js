@@ -57,7 +57,8 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-         loadAllHealthparameter:() => dispatch(accountActions.loadAllHealthparameterRequest())
+         loadAllHealthparameter:() => dispatch(accountActions.loadAllHealthparameterRequest()),
+         addToHealthParameter: (postData) => dispatch(accountActions.addToHealthParameter(postData))
     };
 }
 

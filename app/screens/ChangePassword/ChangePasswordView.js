@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, ImageBackground, Keyboard, KeyboardAvoidingView, ToastAndroid } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ImageBackground, Keyboard, KeyboardAvoidingView } from 'react-native';
 import ChangePasswordStyles from './ChangePasswordStyles';
 import globalStyles from '../../assets/css/globalStyles';
 import PropTypes from 'prop-types';
 import { TextBoxElement, TextBoxElementLogin, TextBoxElementChangepass } from "../../components";
 import Resource_EN from '../../config/Resource_EN';
 import { ScrollView } from 'react-native-gesture-handler';
+import Toast from 'react-native-simple-toast';
 
 class ChangePasswordView extends Component {
   constructor(props) {
@@ -71,7 +72,7 @@ class ChangePasswordView extends Component {
         if (this.state.postChangePassword.oldpassword.length >= 3 && this.state.postChangePassword.oldpassword.length <= 20) {
 
           if (this.state.postChangePassword.oldpassword === this.state.postChangePassword.newpassword) {
-            ToastAndroid.show("Old Password and New Password are same. Please change it.", ToastAndroid.SHORT);
+            Toast.show("Old Password and New Password are same. Please change it.", Toast.SHORT);
             this.setState({ isvalidoldpassword: false });
           }
           else {
@@ -80,7 +81,7 @@ class ChangePasswordView extends Component {
 
         }
         else {
-          ToastAndroid.show("Current Password should have min 3 chars and max 20", ToastAndroid.SHORT);
+          Toast.show("Current Password should have min 3 chars and max 20", Toast.SHORT);
           this.setState({ isvalidoldpassword: false });
         }
       }
@@ -93,7 +94,7 @@ class ChangePasswordView extends Component {
       else {
         if (this.state.postChangePassword.newpassword.length >= 3 && this.state.postChangePassword.newpassword.length <= 20) {
           if (this.state.postChangePassword.oldpassword === this.state.postChangePassword.newpassword) {
-            ToastAndroid.show("Old Password and New Password are same. Please change it.", ToastAndroid.SHORT);
+            Toast.show("Old Password and New Password are same. Please change it.", Toast.SHORT);
             this.setState({ isvalidnewpassword: false });
           }
           else {
@@ -101,7 +102,7 @@ class ChangePasswordView extends Component {
           }
         }
         else {
-          ToastAndroid.show("New Password should have min 3 chars and max 20", ToastAndroid.SHORT);
+          Toast.show("New Password should have min 3 chars and max 20", Toast.SHORT);
           this.setState({ isvalidnewpassword: false });
         }
       }
@@ -118,12 +119,12 @@ class ChangePasswordView extends Component {
             this.setState({ isvalidconfirmpassword: true });
           }
           else {
-            ToastAndroid.show("New Password and Confirm Password are diffrent.", ToastAndroid.SHORT);
+            Toast.show("New Password and Confirm Password are diffrent.", Toast.SHORT);
             this.setState({ isvalidconfirmpassword: false });
           }
         }
         else {
-          ToastAndroid.show("Confirm Password should have min 3 chars and max 20", ToastAndroid.SHORT);
+          Toast.show("Confirm Password should have min 3 chars and max 20", Toast.SHORT);
           this.setState({ isvalidconfirmpassword: false });
         }
       }
@@ -151,7 +152,7 @@ class ChangePasswordView extends Component {
     else {
       if (this.state.postChangePassword.oldpassword.length >= 3 && this.state.postChangePassword.oldpassword.length <= 20) {
         if (this.state.postChangePassword.oldpassword === this.state.postChangePassword.newpassword) {
-          ToastAndroid.show("Old Password and New Password are same. Please change it.", ToastAndroid.SHORT);
+          Toast.show("Old Password and New Password are same. Please change it.", Toast.SHORT);
           isvalidoldpassword = false;
         }
         else {
@@ -159,7 +160,7 @@ class ChangePasswordView extends Component {
         }
       }
       else {
-        ToastAndroid.show("Current Password should have min 3 chars and max 20", ToastAndroid.SHORT);
+        Toast.show("Current Password should have min 3 chars and max 20", Toast.SHORT);
         isvalidoldpassword = false;
       }
     }
@@ -171,7 +172,7 @@ class ChangePasswordView extends Component {
     else {
       if (this.state.postChangePassword.newpassword.length >= 3 && this.state.postChangePassword.newpassword.length <= 20) {
         if (this.state.postChangePassword.oldpassword === this.state.postChangePassword.newpassword) {
-          ToastAndroid.show("Old Password and New Password are same. Please change it.", ToastAndroid.SHORT);
+          Toast.show("Old Password and New Password are same. Please change it.", Toast.SHORT);
           isvalidnewpassword = false;
         }
         else {
@@ -179,7 +180,7 @@ class ChangePasswordView extends Component {
         }
       }
       else {
-        ToastAndroid.show("New Password should have min 3 chars and max 20", ToastAndroid.SHORT);
+        Toast.show("New Password should have min 3 chars and max 20", Toast.SHORT);
         isvalidnewpassword = false;
       }
     }
@@ -195,12 +196,12 @@ class ChangePasswordView extends Component {
           isvalidconfirmpassword = true;
         }
         else {
-          ToastAndroid.show("New Password and Confirm Password are diffrent.", ToastAndroid.SHORT);
+          Toast.show("New Password and Confirm Password are diffrent.", Toast.SHORT);
           isvalidconfirmpassword = false;
         }
       }
       else {
-        ToastAndroid.show("Confirm Password should have min 3 chars and max 20", ToastAndroid.SHORT);
+        Toast.show("Confirm Password should have min 3 chars and max 20", Toast.SHORT);
         isvalidconfirmpassword = false;
       }
     }
@@ -209,7 +210,7 @@ class ChangePasswordView extends Component {
       allInputsValidated = true;
     }
     else {
-      ToastAndroid.show("Please check all fields", ToastAndroid.SHORT);
+      Toast.show("Please check all fields", Toast.SHORT);
     }
 
     this.setState({

@@ -27,6 +27,10 @@ export function navigateToPersonalDetail(params) {
     NavigationService.navigate('MyProfile', params);
 }
 
+export function navigateToHealthParameterPage(params) {
+    NavigationService.navigate('HealthProfile', params);
+}
+
 export function navigateToAddHealthProfile(params) {
     NavigationService.navigate('AddHealthProfile', params);
 }

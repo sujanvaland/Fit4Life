@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { get } from 'lodash';
-import { View, Text, Image, TouchableOpacity, ImageBackground, KeyboardAvoidingView, ToastAndroid, StatusBar } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ImageBackground, KeyboardAvoidingView, StatusBar } from 'react-native';
 import styles from './signupStyles';
 import globalStyles from '../../assets/css/globalStyles';
 import Resource_EN from '../../config/Resource_EN';
@@ -11,6 +11,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 import SplashScreen from 'react-native-splash-screen';
 import * as navigationActions from '../../actions/navigationActions';
+import Toast from 'react-native-simple-toast';
 
 class SignUpView extends Component {
 
@@ -107,7 +108,7 @@ class SignUpView extends Component {
           this.setState({ isvalidfirstname: true });
         }
         else {
-          ToastAndroid.show("firstname should have min 3 chars and max 50", ToastAndroid.SHORT);
+          Toast.show("firstname should have min 3 chars and max 50", Toast.SHORT);
           this.updateState("isvalidfirstname", false);
           this.setState({ isvalidfirstname: false });
         }
@@ -125,7 +126,7 @@ class SignUpView extends Component {
           this.setState({ isvalidlastname: true });
         }
         else {
-          ToastAndroid.show("lastname should have min 3 chars and max 50", ToastAndroid.SHORT);
+          Toast.show("lastname should have min 3 chars and max 50", Toast.SHORT);
           this.updateState("isvalidlastname", false);
           this.setState({ isvalidlastname: false });
         }
@@ -143,7 +144,7 @@ class SignUpView extends Component {
           this.setState({ isvalidemail: true });
         }
         else {
-          ToastAndroid.show("Invalid Email", ToastAndroid.SHORT);
+          Toast.show("Invalid Email", Toast.SHORT);
           this.updateState("isvalidemail", false);
           this.setState({ isvalidemail: false });
         }
@@ -161,7 +162,7 @@ class SignUpView extends Component {
           this.setState({ isvalidpassword: true });
         }
         else {
-          ToastAndroid.show("Password must be min 8 chars", ToastAndroid.SHORT);
+          Toast.show("Password must be min 8 chars", Toast.SHORT);
           this.updateState("isvalidpassword", false);
           this.setState({ isvalidpassword: false });
         }
