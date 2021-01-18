@@ -40,6 +40,14 @@ async function CallApi(params,path,method){
         }
       }
     }
+    else if(path == ApiConstants.UPDATEUSERPROFILE)
+    {
+      console.log("In Update Profile");
+      data = new FormData();
+      for (var key in params) {
+        data.append(key, params[key]);
+      }
+    }
     else
     {
       data = JSON.stringify(params);
@@ -60,6 +68,10 @@ async function CallApi(params,path,method){
     if(path == ApiConstants.LOGIN)
     {
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    }
+    else if(path == ApiConstants.UPDATEUSERPROFILE)
+    {
+      xhr.setRequestHeader("Authorization", "Bearer "+login_token);
     }
     else
     {

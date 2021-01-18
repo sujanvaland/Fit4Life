@@ -167,5 +167,18 @@ export const accountReducer = createReducer(initialState, {
             contracts:null
         };
     },
+
+    [types.SIGNCONTRACT_RESPONSE](state, action) {
+        return {
+            ...state,
+            signcontractstatus: action.response,
+        };
+    },
+    [types.SIGNCONTRACTFILED_RESPONSE](state) {
+        return { 
+            ...state,
+            signcontractstatus:null
+        };
+    },
     
 });

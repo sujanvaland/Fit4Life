@@ -103,8 +103,8 @@ export  function updateUserProfile(profiledetail) {
         firstName:profiledetail.profiledetail.firstname,
         lastName:profiledetail.profiledetail.lastname,
         address:profiledetail.profiledetail.address,
-        phoneNumber:profiledetail.profiledetail.phonenumber,
-        profilePictureFile:""
+        phoneNumber:profiledetail.profiledetail.phonenumber
+        //profilePictureFile:null
       },
       'post',
       null
@@ -140,6 +140,15 @@ export  async function getContracts(action) {
       ApiConstants.CONTRACTS + '?userId.equals=' + userId,
       null,
       'get',
+      null
+  );
+}
+
+export  async function signcontract(action) {
+  return Api(
+      ApiConstants.SIGNCONTRACT + '/' + action.contractID,
+      null,
+      'post',
       null
   );
 }

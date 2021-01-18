@@ -244,3 +244,22 @@ export function getContractsFailed(response) {
         response
     };
 }
+
+export function signContract(contractID) {
+    return {
+        type: types.SIGNCONTRACT_REQUEST,
+        contractID
+    };
+}
+export function onsignContractResponse(response) {
+    return {
+        type: types.SIGNCONTRACT_RESPONSE,
+        response
+    };
+}
+export function onsignContractFailedResponse(response) {
+    return {
+        type: types.SIGNCONTRACTFAILED_RESPONSE,
+        response
+    };
+}

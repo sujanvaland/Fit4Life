@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 import * as loginActions from 'app/actions/loginActions';
 import * as accountActions from 'app/actions/accountActions';
 import {getAccountDetail,getPersonalInformation,getUserPlan,getPayments,getHealthparameters,updateDeviceToken,changePassword,
-  loadProfileImage,updateUserProfile,loadAllHealthparameter, addtohealthparameter, getContracts} from 'app/api/methods/accountDetail';
+  loadProfileImage,updateUserProfile,loadAllHealthparameter, addtohealthparameter, getContracts, signcontract} from 'app/api/methods/accountDetail';
 import * as navigationActions from 'app/actions/navigationActions';
 import AsyncStorage from '@react-native-community/async-storage';
 import Toast from 'react-native-simple-toast';
@@ -153,25 +153,25 @@ function* loadprofileimageAsync(action) {
 function* updateUserProfileAsync(action) {
   yield put(loginActions.enableLoader());
   //how to call api
-  
   const response = yield call(updateUserProfile,action);
-  console.log(response);
-  if (response) {
-
-      Alert.alert(
-          'Success',
-          'Profile Updated Successfully.',
-          [
-            {
-              text: "Ok", style: 'destructive'
-            }
-          ]
-        );
+  //console.log(response);
+  if (response?.status != "400") {
+      // Alert.alert(
+      //     'Success',
+      //     'Profile Updated Successfully.',
+      //     [
+      //       {
+      //         text: "Ok", style: 'destructive'
+      //       }
+      //     ]
+      //   );
+      yield put(accountActions.onProfileUpdatedResponse(response));
+      _storeData("firstname",response.user.firstName);
+      _storeData("lastname",response.user.lastName);
       yield put(accountActions.getAccountDetail());
       yield put(accountActions.getPersonalInformation());
-      yield put(accountActions.onProfileUpdatedResponse(response));
+      navigationActions.navigateToPersonalDetail();
       yield put(loginActions.disableLoader({}));
-      
       //console.log(response);
   } else {
   
@@ -230,6 +230,21 @@ function* getContractsAsync(action) {
   }
 };
 
+function* signContractAsync(action) {
+  yield put(loginActions.enableLoader());
+  const response = yield call(signcontract,action);
+  console.log(response);
+  if (response?.status != "400") {
+      yield put(accountActions.getContracts());
+      yield put(accountActions.onsignContractResponse(response));
+      yield put(loginActions.disableLoader({}));
+  } else {
+      Toast.show(response.title, Toast.LONG);
+      yield put(accountActions.onsignContractFailedResponse(response));
+      yield put(loginActions.disableLoader({}));
+  }
+}
+
 const _storeData = async (key,value) => {
   try {
     await AsyncStorage.setItem(key, value);
@@ -263,5 +278,6 @@ export {
   updateUserProfileAsync,
   loadAllHealthparameterAsync,
   addToHealthParameterAsync,
-  getContractsAsync
+  getContractsAsync,
+  signContractAsync
 }

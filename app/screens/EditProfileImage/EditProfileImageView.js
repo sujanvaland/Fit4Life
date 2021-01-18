@@ -31,10 +31,10 @@ class EditProfileImageView extends Component {
     }
   }
 
-  navigateToMyAccount = () => {
+  navigateToPersonalDetail = () => {
     // const { loadProfileImage } = this.props;
     // loadProfileImage();
-    navigationActions.navigateToMyAccount();
+    navigationActions.navigateToPersonalDetail();
   }
 
   toggleModal(fieldName) {
@@ -138,7 +138,12 @@ class EditProfileImageView extends Component {
 
   TryUploadFile = async () => {
 
-    const { login_token,customerguid } = this.props;
+    const { login_token,personalinformation } = this.props;
+
+    let personalinformationdata = {};
+    if (personalinformation) {
+      personalinformationdata = personalinformation.length > 0 ? personalinformation[0] : {};
+    }
     let filtoupload = this.state.fileUrl;
 
     const imagePath = `${RNFS.DocumentDirectoryPath}/${new Date().toISOString()}.jpg`.replace(/:/g, '-');
@@ -165,7 +170,7 @@ class EditProfileImageView extends Component {
     var uploadUrl = URL + "/" + ApiConstants.UPDATEPROFILEIMAGE;
     var files = [
       {
-        name: 'profilePictureUrl',
+        name: 'profilePictureURL',
         filename: this.state.fileName,
         filepath: imagePath,
         filetype: this.state.fileType
@@ -194,10 +199,12 @@ class EditProfileImageView extends Component {
       headers: {
         'Accept': 'application/json',
         'Authorization': 'Bearer '+login_token,
-        'customerguid': customerguid,
       },
       fields: {
-        'userguid': customerguid
+        'firstName':personalinformationdata.user.firstName,
+        'lastName':personalinformationdata.user.lastName,
+        'address':personalinformationdata.address,
+        'phoneNumber':personalinformationdata.phoneNumber
       },
       begin: uploadBegin,
       progress: uploadProgress
@@ -208,16 +215,16 @@ class EditProfileImageView extends Component {
         tempLoading: true
       });
       //console.log(res);
-      if (res.Status === "1") {
+      if (res?.status != "400") {
         Toast.show("Profile Image updated successfully.", Toast.LONG);
-        this._storeData("customerimage",res.customerimage);
+        this._storeData("customerimage",res.profilePictureURL);
         this.setState({
           uploadPer: 0,
           uploading: false,
           tempLoading: true
         });
         this.deleteFile();
-        //this.navigateToMyAccount();
+        this.navigateToPersonalDetail();
       }
       else {
         Toast.show(res.Message, Toast.LONG);
@@ -264,8 +271,9 @@ class EditProfileImageView extends Component {
     }
     
     
-    let profileImgPath = personalinformationdata.profilepictureurl;
-    console.log(profileImgPath);
+    let profileImgPath = personalinformationdata.profilePictureURL;
+    // console.log(personalinformationdata);
+    // console.log(profileImgPath);
     return (
         <View style={globalStyles.innerContainer}>
           {
@@ -276,12 +284,12 @@ class EditProfileImageView extends Component {
             <View style={EditProfileImageStyles.editprofileimageInner}>
               <View style={EditProfileImageStyles.ImgContainer}>
                 {
-                  (personalinformationdata.profilepictureurl != '' && personalinformationdata.profilepictureurl != undefined) &&
+                  (personalinformationdata.profilePictureURL != '' && personalinformationdata.profilePictureURL != undefined) &&
                   <Image source={{ uri: profileImgPath }} resizeMode="contain" style={EditProfileImageStyles.profileImg} />
                 }
 
                 {
-                  (personalinformationdata.profilepictureurl == '' || personalinformationdata.profilepictureurl == undefined) &&
+                  (personalinformationdata.profilePictureURL == '' || personalinformationdata.profilePictureURL == undefined) &&
                   <Image source={require('../../assets/img/img_avtar.jpg')} resizeMode="contain" style={EditProfileImageStyles.profileImg}/>
                 }
                 

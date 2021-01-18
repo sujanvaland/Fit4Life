@@ -60,6 +60,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         getContracts: () => dispatch(accountActions.getContracts()),
+        signContract: (contractID) => dispatch(accountActions.signContract(contractID)),
     };
 }
 

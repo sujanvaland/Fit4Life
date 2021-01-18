@@ -90,7 +90,7 @@ class UserAreaComponent extends Component {
                 {
                     (this.state.customerimage != '' && this.state.customerimage != undefined) &&
                     <View style={NavStyles.ProfilePic}>
-                        <Image source={require('../assets/img/img_avtar.jpg')} resizeMode="contain" style={NavStyles.PrifileImage} />
+                        <Image source={{ uri: this.state.customerimage }} resizeMode="contain" style={NavStyles.PrifileImage} />
                     </View>
                 }
                 <Text style={NavStyles.UserName}>{this.state.firstname} {this.state.lastname}</Text>

@@ -1,9 +1,9 @@
 /* App config for apis
  */
 const ApiConstants = {
-    BASE_URL: 'https://fit4life-293902.uc.r.appspot.com/api',
+    BASE_URL: 'https://fit4life-299406.uc.r.appspot.com/api',
     LANGUAGE: 'language',
-    SITEURL:'https://fit4life-293902.uc.r.appspot.com/',
+    SITEURL:'https://fit4life-299406.uc.r.appspot.com/',
     //API PATH
     LOGINPATH: 'authenticate',
     SIGNUPPATH:'register',
@@ -14,6 +14,7 @@ const ApiConstants = {
     UPDATEPROFILEIMAGE:'personal-information',
     PAYMENTS:'payments',
     CONTRACTS:'user-contracts',
+    SIGNCONTRACT:'user-contracts/sign',
     HEALTHPARAMETERS:'user-health-parameters',
     ALLHEALTHPARAMETER:'health-parameters',
     ADDTOHEALTHPARAMETER:'user-health-parameter/',

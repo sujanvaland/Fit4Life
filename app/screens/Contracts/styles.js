@@ -176,7 +176,14 @@ const Contractsstyles = StyleSheet.create({
 
 
     },
-
+    modalDocument: {
+        backgroundColor: color.COLOR_WHITE,
+        borderRadius: viewportWidth * 0.018,
+        marginVertical: viewportWidth * 0.1
+    },
+    formSpace: {
+        paddingHorizontal: viewportWidth * 0.02
+    }
 });
 
 export default Contractsstyles;

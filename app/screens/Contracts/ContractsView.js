@@ -4,18 +4,37 @@ import Contractsstyles from './styles';
 import globalStyles from '../../assets/css/globalStyles';
 import SplashScreen from 'react-native-splash-screen';
 import * as navigationActions from '../../actions/navigationActions';
+import Modal from "react-native-modal";
 
 
 
 class ContractsView extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            isModalVisible: false,
+            contractDetails:null
+        }
     }
 
     componentDidMount() {
         SplashScreen.hide();
+    }
 
+    toggleModal(contractDetails) {
+        this.setState({ isModalVisible: !this.state.isModalVisible });
+        this.setState({ contractDetails: contractDetails });
+      }
+    
+    closeModal = () => {
+        this.setState({ isModalVisible: false });
+    }
+
+    signContract(contractID) {
+        if(contractID > 0)
+        {
+            this.props.signContract(contractID);
+        }
     }
 
     // ============ on page refresh============ //
@@ -29,6 +48,30 @@ class ContractsView extends Component {
         }, 500)
         })
     }
+
+    getParsedDate(strDate) {
+        //get date formate
+        if (strDate != "") {
+          let month_names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          var strSplitDate = String(strDate).split('T');
+          var dateArray = strSplitDate[0].split('-');
+          let monthint = parseInt(dateArray[1]);
+          let date = month_names[monthint - 1] + " " + dateArray[2] + ", " + dateArray[0];
+          return date;
+        }
+        return "";
+    }
+
+    getParsedTime(strDate) {//get date formate
+        if (strDate != "") {
+          var strSplitTime = String(strDate).split('T');
+          var TimeArray = strSplitTime[1];
+          var newstrSplitTime = String(TimeArray).split('Z');
+          var newtimeArray = newstrSplitTime[0];
+          return newtimeArray;
+        }
+        return "";
+      }
 
     render() {
         const image = require('../../assets/img/img_loginback.png');
@@ -72,6 +115,20 @@ class ContractsView extends Component {
                         </View>
                     </ScrollView>
                 </ImageBackground>
+                <Modal onBackdropPress={() => this.closeModal()}
+                    isVisible={this.state.isModalVisible}
+                    onBackButtonPress={() => this.closeModal()}>
+                    <View style={[Contractsstyles.modalDocument]}>
+                        {
+                            this.state.contractDetails &&
+                            <ScrollView>
+                                <View style={Contractsstyles.formSpace}>
+                                    <Text>{this.state.contractDetails.contract.description}</Text>
+                                </View>
+                            </ScrollView>
+                        }
+                    </View>
+                </Modal>
             </View >
         );
     }
@@ -87,16 +144,20 @@ class ContractsView extends Component {
           //console.log(item);
             items.push(
                 <View key={item.id} style={Contractsstyles.WhiteBox}>
-                    <Text style={[Contractsstyles.ContcatsTitle, globalStyles.FontLight]}>Covid 19 </Text>
-                    <Text style={[Contractsstyles.EventDesc, globalStyles.FontRegular]}>Description of contract</Text>
-                    <TouchableOpacity style={Contractsstyles.OutlineBtn}>
+                    <Text style={[Contractsstyles.ContcatsTitle, globalStyles.FontLight]}>{item.contract.name} </Text>
+                    <Text style={[Contractsstyles.EventDesc, globalStyles.FontRegular]}>{item.contract.smallDescription}</Text>
+                    <TouchableOpacity style={Contractsstyles.OutlineBtn} onPress={() => this.toggleModal(item)}>
                         <Text style={Contractsstyles.BtnlinkText}>Detail</Text>
                     </TouchableOpacity>
                     <View style={Contractsstyles.FlexRow}>
-                        <TouchableOpacity style={Contractsstyles.FillBtn}>
-                            <Text style={Contractsstyles.FillBtnlinkText}>Signed</Text>
-                        </TouchableOpacity>
-                        <Text style={[Contractsstyles.EventDesc, globalStyles.FontRegular]}>06:00 08/04/2020</Text>
+                        { !item.signDate &&
+                            <TouchableOpacity style={Contractsstyles.FillBtn} onPress={() => this.signContract(item.contract.id)}>
+                                <Text style={Contractsstyles.FillBtnlinkText}>Sign Contract</Text>
+                            </TouchableOpacity>
+                        }
+                        { item.signDate &&
+                            <Text style={[Contractsstyles.EventDesc, globalStyles.FontRegular]}>{this.getParsedTime(item.signDate)} {this.getParsedDate(item.signDate)}</Text>
+                        }
                     </View>
                 </View>) //get data from AccordianElement components
         });

@@ -70,16 +70,16 @@ class PersonalDetailView extends Component {
             <View style={PersonalDetailstyles.InnerContainer}>
               <View style={PersonalDetailstyles.MyprofileBox}>
                 {
-                    (personalinformationdata.profilepictureurl == '' || personalinformationdata.profilepictureurl == undefined) &&
+                    (personalinformationdata.profilePictureURL == '' || personalinformationdata.profilePictureURL == undefined) &&
                     <View style={PersonalDetailstyles.ProfileBox}>
                       <Image source={require('../../assets/img/img_avtar.jpg')} resizeMode="contain" style={PersonalDetailstyles.ProfilePic} />
                     </View>
                 }
 
                 {
-                    (personalinformationdata.profilepictureurl != '' && personalinformationdata.profilepictureurl != undefined) &&
+                    (personalinformationdata.profilePictureURL != '' && personalinformationdata.profilePictureURL != undefined) &&
                     <View style={PersonalDetailstyles.ProfileBox}>
-                      <Image source={{ uri: personalinformationdata.profilepictureurl }} resizeMode="contain" style={PersonalDetailstyles.ProfilePic} />
+                      <Image source={{ uri: personalinformationdata.profilePictureURL }} resizeMode="contain" style={PersonalDetailstyles.ProfilePic} />
                     </View>
                 }
                 
@@ -110,7 +110,7 @@ class PersonalDetailView extends Component {
                     <Text style={[PersonalDetailstyles.EmailTex, globalStyles.FontRegular]}>{personalinformationdata.address}</Text>
                   </View>
 
-                  {userplan.length > 0 &&
+                  {userplan?.length > 0 &&
                     <View style={PersonalDetailstyles.CarBbox}>
                       <Text style={PersonalDetailstyles.CardTitle, globalStyles.FontBold, {textTransform: 'capitalize'}}>{userplandata.plan.name}</Text>
                       <Text style={PersonalDetailstyles.CardNumber}>{this.getParsedDate(userplandata.startDate)} to {this.getParsedDate(userplandata.expirationDate)}</Text>

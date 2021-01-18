@@ -6,7 +6,7 @@ import * as types from '../actions/types';
 import { loginAsync } from './loginSaga';
 import { signupAsync } from './signupSaga';
 import { getAccountDetailAsync,getPersonalInformationAsync,getUserPlanAsync,getPaymentsAsync,getHealthparametersAsync,
-    updateDeviceTokenAsync,changePasswordAsync, loadprofileimageAsync, updateUserProfileAsync,loadAllHealthparameterAsync, addToHealthParameterAsync, getContractsAsync } from './accountSaga';
+    updateDeviceTokenAsync,changePasswordAsync, loadprofileimageAsync, updateUserProfileAsync,loadAllHealthparameterAsync, addToHealthParameterAsync, getContractsAsync, signContractAsync } from './accountSaga';
 import { getUpcomingEventsAsync, getPastEventsAsync, loadcustomereventdetailAsync, 
     loadeventattendancesAsync, 
     sendFeedbackAsync,
@@ -29,6 +29,7 @@ export default function* watch() {
     yield all([takeEvery(types.LOADALLHEALTHPARAMETER_REQUEST, loadAllHealthparameterAsync)]);
     yield all([takeEvery(types.ADDTOHEALTHPARAMETER_REQUEST, addToHealthParameterAsync)]);
     yield all([takeEvery(types.GETCONTRACTS_REQUEST, getContractsAsync)]);
+    yield all([takeEvery(types.SIGNCONTRACT_REQUEST, signContractAsync)]);
 
     //Event Saga
     yield all([takeEvery(types.GETUPCOMINGEVENTS_REQUEST, getUpcomingEventsAsync)]);
