@@ -47,12 +47,12 @@ class HomeView extends Component {
   }
 
   navigateToEventDetail = (obj) => {
-    //console.log(this.props.accountdetail.authorities);
+    //console.log(this.props.accountdetail);
     if (this.props.accountdetail.authorities[0] == "ROLE_USER") {
       navigationActions.navigateToCustomerDetailEvent(obj);
     }
 
-    if (this.props.accountdetail.authorities[0] == "ROLE_CORDINATOR") {
+    if (this.props.accountdetail.authorities[0] == "ROLE_COORDINATOR") {
       navigationActions.navigateToCordinatorDetailEvent(obj);
     }
   };
@@ -374,7 +374,7 @@ class HomeView extends Component {
                     <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={Homestyles.InnerTitleIcon} />
                     <Text style={Homestyles.InnerTitleText}>Upcoming Events</Text>
                   </View>
-                  {/* <Text style={Homestyles.ResultText}>{upcomingevents.length} Result</Text> */}
+                  <Text style={Homestyles.ResultText}>{upcomingevents?.length} Result</Text>
                 </View>
                 {
                   upcomingeventsArr
@@ -388,7 +388,7 @@ class HomeView extends Component {
                     <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={Homestyles.InnerTitleIcon} />
                     <Text style={Homestyles.InnerTitleText}>Last Events</Text>
                   </View>
-                  {/* <Text style={Homestyles.ResultText}>{pasteventsArr.length} Result</Text> */}
+                  <Text style={Homestyles.ResultText}>{pasteventsArr?.length} Result</Text>
                 </View>
               </View>
               {

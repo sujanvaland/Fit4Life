@@ -5,6 +5,8 @@ import globalStyles from '../../assets/css/globalStyles';
 import SplashScreen from 'react-native-splash-screen';
 import * as navigationActions from '../../actions/navigationActions';
 import Modal from "react-native-modal";
+import { get } from 'lodash';
+import { OverlayActivityIndicatorElement } from "../../components";
 
 
 
@@ -75,7 +77,7 @@ class ContractsView extends Component {
 
     render() {
         const image = require('../../assets/img/img_loginback.png');
-        const { contracts } = this.props;
+        const { loading, contracts } = this.props;
 
         let contractsdata = [];
         if (contracts) {
@@ -84,6 +86,9 @@ class ContractsView extends Component {
 
         return (
             <View style={Contractsstyles.container}>
+                {
+                    get(loading, 'isLoading') && <OverlayActivityIndicatorElement />
+                }
                 <StatusBar
                     barStyle="light-content"
                     // dark-content, light-content and default

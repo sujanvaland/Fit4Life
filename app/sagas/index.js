@@ -7,7 +7,7 @@ import { loginAsync } from './loginSaga';
 import { signupAsync } from './signupSaga';
 import { getAccountDetailAsync,getPersonalInformationAsync,getUserPlanAsync,getPaymentsAsync,getHealthparametersAsync,
     updateDeviceTokenAsync,changePasswordAsync, loadprofileimageAsync, updateUserProfileAsync,loadAllHealthparameterAsync, addToHealthParameterAsync, getContractsAsync, signContractAsync } from './accountSaga';
-import { getUpcomingEventsAsync, getPastEventsAsync, loadcustomereventdetailAsync, 
+import { getUpcomingEventsAsync, getPastEventsAsync, loadcustomereventdetailAsync, loadcoordinatoreventdetailAsync, 
     loadeventattendancesAsync, 
     sendFeedbackAsync,
     loadsubscribenowAsync} from './eventSaga';
@@ -35,6 +35,7 @@ export default function* watch() {
     yield all([takeEvery(types.GETUPCOMINGEVENTS_REQUEST, getUpcomingEventsAsync)]);
     yield all([takeEvery(types.GETPASTEVENTS_REQUEST, getPastEventsAsync)]);
     yield all([takeEvery(types.LOADCUSTOMEREVENTDETAIL_REQUEST, loadcustomereventdetailAsync)]);
+    yield all([takeEvery(types.LOADCOORDINATOREVENTDETAIL_REQUEST, loadcoordinatoreventdetailAsync)]);
     yield all([takeEvery(types.LOADEVENTATTENDANCES_REQUEST, loadeventattendancesAsync)]);
     yield all([takeEvery(types.SENDFEEDBACK_REQUEST, sendFeedbackAsync)]);
     yield all([takeEvery(types.LOADSUBSCRIBENOW_REQUEST, loadsubscribenowAsync)]);

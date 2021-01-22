@@ -8,6 +8,8 @@ import globalStyles from '../../assets/css/globalStyles';
 import Icon from 'react-native-ionicons';
 import SplashScreen from 'react-native-splash-screen';
 import * as navigationActions from '../../actions/navigationActions';
+import { get } from 'lodash';
+import { OverlayActivityIndicatorElement } from "../../components";
 
 
 
@@ -51,9 +53,13 @@ class HealthProfileView extends Component {
 
 
     render() {
+        const { loading } = this.props;
         const image = require('../../assets/img/img_loginback.png');
         return (
             <View style={HealthProfilestyles.container}>
+                {
+                    get(loading, 'isLoading') && <OverlayActivityIndicatorElement />
+                }
                 <ImageBackground source={image} style={HealthProfilestyles.ImageBack} resizeMode="cover">
                     <ScrollView refreshControl={
                         <RefreshControl onRefresh={() => { this._refreshHealthparameters() }} />

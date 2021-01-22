@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StatusBar, ScrollView, ImageBackground, Image, TouchableOpacity } from 'react-native';
-
+import { get } from 'lodash';
+import { OverlayActivityIndicatorElement } from "../../components";
 import CustomerDetailEventstyles from './styles';
 import { SliderBox } from "react-native-image-slider-box";
 import { Avatar, Button, IconButton, Card, Title, Paragraph, List } from 'react-native-paper';
@@ -89,6 +90,9 @@ class CustomerDetailEventView extends Component {
 
         return (
             <View style={CustomerDetailEventstyles.container}>
+                {
+                    get(loading, 'isLoading') && <OverlayActivityIndicatorElement />
+                }
                 <StatusBar
                     barStyle="light-content"
                     // dark-content, light-content and default
@@ -138,9 +142,9 @@ class CustomerDetailEventView extends Component {
                                     </View>
                                     <View style={CustomerDetailEventstyles.countPlus}>
                                         <Text style={CustomerDetailEventstyles.ResultText}>{eventAttendancesListArr.length}/{customereventdata.capacity}</Text>
-                                        <TouchableOpacity style={CustomerDetailEventstyles.BtnPlus} onPress={() => this.navigateToAddHealthProfile()}>
+                                        {/* <TouchableOpacity style={CustomerDetailEventstyles.BtnPlus} onPress={() => this.navigateToAddHealthProfile()}>
                                             <Image source={require('../../assets/img/icon_plus.png')} resizeMode="contain" style={CustomerDetailEventstyles.BtnPlusIcon} />
-                                        </TouchableOpacity>
+                                        </TouchableOpacity> */}
                                     </View>
                                 </View>
                             </View>

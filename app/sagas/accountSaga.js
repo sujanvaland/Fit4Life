@@ -14,9 +14,10 @@ function* getAccountDetailAsync(action) {
   yield put(loginActions.enableLoader());
   const response = yield call(getAccountDetail,action);
   //console.log(response);
-  if (response.id > 0) {
+  if (response?.id > 0) {
       yield put(accountActions.ongetAccountDetailResponse(response));
       _storeData("userId",response.id.toString());
+      _storeData("login_role",response.authorities[0]);
       yield put(accountActions.getPersonalInformation());
       yield put(loginActions.disableLoader({}));
   } else {
@@ -29,7 +30,7 @@ function* getPersonalInformationAsync(action) {
   yield put(loginActions.enableLoader());
   const response = yield call(getPersonalInformation,action);
   //console.log(response);
-  if (response[0].id > 0) {
+  if (response[0]?.id > 0) {
       yield put(accountActions.ongetPersonalInformationResponse(response));
       _storeData("firstname",response[0].user.firstName);
       _storeData("lastname",response[0].user.lastName);
@@ -45,7 +46,7 @@ function* getUserPlanAsync(action) {
   yield put(loginActions.enableLoader());
   const response = yield call(getUserPlan,action);
   //console.log(response);
-  if (response[0].id > 0) {
+  if (response[0]?.id > 0) {
       yield put(accountActions.ongetUserPlanResponse(response));
       yield put(loginActions.disableLoader({}));
   } else {

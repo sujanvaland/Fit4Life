@@ -59,3 +59,7 @@ export function navigateToUpdateProfile(params) {
 export function navigateToEditProfileImage(params) {
     NavigationService.navigate('EditProfileImage', params);
 }
+
+export function navigateToContracts(params) {
+    NavigationService.navigate('Contracts', params);
+}

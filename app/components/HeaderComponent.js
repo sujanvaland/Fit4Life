@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, BackHandler, Button, Dimensions, Image, StyleSheet, Alert, TextInput } from 'react-native';
+import { Text, View, TouchableOpacity, Dimensions, Platform, Image, StyleSheet, Alert } from 'react-native';
+import { Icon } from 'native-base';
 // Use prebuilt version of RNVI in dist folder
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
-import Icon from 'react-native-ionicons'
+//import Icon from 'react-native-ionicons';
+import * as navigationActions from 'app/actions/navigationActions';
+import Modal from "react-native-modal";
+import AsyncStorage from '@react-native-community/async-storage';
 import Styles from '../config/styles';
 const { color, Typography } = Styles;
 
+import NavStyles from '../navigation/NavigationStyle';
+import ApiConstants from '../api/ApiConstants';
 
 
 
@@ -13,73 +19,249 @@ class HeaderComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            hideMenu: true,
-
+          hideMenu: true,
+          isModalVisible:false,
+          login_token: '',
+          login_role:'',
+          firstname: '',
+          lastname: '',
+          customerimage: ''
         };
-        this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
     }
 
-    handleBackButtonClick() {
-        this.props.navigation.goBack();
-        return true;
+    async componentDidMount() {
+        let login_token = await this._retrieveData("login_token");
+        let login_role = await this._retrieveData("login_role");
+        let firstname = await this._retrieveData("firstname");
+        let lastname = await this._retrieveData("lastname");
+        let customerimage = await this._retrieveData("customerimage");
+        
+        this.setState({
+            login_token: login_token,
+            login_role: login_role,
+            firstname: firstname,
+            lastname: lastname,
+            customerimage: customerimage
+        });
     }
+      
+    _retrieveData = async (key) => {
+        try {
+            const value = await AsyncStorage.getItem(key);
+            if (value !== null) {
+            return value
+            }
+        } catch (error) {
+        }
+    };
+    
+    async toggleModal() {
+        let login_token = await this._retrieveData("login_token");
+        let login_role = await this._retrieveData("login_role");
+        let firstname = await this._retrieveData("firstname");
+        let lastname = await this._retrieveData("lastname");
+        let customerimage = await this._retrieveData("customerimage");
+        this.setState({
+            login_token: login_token,
+            login_role: login_role,
+            firstname: firstname,
+            lastname: lastname,
+            customerimage: customerimage
+        });
+        
+        this.setState({ isModalVisible: !this.state.isModalVisible });
+    }
+
+    closeModal=()=>{
+        this.setState({ isModalVisible: false });
+    }
+
+    navigateToLogin = () => {
+        this._storeData("login_token", "")
+        this._storeData("loginuser", "");
+        this._storeData("password", "");
+        this._storeData("userId", "");
+        this._storeData("login_role", "");
+        this._storeData("firstname", "");
+        this._storeData("lastname", "");
+        this._storeData("customerimage", "");
+        navigationActions.navigateToLogin();
+        this.setState({ isModalVisible: !this.state.isModalVisible });
+    }
+
+    navigateToHome = () => {
+        navigationActions.navigateToHome();
+        this.setState({ isModalVisible: !this.state.isModalVisible });
+    }
+
+    navigateToMyProfile = () => {
+        navigationActions.navigateToPersonalDetail();
+        this.setState({ isModalVisible: !this.state.isModalVisible });
+    }
+
+    navigateToCalendar = () => {
+        navigationActions.navigateToCalendar();
+        this.setState({ isModalVisible: !this.state.isModalVisible });
+    }
+
+    navigateToHealthParameterPage = () => {
+        navigationActions.navigateToHealthParameterPage();
+        this.setState({ isModalVisible: !this.state.isModalVisible });
+    }
+
+    navigateToContracts = () => {
+        navigationActions.navigateToContracts();
+        this.setState({ isModalVisible: !this.state.isModalVisible });
+    }
+
+    _storeData = async (key,value) => {
+        try {
+          await AsyncStorage.setItem(key, value);
+          return value;
+        } catch (error) {
+          // Error saving data
+          return null;
+        }
+    };
 
     render() {
-        const { goBack } = this.props.navigation;
+
         const props = this.props;
         const {
             pagetitle = false,
             menu = false,
-            searchbox = false,
-            notification = false,
             backbutton = false,
-            back = false,
-            carticon = false,
-            user = false
-
             //pagetitle = false,
         } = props;
-
-
-        const onClose = () => {
-            console.log('Back Preess');
-            this.props.navigation.goBack();
+        
+        const onBackbutton = () => {
+            props.navigation.goBack();
         }
 
         // const { navigate } = this.props.navigation;
         return (
             <View style={HeaderStyles.HeaderMain}>
+                <Modal animationIn={"slideInLeft"} animationOut={"slideOutLeft"} 
+                    // animationType={'slide'}
+                    animationInTiming={600} animationOutTiming={400}
+                    //animationOutTiming={'300'}
+                    transparent={true}
+                    isVisible={this.state.isModalVisible} style={HeaderStyles.modalStyle}
+                    onBackdropPress={() => this.closeModal()}
+                    onBackButtonPress={() => this.closeModal()}>
+                    <View style={HeaderStyles.modalContentStyle}>
+                        <View style={NavStyles.UserArea}>
+                            <View style={NavStyles.ProfilePicArea}>
+                                {
+                                    (this.state.customerimage == '' || this.state.customerimage == undefined) &&
+                                    <View style={NavStyles.ProfilePic}>
+                                        <Image source={require('../assets/img/img_avtar.jpg')} resizeMode="contain" style={NavStyles.PrifileImage} />
+                                    </View>
+                                }
+
+                                {
+                                    (this.state.customerimage != '' && this.state.customerimage != undefined) &&
+                                    <View style={NavStyles.ProfilePic}>
+                                        <Image source={{ uri: this.state.customerimage }} resizeMode="contain" style={NavStyles.PrifileImage} />
+                                    </View>
+                                }
+                                <Text style={NavStyles.UserName}>{this.state.firstname} {this.state.lastname}</Text>
+                                {/* <Text style={NavStyles.Location}>San Francisco, CA</Text> */}
+                            </View>
+                        </View>
+                        <View>
+                            <View>
+                                <TouchableOpacity onPress={() => this.navigateToHome()} style={NavStyles.MyAccountlinks}>
+                                    <Image source={require('../assets/img/icon_home_menu.png')} style={NavStyles.MenuIcon} />
+                                    <Text style={NavStyles.AccountTextLink}>Home</Text>
+                                </TouchableOpacity>
+                            </View>
+
+                            <View>
+                                <TouchableOpacity onPress={() => this.navigateToCalendar()} style={NavStyles.MyAccountlinks}>
+                                    <Image source={require('../assets/img/icon_calendar_menu.png')} style={NavStyles.MenuIcon} />
+                                    <Text style={NavStyles.AccountTextLink}>Calendar</Text>
+                                </TouchableOpacity>
+                            </View>
+                            {
+                                this.state.login_role == 'ROLE_USER' &&
+                                <View>
+                                    <View>
+                                        <TouchableOpacity onPress={() => this.navigateToHealthParameterPage()} style={NavStyles.MyAccountlinks}>
+                                            <Image source={require('../assets/img/icon_calendar_menu.png')} style={NavStyles.MenuIcon} />
+                                            <Text style={NavStyles.AccountTextLink}>HealthParameters</Text>
+                                        </TouchableOpacity>
+                                    </View>                      
+
+                                    <View>
+                                        <TouchableOpacity onPress={() => this.navigateToContracts()} style={NavStyles.MyAccountlinks}>
+                                            <Image source={require('../assets/img/icon_calendar_menu.png')} style={NavStyles.MenuIcon} />
+                                            <Text style={NavStyles.AccountTextLink}>Contracts</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            }
+
+                            {
+                                this.state.login_token != '' && this.state.login_token != undefined &&
+                                <View>
+                                    <View>
+                                        <TouchableOpacity onPress={() => this.navigateToMyProfile()} style={NavStyles.MyAccountlinks}>
+                                            <Image source={require('../assets/img/icon_myprofile_menu.png')} resizeMode="contain" style={NavStyles.MenuIcon} />
+                                            <Text style={NavStyles.AccountTextLink}>My Profile</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                    <View>
+                                        <TouchableOpacity onPress={() =>
+                                            Alert.alert(
+                                                'Log out',
+                                                'Do you want to logout?',
+                                                [
+                                                    { text: 'Cancel', onPress: () => { return null } },
+                                                    {
+                                                        text: 'Confirm', onPress: () => {
+                                                            AsyncStorage.clear();
+                                                            this.navigateToLogin();
+                                                        }
+                                                    },
+                                                ],
+                                                { cancelable: false }
+                                            )
+                                        } style={[NavStyles.MyAccountlinks, NavStyles.MarTop10]}>
+
+                                            <Image source={require('../assets/img/icon_logoutmenu.png')} resizeMode="contain" style={NavStyles.MenuIcon} />
+                                            <Text style={NavStyles.AccountTextLink}>Logout</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            }
+                        </View>
+                    </View>
+                </Modal>
                 <View style={HeaderStyles.HeaderBox}>
                     <View style={HeaderStyles.HeaderContent}>
                         <View style={HeaderStyles.LeftHeader}>
 
                             {menu === true &&
-                                <TouchableOpacity onPress={() => this.props.navigation.openDrawer()} style={HeaderStyles.burgerMenu}>
+                                <TouchableOpacity onPress={() => { this.toggleModal()}} style={HeaderStyles.burgerMenu}>
                                     <Image source={require('../assets/images/icon_menu.png')} resizeMode="contain" style={HeaderStyles.iconMenu} />
                                 </TouchableOpacity>
                             }
                             {backbutton === true &&
-                                <TouchableOpacity style={HeaderStyles.BackButton} onPress={() => { onClose() }}>
+                                <TouchableOpacity style={HeaderStyles.BackButton} onPress={() => { onBackbutton() }}>
                                     <Image source={require('../assets/images/btnback.png')} style={HeaderStyles.BackBtn} resizeMode="contain" />
                                 </TouchableOpacity>
                             }
                             {pagetitle === true &&
                                 <Text style={HeaderStyles.pagetitleText}>{props.title}</Text>
                             }
-                            {user === true &&
-                                <TouchableOpacity>
-                                    <Image source={require('../assets/images/icon_user.png')} resizeMode="contain" style={HeaderStyles.userIcon} />
-                                </TouchableOpacity>
-                            }
                         </View>
                     </View>
                 </View>
-            </View >
+            </View>
         );
     }
 }
-
-export { HeaderComponent }
 
 //export default HeaderComponent;
 const HeaderStyles = StyleSheet.create({
@@ -89,49 +271,31 @@ const HeaderStyles = StyleSheet.create({
         width: '100%',
         zIndex: 99,
         paddingHorizontal: 0,
-        backgroundColor: '#a80f19'
-    },
-    notificationBox: {
-        position: 'relative',
-        paddingTop: 0,
-        marginRight: viewportWidth * 0.02,
-
-    },
-    userIcon: {
-        width: viewportWidth * 0.05
-    },
-    cartNotification: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginRight: viewportWidth * 0.02,
-        marginTop: viewportWidth * 0.002,
-
-    },
-    CartBox: {
-        position: 'relative',
-        paddingTop: 0,
-        marginLeft: viewportWidth * 0.02,
+        backgroundColor: '#a80f19',
+        ...Platform.select({
+            ios:{
+                paddingTop:viewportWidth * 0.09,
+            }
+        })
     },
     pagetitleText: {
-        //   fontFamily: Typography.FONT_SEMIBOLD,
-        fontSize: viewportWidth * 0.04,
+        fontFamily: Typography.FONT_SEMIBOLD,
+        fontSize: viewportWidth * 0.05,
         color: color.COLOR_WHITE,
-        width: viewportWidth * 0.7,
+        width: viewportWidth * 0.6,
         height: viewportWidth * 0.1,
-        textAlign: "center",
-        // paddingLeft: viewportWidth * 0.05,
-        paddingTop: viewportWidth * 0.02,
+        textAlign: "left",
+        paddingLeft: viewportWidth * 0.05,
+        paddingTop: viewportWidth * 0.01,
         marginTop: 0,
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 0,
         borderColor: 'white',
 
     },
-
     BackButton: {
         marginHorizontal: 0,
         marginTop: 4,
@@ -143,49 +307,10 @@ const HeaderStyles = StyleSheet.create({
         width: viewportWidth * 0.08,
         height: viewportWidth * 0.08,
     },
-    badgeCount: {
-        backgroundColor: color.COLOR_SECONDARY,
-        color: color.COLOR_WHITE,
-        fontSize: viewportHeight * 0.015,
-        borderRadius: 20,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: viewportWidth * 0.05,
-        height: viewportWidth * 0.05,
-        position: 'absolute',
-        right: -5,
-        top: -10,
-        zIndex: 9,
-        textAlign: "center",
-        borderWidth: 0,
-
-    },
-    iconMap: {
-        height: viewportHeight * 0.03,
-        width: viewportHeight * 0.03,
-
-    },
     iconMenu: {
         height: viewportHeight * 0.036,
         width: viewportHeight * 0.036,
 
-    },
-    searcBox: {
-        width: viewportWidth * 0.63,
-        height: 45,
-        paddingTop: 0,
-        marginBottom: 10,
-        display: 'flex',
-        flexDirection: "row",
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        borderWidth: 0,
-        borderColor: 'white',
-        paddingHorizontal: 10, borderRadius: 6,
-        borderStyle: "solid",
-        backgroundColor: "rgba(255, 255, 255, 0.1)"
     },
     burgerMenu: {
         borderWidth: 0,
@@ -195,6 +320,7 @@ const HeaderStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         height: viewportWidth * 0.1,
+        
     },
     HeaderMain: {
         position: 'relative',
@@ -213,22 +339,24 @@ const HeaderStyles = StyleSheet.create({
         paddingTop: viewportWidth * 0.02,
         height: viewportWidth * 0.13,
     },
-    menuButton: {
-        maxWidth: 100,
-
-    },
     LeftHeader: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        width: '100%'
+        justifyContent: 'flex-start'
     },
-    badgeText: {
-        color: color.COLOR_WHITE,
-        fontSize: viewportWidth * 0.03
+    modalStyle:{
+      marginTop:0,
+      marginBottom:0,
+      marginLeft:0,
+      marginRight:0,
+      height:"100%"
     },
-    searcTextbox: {
-        backgroundColor: color.COLOR_WHITE,
+    modalContentStyle:{
+        flex:1,
+        backgroundColor:'#a80f19',
+        width:'70%',
+        height:viewportHeight,
     }
-})
+});
+
+export {HeaderComponent} ;

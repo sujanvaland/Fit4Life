@@ -1,7 +1,7 @@
 import { put, call, select } from 'redux-saga/effects';
 import * as loginActions from 'app/actions/loginActions';
 import * as eventActions from 'app/actions/eventActions';
-import { getUpcomingEvents, getPastEvents, loadCustomerEventDetail, loadEventAttendances, sendFeedback, loadSubscribeNow} from 'app/api/methods/event';
+import { getUpcomingEvents, getPastEvents, loadCustomerEventDetail, loadCoordinatorEventDetail, loadEventAttendances, sendFeedback, loadSubscribeNow} from 'app/api/methods/event';
 import * as navigationActions from 'app/actions/navigationActions';
 import { Alert } from 'react-native';
 
@@ -42,6 +42,21 @@ function* loadcustomereventdetailAsync(action) {
       yield put(loginActions.disableLoader({}));
   } else {
       yield put(eventActions.FailedLoadingCustomerEventDetail(response));
+      yield put(loginActions.disableLoader({}));
+  }
+}
+
+function* loadcoordinatoreventdetailAsync(action) {
+    
+  yield put(loginActions.enableLoader());
+  //how to call api
+  const response = yield call(loadCoordinatorEventDetail,action);
+  //console.log(response);
+  if (response) {
+    yield put(eventActions.onCoordinatorEventDetailLoadedResponse(response));
+      yield put(loginActions.disableLoader({}));
+  } else {
+      yield put(eventActions.FailedLoadingCoordinatorEventDetail(response));
       yield put(loginActions.disableLoader({}));
   }
 }
@@ -93,4 +108,4 @@ function* loadsubscribenowAsync(action) {
   }
 }
 
-export { getUpcomingEventsAsync, getPastEventsAsync, loadcustomereventdetailAsync, loadeventattendancesAsync, sendFeedbackAsync, loadsubscribenowAsync}
+export { getUpcomingEventsAsync, getPastEventsAsync, loadcustomereventdetailAsync, loadcoordinatoreventdetailAsync, loadeventattendancesAsync, sendFeedbackAsync, loadsubscribenowAsync}

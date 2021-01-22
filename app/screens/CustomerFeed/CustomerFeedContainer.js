@@ -13,8 +13,11 @@ class CustomerFeedContainer extends Component {
     }
 }
 
-function mapStateToProps() {
-    return {};
+function mapStateToProps(state) {
+    return {
+       loading: state.loadingReducer,
+       login_token:state.loginReducer.login_token,
+    };
 }
 function mapDispatchToProps() {
     return {};

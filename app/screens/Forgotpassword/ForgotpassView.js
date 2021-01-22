@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { get } from 'lodash';
 import { View, Text, Image, TouchableOpacity, ImageBackground, ScrollView, Keyboard } from 'react-native';
 import ForgotPasswordstyles from './ForgotPasswordstyles';
 import globalStyles from '../../assets/css/globalStyles';
 import Resource_EN from '../../config/Resource_EN';
 import PropTypes from 'prop-types';
-import { TextBoxElement, LinkButton, ButtonElement, OverlayActivityIndicatorElement } from "../../components";
+import { get } from 'lodash';
+import { TextBoxElement,OverlayActivityIndicatorElement } from "../../components";
+
 const { heading } = Resource_EN;
 const { content } = Resource_EN;
 const { button } = Resource_EN;
@@ -69,6 +70,9 @@ class ForgotpassView extends Component {
     const image = require('../../assets/img/img_loginback.png');
     return (
       <View style={ForgotPasswordstyles.loginView}>
+        {
+            get(loading, 'isLoading') && <OverlayActivityIndicatorElement />
+        }
         <ImageBackground source={image} style={ForgotPasswordstyles.ImageBack} resizeMode="cover">
           <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={this.state.enableScroll}>
             <View style={ForgotPasswordstyles.verificationInner}>

@@ -43,6 +43,8 @@ class CustomDrawerComponent extends Component {
         this._storeData("login_token", "")
         this._storeData("loginuser", "");
         this._storeData("password", "");
+        this._storeData("userId", "");
+        this._storeData("role", "");
         this._storeData("firstname", "");
         this._storeData("lastname", "");
         this._storeData("customerimage", "");

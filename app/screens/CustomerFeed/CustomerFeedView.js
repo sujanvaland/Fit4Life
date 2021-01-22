@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StatusBar, ScrollView, ImageBackground, Image, TouchableOpacity } from 'react-native';
-
+import { get } from 'lodash';
+import { OverlayActivityIndicatorElement } from "../../components";
 import CustomerFeedstyles from './styles';
 import { SliderBox } from "react-native-image-slider-box";
 import { Avatar, Button, IconButton, Card, Title, Paragraph, List } from 'react-native-paper';
@@ -43,7 +44,7 @@ class CustomerFeedView extends Component {
     }
 
     render() {
-
+        const { loading } = this.props;
         let CustomerFeedSer = [];
         if (this.props.Services) {
             CustomerFeedSer = this.props.Services;
@@ -53,6 +54,9 @@ class CustomerFeedView extends Component {
 
         return (
             <View style={CustomerFeedstyles.container}>
+                {
+                    get(loading, 'isLoading') && <OverlayActivityIndicatorElement />
+                }
                 <StatusBar
                     barStyle="light-content"
                     // dark-content, light-content and default

@@ -50,6 +50,19 @@ export const eventReducer = createReducer(initialState, {
         };
     },
 
+    [types.COORDINATOREVENTDETAILLOADED_RESPONSE](state,action) {
+        return {
+            ...state,
+            coordinatoreventdetail:action.response
+        };
+    },
+
+    [types.FAILEDLOADINGCOORDINATOREVENTDETAIL_RESPONSE](state) {
+        return {
+            ...state
+        };
+    },
+
     [types.EVENTATTENDANCESLOADED_RESPONSE](state,action) {
         return {
             ...state,

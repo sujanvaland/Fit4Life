@@ -63,6 +63,27 @@ export function FailedLoadingCustomerEventDetail(response) {
     };
 }
 
+export function loadCoordinatorEventDetailRequest(eventid) {
+    return {
+        type: types.LOADCOORDINATOREVENTDETAIL_REQUEST,
+        eventid
+    };
+}
+
+export function onCoordinatorEventDetailLoadedResponse(response) {
+    return {
+        type: types.COORDINATOREVENTDETAILLOADED_RESPONSE,
+        response
+    };
+}
+
+export function FailedLoadingCoordinatorEventDetail(response) {
+    return {
+        type: types.FAILEDLOADINGCOORDINATOREVENTDETAIL_RESPONSE,
+        response
+    };
+}
+
 export function loadEventAttendancesRequest(eventid) {
     return {
         type: types.LOADEVENTATTENDANCES_REQUEST,

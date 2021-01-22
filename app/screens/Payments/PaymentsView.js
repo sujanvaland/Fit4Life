@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, ImageBackground, Image, RefreshControl } from 'react-native';
 import Paymentsstyles from './styles';
 import SplashScreen from 'react-native-splash-screen';
+import { get } from 'lodash';
+import { OverlayActivityIndicatorElement } from "../../components";
 
 
 
@@ -62,7 +64,7 @@ class PaymentsView extends Component {
 
     render() {
         const image = require('../../assets/img/img_loginback.png');
-        const { payments } = this.props;
+        const { loading, payments } = this.props;
 
         let paymentsdata = [];
         if (payments) {
@@ -71,6 +73,9 @@ class PaymentsView extends Component {
 
         return (
             <View style={Paymentsstyles.container}>
+                {
+                    get(loading, 'isLoading') && <OverlayActivityIndicatorElement />
+                }
                 <ImageBackground source={image} style={Paymentsstyles.ImageBack} resizeMode="cover">
                     <ScrollView refreshControl={
                         <RefreshControl onRefresh={() => { this._refreshPayments() }} />

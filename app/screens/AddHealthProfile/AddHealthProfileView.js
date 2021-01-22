@@ -8,6 +8,8 @@ import SplashScreen from 'react-native-splash-screen';
 import * as navigationActions from '../../actions/navigationActions';
 import { TextBoxElement } from '../../components';
 import Toast from 'react-native-simple-toast';
+import { get } from 'lodash';
+import { OverlayActivityIndicatorElement } from "../../components";
 
 
 class AddHealthProfileView extends Component {
@@ -142,7 +144,7 @@ class AddHealthProfileView extends Component {
 
     render() {
         const image = require('../../assets/img/img_loginback.png');
-        const { allhealthparameter } = this.props;
+        const { loading, allhealthparameter } = this.props;
         let allhealthparameter_data = [];
         if (allhealthparameter) {
             allhealthparameter_data = allhealthparameter;
@@ -154,6 +156,9 @@ class AddHealthProfileView extends Component {
 
         return (
             <View style={AddHealthProfilestyles.container}>
+                {
+                    get(loading, 'isLoading') && <OverlayActivityIndicatorElement />
+                }
                 <ImageBackground source={image} style={AddHealthProfilestyles.ImageBack} resizeMode="cover">
                     <ScrollView>
                         <View style={AddHealthProfilestyles.InnerContainer}>

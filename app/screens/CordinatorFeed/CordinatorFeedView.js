@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, ImageBackground, Image } from 'react-native';
-
+import { get } from 'lodash';
+import { OverlayActivityIndicatorElement } from "../../components";
 import CordinatorFeedstyles from './styles';
 import { SliderBox } from "react-native-image-slider-box";
 import { Avatar, Button, IconButton, Card, Title, Paragraph, List } from 'react-native-paper';
@@ -41,6 +42,7 @@ class CordinatorFeedView extends Component {
 
     render() {
         const image = require('../../assets/img/img_loginback.png');
+        const { loading } = this.props;
         // let CordinatorFeedSer = [];
         // if (this.props.Services) {
         //     CordinatorFeedSer = this.props.Services;
@@ -48,6 +50,9 @@ class CordinatorFeedView extends Component {
 
         return (
             <View style={CordinatorFeedstyles.container}>
+                {
+                    get(loading, 'isLoading') && <OverlayActivityIndicatorElement />
+                }
                 <ImageBackground source={image} style={globalStyles.ImageBack} resizeMode="cover">
                     <ScrollView>
                         <View style={CordinatorFeedstyles.InnerContainer}>

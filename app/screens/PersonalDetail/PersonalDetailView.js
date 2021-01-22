@@ -7,6 +7,8 @@ import globalStyles from '../../assets/css/globalStyles';
 import Icon from 'react-native-ionicons';
 import SplashScreen from 'react-native-splash-screen';
 import * as navigationActions from '../../actions/navigationActions';
+import { get } from 'lodash';
+import { OverlayActivityIndicatorElement } from "../../components";
 
 
 
@@ -22,6 +24,10 @@ class PersonalDetailView extends Component {
 
   navigateToEditProfileImage = () => {
       navigationActions.navigateToEditProfileImage();
+  }
+
+  navigateToAddHealthProfile = () => {
+      navigationActions.navigateToAddHealthProfile();
   }
 
 
@@ -42,7 +48,7 @@ class PersonalDetailView extends Component {
 
   render() {
     const image = require('../../assets/img/img_loginback.png');
-    const { accountdetail,personalinformation, userplan } = this.props;
+    const { accountdetail,personalinformation, userplan, loading } = this.props;
 
     let account_detail = accountdetail;
     if (!account_detail) {
@@ -64,6 +70,9 @@ class PersonalDetailView extends Component {
 
     return (
       <View style={PersonalDetailstyles.container}>
+        {
+            get(loading, 'isLoading') && <OverlayActivityIndicatorElement />
+        }
         <ImageBackground source={image} style={globalStyles.ImageBack} resizeMode="cover">
 
           <ScrollView>
@@ -118,14 +127,14 @@ class PersonalDetailView extends Component {
                   }
                 </View>
               </View>
-              { accountdetail.authorities[0]=="role_cordinator" &&
+              { accountdetail.authorities[0]=="ROLE_COORDINATOR" &&
                 <View style={[PersonalDetailstyles.FullWidthTitleBack]}>
                   <View style={[PersonalDetailstyles.InnerTitle, PersonalDetailstyles.MarTopzero]}>
                     <View style={PersonalDetailstyles.CustomerFeedLeft}>
                       <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={PersonalDetailstyles.InnerTitleIcon} />
                       <Text style={PersonalDetailstyles.InnerTitleText}>Health Profile</Text>
                     </View>
-                    <TouchableOpacity style={PersonalDetailstyles.AddBtn}>
+                    <TouchableOpacity style={PersonalDetailstyles.AddBtn} onPress={() => this.navigateToAddHealthProfile()}>
                       <Text style={PersonalDetailstyles.AddBtnText}>+ Add</Text>
                     </TouchableOpacity>
                   </View>
@@ -134,7 +143,7 @@ class PersonalDetailView extends Component {
 
               <View style={PersonalDetailstyles.Spacer}></View>
 
-              { accountdetail.authorities[0]=="role_cordinator" &&
+              { accountdetail.authorities[0]=="ROLE_COORDINATOR" &&
                 <View style={[PersonalDetailstyles.FullWidthTitleBack, PersonalDetailstyles.PadTop5]}>
                   <View style={[PersonalDetailstyles.InnerTitle, PersonalDetailstyles.MarTopzero]}>
                     <View style={PersonalDetailstyles.CustomerFeedLeft}>
@@ -152,7 +161,7 @@ class PersonalDetailView extends Component {
                 </View>
               }
               
-              { accountdetail.authorities[0]=="role_cordinator" &&
+              { accountdetail.authorities[0]=="ROLE_COORDINATOR" &&
                 <View style={[PersonalDetailstyles.ContainerMargin]}>
                   <View style={PersonalDetailstyles.WhiteBox}>
                     <Text style={PersonalDetailstyles.EventTitle}>Coordinator name: Frank Doe</Text>

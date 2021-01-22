@@ -7,6 +7,8 @@ import { TextBoxElement, TextBoxElementLogin, TextBoxElementChangepass } from ".
 import Resource_EN from '../../config/Resource_EN';
 import { ScrollView } from 'react-native-gesture-handler';
 import Toast from 'react-native-simple-toast';
+import { get } from 'lodash';
+import { OverlayActivityIndicatorElement } from "../../components";
 
 class ChangePasswordView extends Component {
   constructor(props) {
@@ -226,11 +228,15 @@ class ChangePasswordView extends Component {
   }
 
   render() {
+    const { loading } = this.props;
     const { button } = Resource_EN
     const image = require('../../assets/img/img_loginback.png');
     return (
 
       <View style={ChangePasswordStyles.loginView}>
+        {
+            get(loading, 'isLoading') && <OverlayActivityIndicatorElement />
+        }
         <ImageBackground source={image} style={ChangePasswordStyles.ImageBack} resizeMode="cover">
           <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={this.state.enableScroll}>
             <KeyboardAvoidingView style={ChangePasswordStyles.container} enabled>

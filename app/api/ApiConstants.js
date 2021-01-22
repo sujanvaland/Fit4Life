@@ -21,6 +21,7 @@ const ApiConstants = {
     UPCOMING_EVENTLIST: 'events',
     EVENTLIST: 'event-attendances',
     CUSTOMEREVENTDETAIL: 'events',
+    COORDINATOREVENTDETAIL: 'events',
     EVALUATEEVENT:'event-attendances/evaluate',
     EVENTATTENDANCES:'event-attendances',
     SUBSCRIBENOW:'event-attendances/suscribe',

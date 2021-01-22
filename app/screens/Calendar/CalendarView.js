@@ -9,6 +9,8 @@ import Icon from 'react-native-ionicons';
 import SplashScreen from 'react-native-splash-screen';
 import * as navigationActions from '../../actions/navigationActions';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
+import { get } from 'lodash';
+import { OverlayActivityIndicatorElement } from "../../components";
 
 
 
@@ -120,6 +122,9 @@ class CalendarView extends Component {
         
         return (
             <View style={Calendarstyles.container}>
+                {
+                    get(loading, 'isLoading') && <OverlayActivityIndicatorElement />
+                }
                 <ImageBackground source={image} style={globalStyles.ImageBack} resizeMode="cover">
                     <ScrollView>
                         <View style={Calendarstyles.InnerContainer}>

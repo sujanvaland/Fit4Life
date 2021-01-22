@@ -36,6 +36,15 @@ export function loadCustomerEventDetail(action) {
     );
   }
 
+export function loadCoordinatorEventDetail(action) {
+    return Api(
+        ApiConstants.COORDINATOREVENTDETAIL + '?id.equals=' + action.eventid,
+        null,
+        'get',
+        null
+    );
+}
+
 export function loadEventAttendances(action) {
     return Api(
         ApiConstants.EVENTATTENDANCES + '?eventId.equals=' + action.eventid,

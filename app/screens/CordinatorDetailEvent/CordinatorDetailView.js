@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StatusBar, ScrollView, ImageBackground, Image, TouchableOpacity } from 'react-native';
-
+import { get } from 'lodash';
+import { OverlayActivityIndicatorElement } from "../../components";
 import CordinatorDetailstyles from './styles';
 import { SliderBox } from "react-native-image-slider-box";
 import { Avatar, Button, IconButton, Card, Title, Paragraph, List } from 'react-native-paper';
@@ -15,13 +16,7 @@ import { Rating, AirbnbRating } from 'react-native-ratings';
 class CordinatorDetailView extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            images: [
-                // require('../../assets/images/img_slide1.jpg'),
-                // require('../../assets/images/img_slide2.jpg'),
-                // require('../../assets/images/img_slide3.jpg'),
-            ]
-        }
+        this.state = {}
     }
 
 
@@ -30,29 +25,77 @@ class CordinatorDetailView extends Component {
 
     }
 
-    navigateToAirVelocity = (id) => {
-        // console.log(id);
-        navigationActions.navigateToAirVelocity(id);
-    };
-
-    navigateToAboutus = () => {
-        navigationActions.navigateToAboutus();
+    getParsedDate(strDate) {
+        //get date formate
+        if (strDate != "") {
+          let month_names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          var strSplitDate = String(strDate).split('T');
+          var dateArray = strSplitDate[0].split('-');
+          let monthint = parseInt(dateArray[1]);
+          let date = month_names[monthint - 1] + " " + dateArray[2] + ", " + dateArray[0];
+          return date;
+        }
+        return "";
     }
-    ratingCompleted(rating) {
-        console.log("Rating is: " + rating)
-    }
 
+    getParsedTime(strDate) {//get date formate
+        if (strDate != "") {
+          var strSplitTime = String(strDate).split('T');
+          var TimeArray = strSplitTime[1];
+          var newstrSplitTime = String(TimeArray).split('Z');
+          var newtimeArray = newstrSplitTime[0];
+          return newtimeArray;
+        }
+        return "";
+    }
+    
     render() {
 
-        let CordinatorDetailSer = [];
-        if (this.props.Services) {
-            CordinatorDetailSer = this.props.Services;
+        let { loading, coordinatorEventDetail,eventAttendancesList } = this.props;
+        let coordinatoreventdata = {};
+        
+        if (coordinatorEventDetail) {
+            coordinatoreventdata = coordinatorEventDetail.length > 0 ? coordinatorEventDetail[0] : {};
         }
+
+        console.log(coordinatoreventdata);
+
+        let eventAttendancesListArr = [];
+        if(eventAttendancesList && eventAttendancesList != undefined && eventAttendancesList.length > 0){
+            eventAttendancesList.map((item) =>{
+                eventAttendancesListArr.push(
+                    <View key={item.id} style={CordinatorDetailstyles.GrayBox}>
+                        <View style={CordinatorDetailstyles.FlexGrayBox}>
+                            <Text style={CordinatorDetailstyles.FlexGrayBoxText1}>{item.user.firstName} {item.user.lastName}</Text>
+                            <Text style={CordinatorDetailstyles.TimerBox}>{this.getParsedTime(item.coordinatorArrivalTime)}</Text>
+                        </View>
+                        <View style={CordinatorDetailstyles.TouchPinBox}>
+                            {
+                                item.fileUrl !=null &&
+                                <View>
+                                    <TouchableOpacity style={CordinatorDetailstyles.NewRoutineIcon}>
+                                        <Image source={require('../../assets/img/icon_touchpin.png')} resizeMode='contain' style={CordinatorDetailstyles.TouchPin} />
+                                    </TouchableOpacity>
+                                    <Text style={CordinatorDetailstyles.NewRoutine}>New Routine</Text>
+                                </View>
+                            }
+                            {/* <TouchableOpacity style={CordinatorDetailstyles.ButtionMaron}>
+                                <Text style={CordinatorDetailstyles.ButtonMaronText}>Register</Text>
+                            </TouchableOpacity> */}
+                        </View>
+                    </View>
+                )
+            });
+        }
+
         const image = require('../../assets/img/img_loginback.png');
         const WATER_IMAGE = require('../../assets/img/water.png')
 
         return (
             <View style={CordinatorDetailstyles.container}>
+                {
+                    get(loading, 'isLoading') && <OverlayActivityIndicatorElement />
+                }
                 <StatusBar
                     barStyle="light-content"
                     // dark-content, light-content and default
@@ -75,9 +118,12 @@ class CordinatorDetailView extends Component {
                                 <View style={[CordinatorDetailstyles.InnerTitle, CordinatorDetailstyles.MarTopzero]}>
                                     <View style={CordinatorDetailstyles.CordinatorDetailLeft}>
                                         <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={CordinatorDetailstyles.InnerTitleIcon} />
-                                        <Text style={CordinatorDetailstyles.InnerTitleText}>Running</Text>
+                                        {
+                                            coordinatoreventdata.name &&
+                                            <Text style={CordinatorDetailstyles.InnerTitleText}>{coordinatoreventdata.name}</Text>
+                                        }
                                     </View>
-                                    <Text style={CordinatorDetailstyles.ResultText}>14:30 06/04/2020</Text>
+                                    <Text style={CordinatorDetailstyles.ResultText}>{this.getParsedTime(coordinatoreventdata.startTime)} {this.getParsedDate(coordinatoreventdata.startTime)}</Text>
                                 </View>
 
                                 <View style={[CordinatorDetailstyles.InnerTitle, CordinatorDetailstyles.MarTopzero]}>
@@ -98,96 +144,23 @@ class CordinatorDetailView extends Component {
                                         <Text style={CordinatorDetailstyles.InnerTitleText}>Assistants</Text>
                                     </View>
                                     <View style={CordinatorDetailstyles.countPlus}>
-                                        <Text style={CordinatorDetailstyles.ResultText}>5/10</Text>
-                                        <TouchableOpacity style={CordinatorDetailstyles.BtnPlus} onPress={() => this.navigateToAddHealthProfile()}>
+                                        <Text style={CordinatorDetailstyles.ResultText}>{eventAttendancesListArr.length}/{coordinatoreventdata.capacity}</Text>
+                                        <TouchableOpacity style={CordinatorDetailstyles.BtnPlus}>
                                             <Image source={require('../../assets/img/icon_plus.png')} resizeMode="contain" style={CordinatorDetailstyles.BtnPlusIcon} />
                                         </TouchableOpacity>
                                     </View>
                                 </View>
                             </View>
-                            <View style={CordinatorDetailstyles.ContainerMargin}>
-                                <View style={CordinatorDetailstyles.WhiteBox}>
-                                    <View style={CordinatorDetailstyles.GrayBox}>
-                                        <View style={CordinatorDetailstyles.FlexGrayBox}>
-                                            <Text style={CordinatorDetailstyles.FlexGrayBoxText1}>John Doe</Text>
-                                        </View>
-                                        <View style={CordinatorDetailstyles.TouchPinBox}>
-                                            <TouchableOpacity style={CordinatorDetailstyles.ButtionMaron}>
-                                                <Text style={CordinatorDetailstyles.ButtonMaronText}>Register</Text>
-                                            </TouchableOpacity>
-                                        </View>
+                            {
+                                eventAttendancesListArr.length > 0 &&
+                                <View style={CordinatorDetailstyles.ContainerMargin}>
+                                    <View style={CordinatorDetailstyles.WhiteBox}>
+                                        {
+                                            eventAttendancesListArr
+                                        }
                                     </View>
-                                    <View style={CordinatorDetailstyles.GrayBox}>
-                                        <View style={CordinatorDetailstyles.FlexGrayBox}>
-                                            <Text style={CordinatorDetailstyles.FlexGrayBoxText1}>John Doe</Text>
-                                            <Text style={CordinatorDetailstyles.TimerBox}>15:06</Text>
-                                        </View>
-                                        <View style={CordinatorDetailstyles.TouchPinBox}>
-                                            <TouchableOpacity style={CordinatorDetailstyles.NewRoutineIcon}>
-                                                <Image source={require('../../assets/img/icon_touchpin.png')} resizeMode='contain' style={CordinatorDetailstyles.TouchPin} />
-                                            </TouchableOpacity>
-                                            <Text style={CordinatorDetailstyles.NewRoutine}>New Routine</Text>
-                                            <TouchableOpacity style={CordinatorDetailstyles.ButtionMaron}>
-                                                <Text style={CordinatorDetailstyles.ButtonMaronText}>Register</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                    </View>
-
-                                    <View style={CordinatorDetailstyles.GrayBox}>
-                                        <View style={CordinatorDetailstyles.FlexGrayBox}>
-                                            <Text style={CordinatorDetailstyles.FlexGrayBoxText1}>Martin Doe</Text>
-                                            <Text style={CordinatorDetailstyles.TimerBox}>15:06</Text>
-                                        </View>
-                                        <View style={CordinatorDetailstyles.TouchPinBox}>
-                                            <TouchableOpacity style={CordinatorDetailstyles.NewRoutineIcon}>
-                                                <Image source={require('../../assets/img/icon_touchpin.png')} resizeMode='contain' style={CordinatorDetailstyles.TouchPin} />
-                                            </TouchableOpacity>
-
-                                            <TouchableOpacity style={CordinatorDetailstyles.ButtionMaron}>
-                                                <Text style={CordinatorDetailstyles.ButtonMaronText}>Cancel</Text>
-                                            </TouchableOpacity>
-                                        </View>
-
-                                    </View>
-
-                                    <View style={CordinatorDetailstyles.GrayBox}>
-                                        <View style={CordinatorDetailstyles.FlexGrayBox}>
-                                            <Text style={CordinatorDetailstyles.FlexGrayBoxText1}>Emily Doe</Text>
-                                            <Text style={CordinatorDetailstyles.TimerBox}>15:06</Text>
-                                        </View>
-                                        <View style={CordinatorDetailstyles.TouchPinBox}>
-                                            <TouchableOpacity style={CordinatorDetailstyles.NewRoutineIcon}>
-                                                <Image source={require('../../assets/img/icon_touchpin.png')} resizeMode='contain' style={CordinatorDetailstyles.TouchPin} />
-                                            </TouchableOpacity>
-
-                                            <TouchableOpacity style={CordinatorDetailstyles.ButtionMaron}>
-                                                <Text style={CordinatorDetailstyles.ButtonMaronText}>Cancel</Text>
-                                            </TouchableOpacity>
-                                        </View>
-
-                                    </View>
-
-                                    <View style={CordinatorDetailstyles.GrayBox}>
-                                        <View style={CordinatorDetailstyles.FlexGrayBox}>
-                                            <Text style={CordinatorDetailstyles.FlexGrayBoxText1}>Frank Doe
-
-</Text>
-                                            <Text style={CordinatorDetailstyles.TimerBox}>15:06</Text>
-                                        </View>
-                                        <View style={CordinatorDetailstyles.TouchPinBox}>
-                                            <TouchableOpacity style={CordinatorDetailstyles.NewRoutineIcon}>
-                                                <Image source={require('../../assets/img/icon_touchpin.png')} resizeMode='contain' style={CordinatorDetailstyles.TouchPin} />
-                                            </TouchableOpacity>
-                                            <Text style={CordinatorDetailstyles.NewRoutine}>New Routine</Text>
-                                            <TouchableOpacity style={CordinatorDetailstyles.ButtionMaron}>
-                                                <Text style={CordinatorDetailstyles.ButtonMaronText}>Register</Text>
-                                            </TouchableOpacity>
-                                        </View>
-
-                                    </View>
-
                                 </View>
-                            </View>
+                            }
 
                         </View>
                     </ScrollView>
