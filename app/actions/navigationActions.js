@@ -35,6 +35,10 @@ export function navigateToAddHealthProfile(params) {
     NavigationService.navigate('AddHealthProfile', params);
 }
 
+export function navigateToPayments(params) {
+    NavigationService.navigate('Payments', params);
+}
+
 export function navigateToCordinatorFeed(params) {
     NavigationService.navigate('CordinatorFeed', params);
 }

@@ -109,6 +109,11 @@ class HeaderComponent extends Component {
         this.setState({ isModalVisible: !this.state.isModalVisible });
     }
 
+    navigateToPayments = () => {
+        navigationActions.navigateToPayments();
+        this.setState({ isModalVisible: !this.state.isModalVisible });
+    }
+
     navigateToContracts = () => {
         navigationActions.navigateToContracts();
         this.setState({ isModalVisible: !this.state.isModalVisible });
@@ -191,7 +196,14 @@ class HeaderComponent extends Component {
                                             <Image source={require('../assets/img/icon_calendar_menu.png')} style={NavStyles.MenuIcon} />
                                             <Text style={NavStyles.AccountTextLink}>HealthParameters</Text>
                                         </TouchableOpacity>
-                                    </View>                      
+                                    </View>  
+
+                                    <View>
+                                        <TouchableOpacity onPress={() => this.navigateToPayments()} style={NavStyles.MyAccountlinks}>
+                                            <Image source={require('../assets/img/icon_calendar_menu.png')} style={NavStyles.MenuIcon} />
+                                            <Text style={NavStyles.AccountTextLink}>Payments</Text>
+                                        </TouchableOpacity>
+                                    </View>                     
 
                                     <View>
                                         <TouchableOpacity onPress={() => this.navigateToContracts()} style={NavStyles.MyAccountlinks}>
