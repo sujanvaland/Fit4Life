@@ -319,7 +319,7 @@ class UpdateProfileView extends Component {
                         <Text style={UpdateProfileStyles.BookPrice}>Total</Text>
                         <Text style={UpdateProfileStyles.BookAmount}>AED 97.00</Text>
                     </View> */}
-                    <TouchableOpacity style={UpdateProfileStyles.BtnBooknow} onPress={() => this.navigateToUpdateprofile()}  disabled={this.submitted}>
+                    <TouchableOpacity style={UpdateProfileStyles.BtnBooknow} onPress={() => this.navigateToUpdateprofile()} >
                         <Text style={UpdateProfileStyles.BtnTtl}>Update</Text>
                     </TouchableOpacity>
 
