@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, ScrollView, ImageBackground, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StatusBar, ScrollView, ImageBackground, Image, TouchableOpacity, Linking } from 'react-native';
 import { get } from 'lodash';
 import { OverlayActivityIndicatorElement } from "../../components";
 import CustomerDetailEventstyles from './styles';
@@ -122,19 +122,22 @@ class CustomerDetailEventView extends Component {
                                     </View>
                                     <Text style={CustomerDetailEventstyles.ResultText}>{this.getParsedTime(customereventdata.startTime)} {this.getParsedDate(customereventdata.startTime)}</Text>
                                 </View>
-
-                                <View style={[CustomerDetailEventstyles.InnerTitle, CustomerDetailEventstyles.MarTopzero]}>
-                                    <View style={CustomerDetailEventstyles.CustomerDetailEventLeft}>
-                                        <Image source={require('../../assets/img/icon_link.png')} resizeMode="contain" style={CustomerDetailEventstyles.InnerTitleIcon} />
-                                        <View style={CustomerDetailEventstyles.LinkViewBox}>
-                                            <Text style={CustomerDetailEventstyles.InnerTitleText}>Link</Text>
-                                            <Text style={CustomerDetailEventstyles.LinkTextBox}>http://meet.com/ht ...</Text>
+                                {
+                                    customereventdata.linkUrl &&
+                                    <View style={[CustomerDetailEventstyles.InnerTitle, CustomerDetailEventstyles.MarTopzero]}>
+                                        <View style={CustomerDetailEventstyles.CustomerDetailEventLeft}>
+                                            <Image source={require('../../assets/img/icon_link.png')} resizeMode="contain" style={CustomerDetailEventstyles.InnerTitleIcon} />
+                                            <View style={CustomerDetailEventstyles.LinkViewBox}>
+                                                <Text style={CustomerDetailEventstyles.InnerTitleText}>Link</Text>
+                                                <Text style={CustomerDetailEventstyles.LinkTextBox}>{customereventdata.linkUrl}</Text>
+                                            </View>
                                         </View>
+                                        <TouchableOpacity style={CustomerDetailEventstyles.BtnGo} onPress={ ()=> Linking.openURL(customereventdata.linkUrl) }>
+                                            <Text style={CustomerDetailEventstyles.BtnGotext}>Go</Text>
+                                        </TouchableOpacity>
                                     </View>
-                                    <TouchableOpacity style={CustomerDetailEventstyles.BtnGo}>
-                                        <Text style={CustomerDetailEventstyles.BtnGotext}>Go</Text>
-                                    </TouchableOpacity>
-                                </View>
+                                }
+                                
                                 <View style={[CustomerDetailEventstyles.InnerTitle, CustomerDetailEventstyles.MarTopzero]}>
                                     <View style={CustomerDetailEventstyles.CustomerDetailEventLeft}>
                                         <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={CustomerDetailEventstyles.InnerTitleIcon} />

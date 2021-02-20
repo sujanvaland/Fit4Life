@@ -18,7 +18,7 @@ const ApiConstants = {
     HEALTHPARAMETERS:'user-health-parameters',
     ALLHEALTHPARAMETER:'health-parameters',
     ADDTOHEALTHPARAMETER:'user-health-parameter/',
-    UPCOMING_EVENTLIST: 'events',
+    UPCOMING_EVENTLIST: 'events/feed',
     EVENTLIST: 'event-attendances',
     CUSTOMEREVENTDETAIL: 'events',
     COORDINATOREVENTDETAIL: 'events',

@@ -125,19 +125,23 @@ class CordinatorDetailView extends Component {
                                     </View>
                                     <Text style={CordinatorDetailstyles.ResultText}>{this.getParsedTime(coordinatoreventdata.startTime)} {this.getParsedDate(coordinatoreventdata.startTime)}</Text>
                                 </View>
-
-                                <View style={[CordinatorDetailstyles.InnerTitle, CordinatorDetailstyles.MarTopzero]}>
-                                    <View style={CordinatorDetailstyles.CordinatorDetailLeft}>
-                                        <Image source={require('../../assets/img/icon_link.png')} resizeMode="contain" style={CordinatorDetailstyles.InnerTitleIcon} />
-                                        <View style={CordinatorDetailstyles.LinkViewBox}>
-                                            <Text style={CordinatorDetailstyles.InnerTitleText}>Link</Text>
-                                            <Text style={CordinatorDetailstyles.LinkTextBox}>http://meet.com/ht ...</Text>
+                                
+                                {
+                                    coordinatoreventdata.linkUrl &&
+                                    <View style={[CordinatorDetailstyles.InnerTitle, CordinatorDetailstyles.MarTopzero]}>
+                                        <View style={CordinatorDetailstyles.CordinatorDetailLeft}>
+                                            <Image source={require('../../assets/img/icon_link.png')} resizeMode="contain" style={CordinatorDetailstyles.InnerTitleIcon} />
+                                            <View style={CordinatorDetailstyles.LinkViewBox}>
+                                                <Text style={CordinatorDetailstyles.InnerTitleText}>Link</Text>
+                                                <Text style={CordinatorDetailstyles.LinkTextBox}>{coordinatoreventdata.linkUrl}</Text>
+                                            </View>
                                         </View>
+                                        <TouchableOpacity style={CordinatorDetailstyles.BtnGo} onPress={ ()=> Linking.openURL(coordinatoreventdata.linkUrl) }>
+                                            <Text style={CordinatorDetailstyles.BtnGotext}>Go</Text>
+                                        </TouchableOpacity>
                                     </View>
-                                    <TouchableOpacity style={CordinatorDetailstyles.BtnGo}>
-                                        <Text style={CordinatorDetailstyles.BtnGotext}>Go</Text>
-                                    </TouchableOpacity>
-                                </View>
+                                }
+
                                 <View style={[CordinatorDetailstyles.InnerTitle, CordinatorDetailstyles.MarTopzero]}>
                                     <View style={CordinatorDetailstyles.CordinatorDetailLeft}>
                                         <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={CordinatorDetailstyles.InnerTitleIcon} />
