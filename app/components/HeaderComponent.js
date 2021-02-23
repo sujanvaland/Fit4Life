@@ -9,7 +9,7 @@ import Modal from "react-native-modal";
 import AsyncStorage from '@react-native-community/async-storage';
 import Styles from '../config/styles';
 const { color, Typography } = Styles;
-
+import { Picker, Item } from "native-base";
 import NavStyles from '../navigation/NavigationStyle';
 import ApiConstants from '../api/ApiConstants';
 
@@ -25,7 +25,8 @@ class HeaderComponent extends Component {
           login_role:'',
           firstname: '',
           lastname: '',
-          customerimage: ''
+          customerimage: '',
+          language:"",
         };
     }
 
@@ -35,7 +36,8 @@ class HeaderComponent extends Component {
         let firstname = await this._retrieveData("firstname");
         let lastname = await this._retrieveData("lastname");
         let customerimage = await this._retrieveData("customerimage");
-        
+        const lang = await AsyncStorage.getItem('language');
+        this.setState({language:lang});
         this.setState({
             login_token: login_token,
             login_role: login_role,
@@ -129,6 +131,16 @@ class HeaderComponent extends Component {
         }
     };
 
+    changeLanguage = async (item) =>{
+        try{
+            this.setState({language:item});
+            await AsyncStorage.setItem("language",item);
+            navigationActions.navigateToLogin();
+       
+        } catch (error) {
+            
+        }
+    }
     render() {
 
         const props = this.props;
@@ -137,6 +149,7 @@ class HeaderComponent extends Component {
             menu = false,
             backbutton = false,
             //pagetitle = false,
+            lnmenu=false,
         } = props;
         
         const onBackbutton = () => {
@@ -245,6 +258,7 @@ class HeaderComponent extends Component {
                                             <Text style={NavStyles.AccountTextLink}>Logout</Text>
                                         </TouchableOpacity>
                                     </View>
+                                    
                                 </View>
                             }
                         </View>
@@ -266,6 +280,24 @@ class HeaderComponent extends Component {
                             }
                             {pagetitle === true &&
                                 <Text style={HeaderStyles.pagetitleText}>{props.title}</Text>
+                            }
+                            {lnmenu === true &&
+                                <View>
+                                    <Item picker>
+                                        <Picker
+                                            style={HeaderStyles.pagetitleText}
+                                            selectedValue={this.state.language}
+                                            mode="dropdown"
+                                            iosIcon={<Icon name="ios-arrow-down" style={{fontSize:15}}/>}
+                                            placeholder="Select Language"
+                                            onValueChange={(itemValue) => this.changeLanguage(itemValue)}
+                                        >
+                                            <Picker.Item value="" label="Select Language" />
+                                            <Picker.Item key={1} value={"en"} label={"English"} />
+                                            <Picker.Item key={2} value={"sp"} label={"Spanish"} />
+                                        </Picker>
+                                    </Item>
+                                </View>
                             }
                         </View>
                     </View>

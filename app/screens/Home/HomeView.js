@@ -13,7 +13,8 @@ import * as navigationActions from '../../actions/navigationActions';
 import Modal from "react-native-modal";
 import Styles from '../../config/styles';
 import Toast from 'react-native-simple-toast';
-
+import Resource_EN from '../../config/Resource_EN';
+const { English,Spanish } = Resource_EN;
 
 
 class HomeView extends Component {
@@ -31,7 +32,8 @@ class HomeView extends Component {
         Default_Rating: 0,
         Max_Rating: 5,
         message: ''
-      }
+      },
+      lang:English,
     }
 
     //Filled Star. You can also give the path from local
@@ -205,6 +207,17 @@ class HomeView extends Component {
     }
   };
 
+  componentDidUpdate(prevProps){
+    console.log(prevProps.language,this.props.language)
+    if(prevProps.language != this.props.language){
+      if(this.props.language == "en"){
+        this.setState({lang:English})
+      }else{
+        this.setState({lang:Spanish})
+      }
+    }
+  }
+
   UpdateRating(key) {
     this.setState(prevState => ({
       postSendFeedback: {                   // object that we want to update
@@ -218,7 +231,8 @@ class HomeView extends Component {
   render() {
 
     const { upcomingevents, pastevents, loading } = this.props;
-
+    const { lang } = this.state;
+    console.log(lang.LoginUsername);
     let upcomingeventsArr = [];
     let pasteventsArr = [];
     //console.log(upcomingevents);
@@ -348,6 +362,7 @@ class HomeView extends Component {
 
     return (
       <View style={Homestyles.container}>
+        
         {
           get(loading, 'isLoading') && <OverlayActivityIndicatorElement />
         }

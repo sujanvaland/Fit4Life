@@ -9,7 +9,9 @@ import { TextBoxElementLogin, LinkButton, ButtonElement, OverlayActivityIndicato
 import SplashScreen from 'react-native-splash-screen';
 import NetInfo from "@react-native-community/netinfo";
 import { ScrollView } from 'react-native-gesture-handler';
-
+import {NavigationEvents} from 'react-navigation';
+import Resource_EN from '../../config/Resource_EN';
+const { English,Spanish } = Resource_EN;
 class LoginView extends Component {
 
   async componentDidMount() {
@@ -29,6 +31,13 @@ class LoginView extends Component {
       'keyboardDidHide',
       this._keyboardDidHide,
     );
+
+    const language = await AsyncStorage.getItem('language');
+    if(language == "sp"){
+      this.setState({lang:Spanish})
+    }else{
+      this.setState({lang:English})
+    }
   }
 
 
@@ -41,7 +50,8 @@ class LoginView extends Component {
       firstTimeRender: undefined,
       enableScroll: false,
       ShowEnvMsg: false,
-      CurrentEnv: ""
+      CurrentEnv: "",
+      lang:{},
     }
     this.props.loginresponse.ErrorMessage = "";
     this.props.loginresponse.isLoggedIn = true;
@@ -122,6 +132,7 @@ class LoginView extends Component {
     this.keyboardDidHideListener.remove();
   }
 
+  
   _keyboardDidShow = () => {
     this.setState({ enableScroll: true });
   }
@@ -130,11 +141,13 @@ class LoginView extends Component {
     this.setState({ enableScroll: false });
   }
   render() {
-    const { username, password } = this.state;
+    const { username, password,lang } = this.state;
     const { ErrorMessage, submitted, loading } = this.props;
+    
     const image = require('../../assets/img/img_loginback.png');
     return (
       <View style={loginStyles.loginView}>
+        <NavigationEvents onDidFocus={() => this.componentDidMount()} />
         <ImageBackground source={image} style={loginStyles.ImageBack} resizeMode="cover">
           <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={this.state.enableScroll}>
             <KeyboardAvoidingView style={loginStyles.container} enabled>
@@ -161,10 +174,6 @@ class LoginView extends Component {
                 <Image source={require('../../assets/img/logo.png')} resizeMode="contain" style={loginStyles.logo} />
                 <View style={loginStyles.loginArea}>
 
-                  {
-                    this.state.ShowEnvMsg == true &&
-                    <Text style={globalStyles.headingText}>Current Environment : {this.state.CurrentEnv}</Text>
-                  }
                   <View style={loginStyles.textBoxContent}>
                     <View style={loginStyles.textBoxInner}>
 
@@ -224,7 +233,7 @@ class LoginView extends Component {
                   </View>
 
                   <View style={loginStyles.NewRegistration}>
-                    <Text style={loginStyles.accountText}>New Registratoin?</Text>
+                    <Text style={loginStyles.accountText}>{lang.NewRegistration}?</Text>
                     <TouchableOpacity style={loginStyles.BtnSignup} onPress={this.navigateToSignup}>
                       <Text style={loginStyles.TextSignup}>Cilck here</Text>
                     </TouchableOpacity>

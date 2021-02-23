@@ -69,7 +69,7 @@ const RNApp = createStackNavigator(
             navigationOptions: ({ navigation }) => {
                 return {
                     header: () => (
-                        <HeaderComponent navigation={navigation} user={false} menu={true} title="Fit4Life" pagetitle={true} />
+                        <HeaderComponent navigation={navigation} lnmenu={true} user={false} menu={true} title="Fit4Life" pagetitle={true} />
                     ),
                     gestureEnabled: true,
                 };

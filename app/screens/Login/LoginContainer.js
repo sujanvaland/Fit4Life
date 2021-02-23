@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as loginActions from 'app/actions/loginActions';
 import * as navigationActions from 'app/actions/navigationActions';
-
+let language = "";
 class LoginContainer extends Component {
     constructor(props) {
         super(props);
@@ -23,6 +23,8 @@ class LoginContainer extends Component {
             return true;
           }
         });
+
+        
     }
   
     navigateToForgotPassword = () => {
@@ -35,6 +37,7 @@ class LoginContainer extends Component {
 
     _retrieveData = async (key) => {
         try {
+          
           const value = await AsyncStorage.getItem('TDMDeliveryApp:'+key);
           if (value !== null) {
             return value
