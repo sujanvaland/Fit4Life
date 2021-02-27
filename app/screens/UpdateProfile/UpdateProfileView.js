@@ -8,6 +8,9 @@ import Icon from 'react-native-ionicons';
 import Modal from 'react-native-modal';
 import { TextBoxElement, OverlayActivityIndicatorElement } from '../../components';
 import Toast from 'react-native-simple-toast';
+import AsyncStorage from '@react-native-community/async-storage';
+import Resource_EN from '../../config/Resource_EN';
+const { English,Spanish } = Resource_EN;
 
 class UpdateProfileView extends Component {
     constructor(props) {
@@ -22,12 +25,14 @@ class UpdateProfileView extends Component {
             isvalidfirstname: true,
             isvalidlastname: true,
             isvalidaddress: true,
-            isvalidphonenumber: true
+            isvalidphonenumber: true,
+            lang:{},
           }
 
 
     }
-    componentDidMount(){
+
+    async componentDidMount(){
 
         let { personalinformation,accountdetail } = this.props;
         let newpostUpdateprofile = this.state.postUpdateprofile;
@@ -47,6 +52,14 @@ class UpdateProfileView extends Component {
           this.setState({
             postUpdateprofile : newpostUpdateprofile
           });
+        }
+
+        const language = await AsyncStorage.getItem('language');
+        //console.log(language);
+        if(language == "sp"){
+          this.setState({lang:Spanish})
+        }else{
+          this.setState({lang:English})
         }
       }
    
@@ -241,6 +254,7 @@ class UpdateProfileView extends Component {
  }
     
     render() {
+        const { lang } = this.state;
         const{loading} = this.props;
         return (
 
@@ -260,11 +274,11 @@ class UpdateProfileView extends Component {
                         <View style={[UpdateProfileStyles.ServicesOoptionBox, UpdateProfileStyles.ContianerHeight]}>
                             <View>
                                 <View style={UpdateProfileStyles.FormArea}>
-                                    <Text>Firstname</Text>
+                                    <Text>{lang.FirstName}</Text>
                                     <View style={UpdateProfileStyles.TextBoxContainer}>
                                        
                                         <TextBoxElement
-                                        placeholder={'Firstname'}
+                                        placeholder={lang.FirstName}
                                         value={this.state.postUpdateprofile.firstname}
                                         onChangeText={value => this.onValueChange("firstname", value)}
                                         isvalidInput={this.state.isvalidfirstname}
@@ -272,11 +286,11 @@ class UpdateProfileView extends Component {
                                         maxLength={50}
                                         />
                                     </View>
-                                    <Text>Lastname</Text>
+                                    <Text>{lang.LastName}</Text>
                                     <View style={UpdateProfileStyles.TextBoxContainer}>
                                        
                                         <TextBoxElement
-                                        placeholder={'Lastname'}
+                                        placeholder={lang.LastName}
                                         value={this.state.postUpdateprofile.lastname}
                                         onChangeText={value => this.onValueChange("lastname", value)}
                                         isvalidInput={this.state.isvalidlastname}
@@ -284,11 +298,11 @@ class UpdateProfileView extends Component {
                                         maxLength={50}
                                         />
                                     </View>
-                                    <Text>Address</Text>
+                                    <Text>{lang.Address}</Text>
                                     <View style={UpdateProfileStyles.TextBoxContainer}>
                                        
                                         <TextBoxElement
-                                        placeholder={'Address'}
+                                        placeholder={lang.Address}
                                         value={this.state.postUpdateprofile.address}
                                         onChangeText={value => this.onValueChange("address", value)}
                                         isvalidInput={this.state.isvalidaddress}
@@ -296,10 +310,10 @@ class UpdateProfileView extends Component {
                                         maxLength={50}
                                         />
                                     </View>
-                                    <Text>Phone Number</Text>
+                                    <Text>{lang.PhoneNumber}</Text>
                                     <View style={UpdateProfileStyles.TextBoxContainer}>
                                        <TextBoxElement
-                                        placeholder={'Enter your phone no.'}
+                                        placeholder={lang.PhoneNumber}
                                         value={this.state.postUpdateprofile.phonenumber}
                                         isvalidInput={this.state.isvalidphonenumber}
                                         onEndEditing={() => this.validateInputs("phonenumber")}
@@ -320,7 +334,7 @@ class UpdateProfileView extends Component {
                         <Text style={UpdateProfileStyles.BookAmount}>AED 97.00</Text>
                     </View> */}
                     <TouchableOpacity style={UpdateProfileStyles.BtnBooknow} onPress={() => this.navigateToUpdateprofile()} >
-                        <Text style={UpdateProfileStyles.BtnTtl}>Update</Text>
+                        <Text style={UpdateProfileStyles.BtnTtl}>{lang.Update}</Text>
                     </TouchableOpacity>
 
                     

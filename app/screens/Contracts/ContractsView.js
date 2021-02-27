@@ -7,6 +7,9 @@ import * as navigationActions from '../../actions/navigationActions';
 import Modal from "react-native-modal";
 import { get } from 'lodash';
 import { OverlayActivityIndicatorElement } from "../../components";
+import AsyncStorage from '@react-native-community/async-storage';
+import Resource_EN from '../../config/Resource_EN';
+const { English,Spanish } = Resource_EN;
 
 
 
@@ -15,13 +18,21 @@ class ContractsView extends Component {
         super(props);
         this.state = {
             isModalVisible: false,
-            contractDetails:null
+            contractDetails:null,
+            lang:{},
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         SplashScreen.hide();
-    }
+        const language = await AsyncStorage.getItem('language');
+        //console.log(language);
+        if(language == "sp"){
+          this.setState({lang:Spanish})
+        }else{
+          this.setState({lang:English})
+        }
+      }
 
     toggleModal(contractDetails) {
         this.setState({ isModalVisible: !this.state.isModalVisible });
@@ -76,6 +87,7 @@ class ContractsView extends Component {
       }
 
     render() {
+        const { lang } = this.state;
         const image = require('../../assets/img/img_loginback.png');
         const { loading, contracts } = this.props;
 
@@ -109,7 +121,7 @@ class ContractsView extends Component {
                                 <View style={Contractsstyles.InnerTitle}>
                                     <View style={Contractsstyles.HomeLeft}>
                                         <Image source={require('../../assets/images/img_contracts.png')} resizeMode="contain" style={Contractsstyles.InnerTitleIcon} />
-                                        <Text style={Contractsstyles.InnerTitleText}>Contracts</Text>
+                                        <Text style={Contractsstyles.InnerTitleText}>{lang.Contracts}</Text>
                                     </View>
 
                                 </View>
@@ -139,6 +151,7 @@ class ContractsView extends Component {
     }
 
     rendercontractslist = () => {
+        const { lang } = this.state;
         let { login_token, contracts } = this.props;
         let contractsdata = []
         if (contracts) {
@@ -152,12 +165,12 @@ class ContractsView extends Component {
                     <Text style={[Contractsstyles.ContcatsTitle, globalStyles.FontLight]}>{item.contract.name} </Text>
                     <Text style={[Contractsstyles.EventDesc, globalStyles.FontRegular]}>{item.contract.smallDescription}</Text>
                     <TouchableOpacity style={Contractsstyles.OutlineBtn} onPress={() => this.toggleModal(item)}>
-                        <Text style={Contractsstyles.BtnlinkText}>Detail</Text>
+                        <Text style={Contractsstyles.BtnlinkText}>{lang.Detail}</Text>
                     </TouchableOpacity>
                     <View style={Contractsstyles.FlexRow}>
                         { !item.signDate &&
                             <TouchableOpacity style={Contractsstyles.FillBtn} onPress={() => this.signContract(item.contract.id)}>
-                                <Text style={Contractsstyles.FillBtnlinkText}>Sign Contract</Text>
+                                <Text style={Contractsstyles.FillBtnlinkText}>{lang.SignContract}</Text>
                             </TouchableOpacity>
                         }
                         { item.signDate &&

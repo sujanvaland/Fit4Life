@@ -3,7 +3,6 @@ import { get } from 'lodash';
 import { View, Text, Image, TouchableOpacity, ImageBackground, KeyboardAvoidingView, StatusBar } from 'react-native';
 import styles from './signupStyles';
 import globalStyles from '../../assets/css/globalStyles';
-import Resource_EN from '../../config/Resource_EN';
 import PropTypes from 'prop-types';
 
 import { TextBoxElement, PhoneTextBoxElement, ButtonElement, OverlayActivityIndicatorElement } from "../../components";
@@ -12,6 +11,9 @@ import { ScrollView } from 'react-native-gesture-handler';
 import SplashScreen from 'react-native-splash-screen';
 import * as navigationActions from '../../actions/navigationActions';
 import Toast from 'react-native-simple-toast';
+import AsyncStorage from '@react-native-community/async-storage';
+import Resource_EN from '../../config/Resource_EN';
+const { English,Spanish } = Resource_EN;
 
 class SignUpView extends Component {
 
@@ -33,8 +35,8 @@ class SignUpView extends Component {
       isvalidfirstname: false,
       isvalidlastname: false,
       isvalidemail: false,
-      isvalidpassword: false
-
+      isvalidpassword: false,
+      lang:{},
     };
   }
 
@@ -58,9 +60,16 @@ class SignUpView extends Component {
     }
   };
 
-
-  componentDidMount() {
+  async componentDidMount() {
     SplashScreen.hide();
+    const language = await AsyncStorage.getItem('language');
+    //console.log(language);
+    if(language == "sp"){
+      this.setState({lang:Spanish})
+    }else{
+      this.setState({lang:English})
+    }
+
     this.setState(prevState => ({
       userDetails: {                   // object that we want to update
         ...prevState.userDetails,    // keep all other key-value pairs
@@ -71,6 +80,7 @@ class SignUpView extends Component {
       }
     }));
   }
+
   validateEmail = (value) => {
     if (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g.test(value)) {
       return true;
@@ -194,7 +204,8 @@ class SignUpView extends Component {
 
 
   render() {
-
+    
+    const { lang } = this.state;
     const { userDetails } = this.state;
     const { loading, disabled } = this.props;
     const image = require('../../assets/img/img_loginback.png');
@@ -226,10 +237,10 @@ class SignUpView extends Component {
               <View style={styles.loginContainer}>
 
                 <View style={styles.loginArea}>
-                  <Text style={styles.TitleText}>Create an Account</Text>
+                  <Text style={styles.TitleText}>{lang.CreateanAccount}</Text>
                   <View style={styles.textBoxContent}>
                     <TextBoxElement
-                      placeholder={"First Name"}
+                      placeholder={lang.FirstName}
                       value={userDetails.firstname}
                       autoCapitalize={'none'}
                       onChangeText={value => this.updateState("firstname", value)}
@@ -241,7 +252,7 @@ class SignUpView extends Component {
                   </View>
                   <View style={styles.textBoxContent}>
                     <TextBoxElement
-                      placeholder={"Last Name"}
+                      placeholder={lang.LastName}
                       value={userDetails.lastname}
                       autoCapitalize={'none'}
                       onChangeText={value => this.updateState("lastname", value)}
@@ -253,7 +264,7 @@ class SignUpView extends Component {
                   </View>
                   <View style={styles.textBoxContent}>
                     <TextBoxElement
-                      placeholder={"Email"}
+                      placeholder={lang.Email}
                       value={userDetails.email}
                       autoCapitalize={'none'}
                       onChangeText={value => this.updateState("email", value)}
@@ -268,7 +279,7 @@ class SignUpView extends Component {
                   </View>
                   <View style={styles.textBoxContent}>
                     <TextBoxElement
-                      placeholder={"Password"}
+                      placeholder={lang.Password}
                       secureTextEntry={true}
                       value={userDetails.password}
                       onChangeText={value => this.updateState("password", value)}
@@ -280,15 +291,15 @@ class SignUpView extends Component {
 
                   <View style={[styles.flexBox, styles.Mrtop20]}>
                     <TouchableOpacity onPress={this.signup} disabled={this.submitted} style={[styles.buttonStyle, (disabled) ? styles.buttonStyleDisable : styles.buttonStyleActive]}>
-                      <Text style={[styles.buttonStyleText, (disabled) ? styles.buttonStyleDisable : styles.buttonStyleActive]}>Register</Text>
+                      <Text style={[styles.buttonStyleText, (disabled) ? styles.buttonStyleDisable : styles.buttonStyleActive]}>{lang.Register}</Text>
                     </TouchableOpacity>
                   </View>
 
 
                   <View style={styles.NewRegistration}>
-                    <Text style={styles.accountText}>Already having Account?</Text>
+                    <Text style={styles.accountText}>{lang.AlreadyhavingAccount}</Text>
                     <TouchableOpacity style={styles.BtnSignup} onPress={() => this.navigateToLogin()}>
-                      <Text style={styles.TextSignup}>Sign In</Text>
+                      <Text style={styles.TextSignup}>{lang.SignIn}</Text>
                     </TouchableOpacity>
                   </View>
 

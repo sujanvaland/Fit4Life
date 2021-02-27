@@ -4,19 +4,30 @@ import Paymentsstyles from './styles';
 import SplashScreen from 'react-native-splash-screen';
 import { get } from 'lodash';
 import { OverlayActivityIndicatorElement } from "../../components";
+import AsyncStorage from '@react-native-community/async-storage';
+import Resource_EN from '../../config/Resource_EN';
+const { English,Spanish } = Resource_EN;
 
 
 
 class PaymentsView extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            lang:{},
+        }
     }
 
 
-    componentDidMount() {
+    async componentDidMount() {
         SplashScreen.hide();
-
+        const language = await AsyncStorage.getItem('language');
+        //console.log(language);
+        if(language == "sp"){
+          this.setState({lang:Spanish})
+        }else{
+          this.setState({lang:English})
+        }
     }
 
     getParsedDate(strDate) {//get date formate
@@ -63,6 +74,7 @@ class PaymentsView extends Component {
 
 
     render() {
+        const { lang } = this.state;
         const image = require('../../assets/img/img_loginback.png');
         const { loading, payments } = this.props;
 
@@ -85,7 +97,7 @@ class PaymentsView extends Component {
                                 <View style={Paymentsstyles.InnerTitle}>
                                     <View style={Paymentsstyles.CustomerFeedLeft}>
                                         <Image source={require('../../assets/img/icon_payments.png')} resizeMode="contain" style={Paymentsstyles.InnerTitleIcon} />
-                                        <Text style={Paymentsstyles.InnerTitleText}>Payments</Text>
+                                        <Text style={Paymentsstyles.InnerTitleText}>{lang.Payments}</Text>
                                     </View>
                                 </View>
 
@@ -99,6 +111,7 @@ class PaymentsView extends Component {
     }
 
     renderpaymentslist = () => {
+        const { lang } = this.state;
         let { login_token, payments } = this.props;
         let paymentsdata = []
         if (payments) {
@@ -119,10 +132,11 @@ class PaymentsView extends Component {
                         <Text style={Paymentsstyles.Banktransfer}>{item.paymentMethod} </Text>
                         <Text style={Paymentsstyles.DateToend}>{this.getParsedDate(item.userPlan.startDate)} to {this.getParsedDate(item.userPlan.expirationDate)}</Text>
                     </View>
-                    <View style={Paymentsstyles.BottomDate}>
-                        <Text style={Paymentsstyles.BottomDateText}>{this.getTeansactionTime(item.transactionDate)} {this.getTeansactionDate(item.transactionDate)}</Text>
-                    </View>
-    
+                    { item?.transactionDate &&
+                        <View style={Paymentsstyles.BottomDate}>
+                            <Text style={Paymentsstyles.BottomDateText}>{this.getTeansactionTime(item?.transactionDate)} {this.getTeansactionDate(item?.transactionDate)}</Text>
+                        </View>
+                    }
                 </View>) //get data from AccordianElement components
           }
         });

@@ -9,13 +9,29 @@ import SplashScreen from 'react-native-splash-screen';
 import * as navigationActions from '../../actions/navigationActions';
 import { get } from 'lodash';
 import { OverlayActivityIndicatorElement } from "../../components";
+import AsyncStorage from '@react-native-community/async-storage';
+import Resource_EN from '../../config/Resource_EN';
+const { English,Spanish } = Resource_EN;
 
 
 
 class PersonalDetailView extends Component {
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {
+      lang:{},
+    }
+  }
+
+  async componentDidMount() {
+    SplashScreen.hide();
+    const language = await AsyncStorage.getItem('language');
+    //console.log(language);
+    if(language == "sp"){
+      this.setState({lang:Spanish})
+    }else{
+      this.setState({lang:English})
+    }
   }
 
   navigateToUpdateProfile = () => {
@@ -30,11 +46,6 @@ class PersonalDetailView extends Component {
       navigationActions.navigateToAddHealthProfile();
   }
 
-
-  componentDidMount() {
-    SplashScreen.hide();
-  }
-
   getParsedDate(strDate) {//get date formate
     if (strDate != "") {
       var dateArray = strDate.split('-');
@@ -47,6 +58,8 @@ class PersonalDetailView extends Component {
   
 
   render() {
+
+    const { lang } = this.state;
     const image = require('../../assets/img/img_loginback.png');
     const { accountdetail,personalinformation, userplan, loading } = this.props;
 
@@ -132,10 +145,10 @@ class PersonalDetailView extends Component {
                   <View style={[PersonalDetailstyles.InnerTitle, PersonalDetailstyles.MarTopzero]}>
                     <View style={PersonalDetailstyles.CustomerFeedLeft}>
                       <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={PersonalDetailstyles.InnerTitleIcon} />
-                      <Text style={PersonalDetailstyles.InnerTitleText}>Health Profile</Text>
+                      <Text style={PersonalDetailstyles.InnerTitleText}>{lang.HealthProfile}</Text>
                     </View>
                     <TouchableOpacity style={PersonalDetailstyles.AddBtn} onPress={() => this.navigateToAddHealthProfile()}>
-                      <Text style={PersonalDetailstyles.AddBtnText}>+ Add</Text>
+                      <Text style={PersonalDetailstyles.AddBtnText}>+ {lang.Add}</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -150,12 +163,12 @@ class PersonalDetailView extends Component {
 
                       <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={PersonalDetailstyles.InnerTitleIcon} />
                       <View>
-                        <Text style={[PersonalDetailstyles.InnerTitleText, PersonalDetailstyles.FullwidthBox]}>Commnets</Text>
-                        <Text style={[PersonalDetailstyles.ResultText, PersonalDetailstyles.Fnt12]}>211 Result</Text>
+                        <Text style={[PersonalDetailstyles.InnerTitleText, PersonalDetailstyles.FullwidthBox]}>{lang.Commnets}</Text>
+                        <Text style={[PersonalDetailstyles.ResultText, PersonalDetailstyles.Fnt12]}>211 {lang.Result}</Text>
                       </View>
                     </View>
                     <TouchableOpacity style={PersonalDetailstyles.AddBtn}>
-                      <Text style={PersonalDetailstyles.AddBtnText}>+ Add</Text>
+                      <Text style={PersonalDetailstyles.AddBtnText}>+ {lang.Add}</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -164,7 +177,7 @@ class PersonalDetailView extends Component {
               { accountdetail.authorities[0]=="ROLE_COORDINATOR" &&
                 <View style={[PersonalDetailstyles.ContainerMargin]}>
                   <View style={PersonalDetailstyles.WhiteBox}>
-                    <Text style={PersonalDetailstyles.EventTitle}>Coordinator name: Frank Doe</Text>
+                    <Text style={PersonalDetailstyles.EventTitle}>{lang.Coordinatorname}: Frank Doe</Text>
                     <Text style={PersonalDetailstyles.EventLocation}>Exercise and physical activity can be classified into
                     four categories: endurance, strength, flexibility, and balance.</Text>
                     <Text style={PersonalDetailstyles.DateText}>Morning 09/11/2020</Text>

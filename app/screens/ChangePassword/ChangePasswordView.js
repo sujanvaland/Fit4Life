@@ -4,11 +4,13 @@ import ChangePasswordStyles from './ChangePasswordStyles';
 import globalStyles from '../../assets/css/globalStyles';
 import PropTypes from 'prop-types';
 import { TextBoxElement, TextBoxElementLogin, TextBoxElementChangepass } from "../../components";
-import Resource_EN from '../../config/Resource_EN';
 import { ScrollView } from 'react-native-gesture-handler';
 import Toast from 'react-native-simple-toast';
 import { get } from 'lodash';
 import { OverlayActivityIndicatorElement } from "../../components";
+import AsyncStorage from '@react-native-community/async-storage';
+import Resource_EN from '../../config/Resource_EN';
+const { English,Spanish } = Resource_EN;
 
 class ChangePasswordView extends Component {
   constructor(props) {
@@ -27,11 +29,12 @@ class ChangePasswordView extends Component {
         oldpassword: '',
         newpassword: '',
         confirmpassword: ''
-      }
+      },
+      lang:{},
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       this._keyboardDidShow,
@@ -40,6 +43,14 @@ class ChangePasswordView extends Component {
       'keyboardDidHide',
       this._keyboardDidHide,
     );
+
+    const language = await AsyncStorage.getItem('language');
+    //console.log(language);
+    if(language == "sp"){
+      this.setState({lang:Spanish})
+    }else{
+      this.setState({lang:English})
+    }
   }
   componentWillUnmount() {
     this.keyboardDidShowListener.remove();
@@ -228,8 +239,8 @@ class ChangePasswordView extends Component {
   }
 
   render() {
+    const { lang } = this.state;
     const { loading } = this.props;
-    const { button } = Resource_EN
     const image = require('../../assets/img/img_loginback.png');
     return (
 
@@ -247,7 +258,7 @@ class ChangePasswordView extends Component {
                     <Image style={ChangePasswordStyles.passwordImg} source={require('../../assets/img/password.png')} resizeMode="cover" />
                     <Image style={ChangePasswordStyles.lineImg} source={require('../../assets/img/line.png')} resizeMode="cover" />
                   </View>
-                  <TextBoxElementChangepass placeholder="Current Password&nbsp;&nbsp;"
+                  <TextBoxElementChangepass placeholder={lang.CurrentPassword}
                     style={[this.state.isValidoldpassword ? ChangePasswordStyles.BorderGrey : ChangePasswordStyles.BorderRed, ChangePasswordStyles.textInput]}
                     value={this.state.postChangePassword.oldpassword}
                     onChangeText={value => this.onValueChange("oldpassword", value)}
@@ -267,7 +278,7 @@ class ChangePasswordView extends Component {
 
 
                   <TextBoxElementChangepass
-                    placeholder={"Password"}
+                    placeholder={lang.Password}
                     secureTextEntry={true}
                     value={this.state.postChangePassword.newpassword}
                     //  isvalidInput={this.props.loginresponse.ErrorMessage == "" || this.props.loginresponse.ErrorMessage == null}
@@ -282,7 +293,7 @@ class ChangePasswordView extends Component {
                     <Image style={ChangePasswordStyles.lineImg} source={require('../../assets/img/line.png')} resizeMode="cover" />
                   </View>
 
-                  <TextBoxElementChangepass placeholder="Confirm Password&nbsp;&nbsp;"
+                  <TextBoxElementChangepass placeholder={lang.ConfirmPassword}
                     style={[this.state.isValidconfirmpassword ? ChangePasswordStyles.BorderGrey : ChangePasswordStyles.BorderRed, ChangePasswordStyles.textInput]}
                     value={this.state.postChangePassword.confirmpassword}
                     onChangeText={value => this.onValueChange("confirmpassword", value)}
@@ -296,7 +307,7 @@ class ChangePasswordView extends Component {
                 <View style={ChangePasswordStyles.ButtonBox}>
                   <TouchableOpacity style={ChangePasswordStyles.buttonStyle}
                     onPress={() => this.changePassword()}>
-                    <Text style={ChangePasswordStyles.btnText}>Update Password</Text>
+                    <Text style={ChangePasswordStyles.btnText}>{lang.UpdatePassword}</Text>
                   </TouchableOpacity>
 
 

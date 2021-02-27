@@ -12,6 +12,8 @@ const { color, Typography } = Styles;
 import { Picker, Item } from "native-base";
 import NavStyles from '../navigation/NavigationStyle';
 import ApiConstants from '../api/ApiConstants';
+import Resource_EN from '../config/Resource_EN';
+const { English,Spanish } = Resource_EN;
 
 
 
@@ -27,6 +29,7 @@ class HeaderComponent extends Component {
           lastname: '',
           customerimage: '',
           language:"",
+          lang:{},
         };
     }
 
@@ -36,8 +39,8 @@ class HeaderComponent extends Component {
         let firstname = await this._retrieveData("firstname");
         let lastname = await this._retrieveData("lastname");
         let customerimage = await this._retrieveData("customerimage");
-        const lang = await AsyncStorage.getItem('language');
-        this.setState({language:lang});
+        const langvalue = await AsyncStorage.getItem('language');
+        this.setState({language:langvalue});
         this.setState({
             login_token: login_token,
             login_role: login_role,
@@ -45,6 +48,12 @@ class HeaderComponent extends Component {
             lastname: lastname,
             customerimage: customerimage
         });
+
+        if(langvalue == "sp"){
+            this.setState({lang:Spanish})
+        }else{
+            this.setState({lang:English})
+        }
     }
       
     _retrieveData = async (key) => {
@@ -135,7 +144,7 @@ class HeaderComponent extends Component {
         try{
             this.setState({language:item});
             await AsyncStorage.setItem("language",item);
-            navigationActions.navigateToLogin();
+            this.navigateToLogin();
        
         } catch (error) {
             
@@ -143,6 +152,8 @@ class HeaderComponent extends Component {
     }
     render() {
 
+        const { lang } = this.state;
+        //console.log(lang);
         const props = this.props;
         const {
             pagetitle = false,
@@ -191,14 +202,14 @@ class HeaderComponent extends Component {
                             <View>
                                 <TouchableOpacity onPress={() => this.navigateToHome()} style={NavStyles.MyAccountlinks}>
                                     <Image source={require('../assets/img/icon_home_menu.png')} style={NavStyles.MenuIcon} />
-                                    <Text style={NavStyles.AccountTextLink}>Home</Text>
+                                    <Text style={NavStyles.AccountTextLink}>{lang.Home}</Text>
                                 </TouchableOpacity>
                             </View>
 
                             <View>
                                 <TouchableOpacity onPress={() => this.navigateToCalendar()} style={NavStyles.MyAccountlinks}>
                                     <Image source={require('../assets/img/icon_calendar_menu.png')} style={NavStyles.MenuIcon} />
-                                    <Text style={NavStyles.AccountTextLink}>Calendar</Text>
+                                    <Text style={NavStyles.AccountTextLink}>{lang.Calendar}</Text>
                                 </TouchableOpacity>
                             </View>
                             {
@@ -207,21 +218,21 @@ class HeaderComponent extends Component {
                                     <View>
                                         <TouchableOpacity onPress={() => this.navigateToHealthParameterPage()} style={NavStyles.MyAccountlinks}>
                                             <Image source={require('../assets/img/icon_calendar_menu.png')} style={NavStyles.MenuIcon} />
-                                            <Text style={NavStyles.AccountTextLink}>HealthParameters</Text>
+                                            <Text style={NavStyles.AccountTextLink}>{lang.HealthParameters}</Text>
                                         </TouchableOpacity>
                                     </View>  
 
                                     <View>
                                         <TouchableOpacity onPress={() => this.navigateToPayments()} style={NavStyles.MyAccountlinks}>
                                             <Image source={require('../assets/img/icon_calendar_menu.png')} style={NavStyles.MenuIcon} />
-                                            <Text style={NavStyles.AccountTextLink}>Payments</Text>
+                                            <Text style={NavStyles.AccountTextLink}>{lang.Payments}</Text>
                                         </TouchableOpacity>
                                     </View>                     
 
                                     <View>
                                         <TouchableOpacity onPress={() => this.navigateToContracts()} style={NavStyles.MyAccountlinks}>
                                             <Image source={require('../assets/img/icon_calendar_menu.png')} style={NavStyles.MenuIcon} />
-                                            <Text style={NavStyles.AccountTextLink}>Contracts</Text>
+                                            <Text style={NavStyles.AccountTextLink}>{lang.Contracts}</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </View>
@@ -233,18 +244,18 @@ class HeaderComponent extends Component {
                                     <View>
                                         <TouchableOpacity onPress={() => this.navigateToMyProfile()} style={NavStyles.MyAccountlinks}>
                                             <Image source={require('../assets/img/icon_myprofile_menu.png')} resizeMode="contain" style={NavStyles.MenuIcon} />
-                                            <Text style={NavStyles.AccountTextLink}>My Profile</Text>
+                                            <Text style={NavStyles.AccountTextLink}>{lang.MyProfile}</Text>
                                         </TouchableOpacity>
                                     </View>
                                     <View>
                                         <TouchableOpacity onPress={() =>
                                             Alert.alert(
-                                                'Log out',
-                                                'Do you want to logout?',
+                                                lang.Logout,
+                                                lang.LogoutQus,
                                                 [
-                                                    { text: 'Cancel', onPress: () => { return null } },
+                                                    { text: lang.Cancel, onPress: () => { return null } },
                                                     {
-                                                        text: 'Confirm', onPress: () => {
+                                                        text: lang.Confirm, onPress: () => {
                                                             AsyncStorage.clear();
                                                             this.navigateToLogin();
                                                         }
@@ -255,7 +266,7 @@ class HeaderComponent extends Component {
                                         } style={[NavStyles.MyAccountlinks, NavStyles.MarTop10]}>
 
                                             <Image source={require('../assets/img/icon_logoutmenu.png')} resizeMode="contain" style={NavStyles.MenuIcon} />
-                                            <Text style={NavStyles.AccountTextLink}>Logout</Text>
+                                            <Text style={NavStyles.AccountTextLink}>{lang.LogoutTxt}</Text>
                                         </TouchableOpacity>
                                     </View>
                                     

@@ -10,19 +10,30 @@ import Icon from 'react-native-ionicons';
 import SplashScreen from 'react-native-splash-screen';
 import * as navigationActions from '../../actions/navigationActions';
 import { Rating, AirbnbRating } from 'react-native-ratings';
+import AsyncStorage from '@react-native-community/async-storage';
+import Resource_EN from '../../config/Resource_EN';
+const { English,Spanish } = Resource_EN;
 
 
 
 class CordinatorDetailView extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            lang:{},
+        }
     }
 
 
-    componentDidMount() {
+    async componentDidMount() {
         SplashScreen.hide();
-
+        const language = await AsyncStorage.getItem('language');
+        //console.log(language);
+        if(language == "sp"){
+          this.setState({lang:Spanish})
+        }else{
+          this.setState({lang:English})
+        }
     }
 
     getParsedDate(strDate) {
@@ -50,7 +61,7 @@ class CordinatorDetailView extends Component {
     }
     
     render() {
-
+        const { lang } = this.state;
         let { loading, coordinatorEventDetail,eventAttendancesList } = this.props;
         let coordinatoreventdata = {};
         
@@ -58,7 +69,7 @@ class CordinatorDetailView extends Component {
             coordinatoreventdata = coordinatorEventDetail.length > 0 ? coordinatorEventDetail[0] : {};
         }
 
-        console.log(coordinatoreventdata);
+        //console.log(coordinatoreventdata);
 
         let eventAttendancesListArr = [];
         if(eventAttendancesList && eventAttendancesList != undefined && eventAttendancesList.length > 0){
@@ -76,7 +87,7 @@ class CordinatorDetailView extends Component {
                                     <TouchableOpacity style={CordinatorDetailstyles.NewRoutineIcon}>
                                         <Image source={require('../../assets/img/icon_touchpin.png')} resizeMode='contain' style={CordinatorDetailstyles.TouchPin} />
                                     </TouchableOpacity>
-                                    <Text style={CordinatorDetailstyles.NewRoutine}>New Routine</Text>
+                                    <Text style={CordinatorDetailstyles.NewRoutine}>{lang.NewRoutine}</Text>
                                 </View>
                             }
                             {/* <TouchableOpacity style={CordinatorDetailstyles.ButtionMaron}>
@@ -132,12 +143,12 @@ class CordinatorDetailView extends Component {
                                         <View style={CordinatorDetailstyles.CordinatorDetailLeft}>
                                             <Image source={require('../../assets/img/icon_link.png')} resizeMode="contain" style={CordinatorDetailstyles.InnerTitleIcon} />
                                             <View style={CordinatorDetailstyles.LinkViewBox}>
-                                                <Text style={CordinatorDetailstyles.InnerTitleText}>Link</Text>
+                                                <Text style={CordinatorDetailstyles.InnerTitleText}>{lang.Link}</Text>
                                                 <Text style={CordinatorDetailstyles.LinkTextBox}>{coordinatoreventdata.linkUrl}</Text>
                                             </View>
                                         </View>
                                         <TouchableOpacity style={CordinatorDetailstyles.BtnGo} onPress={ ()=> Linking.openURL(coordinatoreventdata.linkUrl) }>
-                                            <Text style={CordinatorDetailstyles.BtnGotext}>Go</Text>
+                                            <Text style={CordinatorDetailstyles.BtnGotext}>{lang.Go}</Text>
                                         </TouchableOpacity>
                                     </View>
                                 }
@@ -145,7 +156,7 @@ class CordinatorDetailView extends Component {
                                 <View style={[CordinatorDetailstyles.InnerTitle, CordinatorDetailstyles.MarTopzero]}>
                                     <View style={CordinatorDetailstyles.CordinatorDetailLeft}>
                                         <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={CordinatorDetailstyles.InnerTitleIcon} />
-                                        <Text style={CordinatorDetailstyles.InnerTitleText}>Assistants</Text>
+                                        <Text style={CordinatorDetailstyles.InnerTitleText}>{lang.Assistants}</Text>
                                     </View>
                                     <View style={CordinatorDetailstyles.countPlus}>
                                         <Text style={CordinatorDetailstyles.ResultText}>{eventAttendancesListArr.length}/{coordinatoreventdata.capacity}</Text>

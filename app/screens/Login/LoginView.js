@@ -181,7 +181,7 @@ class LoginView extends Component {
                       <Image style={loginStyles.lineImg} source={require('../../assets/img/line.png')} resizeMode="cover" />
                     </View>
                     <TextBoxElementLogin
-                      placeholder={"Email / Username"}
+                      placeholder={lang.LoginUsername}
                       value={username}
                       isvalidInput={this.props.loginresponse.ErrorMessage == "" || this.props.loginresponse.ErrorMessage == null}
                       autoCapitalize={'none'}
@@ -196,7 +196,7 @@ class LoginView extends Component {
                       <Image style={loginStyles.lineImg} source={require('../../assets/img/line.png')} resizeMode="cover" />
                     </View>
                     <TextBoxElementLogin
-                      placeholder={"Password"}
+                      placeholder={lang.LoginPassword}
                       secureTextEntry={true}
                       value={password}
                       isvalidInput={this.props.loginresponse.ErrorMessage == "" || this.props.loginresponse.ErrorMessage == null}
@@ -212,10 +212,10 @@ class LoginView extends Component {
                     }
 
                   </View>
-                  <LinkButton onPress={this.navigateToForgotPassword} title={"Forgot Password?"} />
+                  <LinkButton onPress={this.navigateToForgotPassword} title={lang.ForgotPassword} />
                   <View>
                     <ButtonElement
-                      title={"Login"}
+                      title={lang.Login}
                       onPress={this.navigate}
                       disabled={this.submitted}
                       style={loginStyles.loginButton}
@@ -224,18 +224,18 @@ class LoginView extends Component {
                   <View style={loginStyles.SocialButton}>
                     <TouchableOpacity style={[loginStyles.BtnFacebook, loginStyles.SocialComonBtn]}>
                       <Image source={require('../../assets/img/icon_facebook.png')} resizeMode="contain" style={loginStyles.SocialIcon} />
-                      <Text style={loginStyles.BtnText}>Facebok</Text>
+                      <Text style={loginStyles.BtnText}>{lang.Facebok}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={[loginStyles.BtnInsta, loginStyles.SocialComonBtn]}>
                       <Image source={require('../../assets/img/icon_insta.png')} resizeMode="contain" style={loginStyles.SocialIcon} />
-                      <Text style={loginStyles.BtnText}>Instagram</Text>
+                      <Text style={loginStyles.BtnText}>{lang.Instagram}</Text>
                     </TouchableOpacity>
                   </View>
 
                   <View style={loginStyles.NewRegistration}>
-                    <Text style={loginStyles.accountText}>{lang.NewRegistration}?</Text>
+                    <Text style={loginStyles.accountText}>{lang.NewRegistration}</Text>
                     <TouchableOpacity style={loginStyles.BtnSignup} onPress={this.navigateToSignup}>
-                      <Text style={loginStyles.TextSignup}>Cilck here</Text>
+                      <Text style={loginStyles.TextSignup}>{lang.Cilckhere}</Text>
                     </TouchableOpacity>
                   </View>
                 </View>

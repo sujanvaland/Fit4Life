@@ -10,19 +10,30 @@ import SplashScreen from 'react-native-splash-screen';
 import * as navigationActions from '../../actions/navigationActions';
 import { get } from 'lodash';
 import { OverlayActivityIndicatorElement } from "../../components";
+import AsyncStorage from '@react-native-community/async-storage';
+import Resource_EN from '../../config/Resource_EN';
+const { English,Spanish } = Resource_EN;
 
 
 
 class HealthProfileView extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            lang:{},
+        }
     }
 
 
-    componentDidMount() {
+    async componentDidMount() {
         SplashScreen.hide();
-
+        const language = await AsyncStorage.getItem('language');
+        //console.log(language);
+        if(language == "sp"){
+          this.setState({lang:Spanish})
+        }else{
+          this.setState({lang:English})
+        }
     }
 
     navigateToAddHealthProfile = () => {
@@ -53,6 +64,7 @@ class HealthProfileView extends Component {
 
 
     render() {
+        const { lang } = this.state;
         const { loading } = this.props;
         const image = require('../../assets/img/img_loginback.png');
         return (
@@ -69,7 +81,7 @@ class HealthProfileView extends Component {
                                 <View style={HealthProfilestyles.InnerTitle}>
                                     <View style={HealthProfilestyles.CustomerFeedLeft}>
                                         <Image source={require('../../assets/img/icon_healthttl.png')} resizeMode="contain" style={HealthProfilestyles.InnerTitleIcon} />
-                                        <Text style={HealthProfilestyles.InnerTitleText}>Health Profile</Text>
+                                        <Text style={HealthProfilestyles.InnerTitleText}>{lang.HealthProfile}</Text>
                                     </View>
                                     <TouchableOpacity style={HealthProfilestyles.BtnPlus} onPress={() => this.navigateToAddHealthProfile()}>
                                         <Image source={require('../../assets/img/icon_plus.png')} resizeMode="contain" style={HealthProfilestyles.BtnPlusIcon} />
@@ -88,6 +100,7 @@ class HealthProfileView extends Component {
     }
 
     renderhealthparameterslist = () => {
+        const { lang } = this.state;
         let { login_token, healthparameters } = this.props;
         let healthparametersdata = []
         if (healthparameters) {

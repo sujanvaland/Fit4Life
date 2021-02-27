@@ -11,7 +11,9 @@ import * as navigationActions from '../../actions/navigationActions';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import { get } from 'lodash';
 import { OverlayActivityIndicatorElement } from "../../components";
-
+import AsyncStorage from '@react-native-community/async-storage';
+import Resource_EN from '../../config/Resource_EN';
+const { English,Spanish } = Resource_EN;
 
 
 class CalendarView extends Component {
@@ -19,14 +21,21 @@ class CalendarView extends Component {
         super(props);
         this.state = {
             mindate: new Date(),
-            activedate: new Date()
+            activedate: new Date(),
+            lang:{},
         }
     }
 
 
-    componentDidMount() {
+    async componentDidMount() {
         SplashScreen.hide();
-
+        const language = await AsyncStorage.getItem('language');
+        //console.log(language);
+        if(language == "sp"){
+            this.setState({lang:Spanish})
+        }else{
+            this.setState({lang:English})
+        }
     }
 
     getParsedDate(strDate) {//get date formate
@@ -68,14 +77,14 @@ class CalendarView extends Component {
       this.setState({ activedate: timestamp });
     }
 
-    _onsubscribeNow = (EventId) => {
+    _onsubscribeNow = (EventId,lang) => {
         if(EventId != ""){
             Alert.alert(
-              "Subscribe Now",
-              "Are you sure you want to subscribe this event?",
+              lang.SubscribeNow,
+              lang.Subscribeevent,
               [
-                { text: "Cancel", style: 'cancel' },
-                { text: "Ok", onPress: () => { this.SubscribeNow(EventId); }, style: 'cancel' }
+                { text: lang.Cancel, style: 'cancel' },
+                { text: lang.Ok, onPress: () => { this.SubscribeNow(EventId); }, style: 'cancel' }
               ],
               { cancelable: false }
             );
@@ -90,7 +99,7 @@ class CalendarView extends Component {
       };
 
     render() {
-
+        const { lang } = this.state;
         const { scheduleevents,loading } = this.props;
         
         let scheduleeventsArr = [];
@@ -98,10 +107,10 @@ class CalendarView extends Component {
         if(scheduleevents && scheduleevents != undefined && scheduleevents.length > 0){
             //filteredscheduleevents = scheduleevents;
             let activedate = this.state.activedate;
-            console.log(activedate);
+            //console.log(activedate);
             let isodate = activedate.toISOString();
             let YMDactivedate = this.getYMDParsedDate(isodate);
-            console.log(YMDactivedate);
+            //console.log(YMDactivedate);
             scheduleevents.filter(x => this.getYMDParsedDate(x.startTime) == YMDactivedate).map((item) =>{
                 scheduleeventsArr.push(
                     <View key={item.id} style={Calendarstyles.WhiteBox}>
@@ -109,8 +118,8 @@ class CalendarView extends Component {
                         <Text style={Calendarstyles.EventLocation}>Anteayer, {this.getParsedDate(item.startTime)}{'\n'}
                         Clase de musculación{'\n'}Cristian Arriagada</Text>
                         <View style={Calendarstyles.RedButtonBox}>
-                            <TouchableOpacity style={Calendarstyles.RedButton} onPress={() => this._onsubscribeNow(item.id)}>
-                                <Text style={Calendarstyles.BtnText}>Subscribe</Text>
+                            <TouchableOpacity style={Calendarstyles.RedButton} onPress={() => this._onsubscribeNow(item.id,lang)}>
+                                <Text style={Calendarstyles.BtnText}>{lang.Subscribe}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -132,7 +141,7 @@ class CalendarView extends Component {
                                 <View style={Calendarstyles.InnerTitle}>
                                     <View style={Calendarstyles.CustomerFeedLeft}>
                                         <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={Calendarstyles.InnerTitleIcon} />
-                                        <Text style={Calendarstyles.InnerTitleText}>Calendar</Text>
+                                        <Text style={Calendarstyles.InnerTitleText}>{lang.Calendar}</Text>
                                     </View>
                                 </View>
 
@@ -161,9 +170,9 @@ class CalendarView extends Component {
                                 <View style={[Calendarstyles.InnerTitle, Calendarstyles.MarTopzero]}>
                                     <View style={Calendarstyles.CustomerFeedLeft}>
                                         <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={Calendarstyles.InnerTitleIcon} />
-                                        <Text style={Calendarstyles.InnerTitleText}>Schedule Events</Text>
+                                        <Text style={Calendarstyles.InnerTitleText}>{lang.ScheduleEvents}</Text>
                                     </View>
-                                    <Text style={Calendarstyles.ResultText}>{scheduleeventsArr.length} Result</Text>
+                                    <Text style={Calendarstyles.ResultText}>{scheduleeventsArr.length} {lang.Result}</Text>
                                 </View>
                             </View>
                             <View style={[Calendarstyles.ContainerMargin, Calendarstyles.MarBtm20]}>

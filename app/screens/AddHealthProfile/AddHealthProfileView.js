@@ -10,6 +10,9 @@ import { TextBoxElement } from '../../components';
 import Toast from 'react-native-simple-toast';
 import { get } from 'lodash';
 import { OverlayActivityIndicatorElement } from "../../components";
+import AsyncStorage from '@react-native-community/async-storage';
+import Resource_EN from '../../config/Resource_EN';
+const { English,Spanish } = Resource_EN;
 
 
 class AddHealthProfileView extends Component {
@@ -23,13 +26,21 @@ class AddHealthProfileView extends Component {
             postData: {
                 healthparameter: '',
                 healthparameterValue: ''
-            }
+            },
+            lang:{},
         }
     }
 
 
-    componentDidMount() {
+    async componentDidMount() {
         SplashScreen.hide();
+        const language = await AsyncStorage.getItem('language');
+        //console.log(language);
+        if(language == "sp"){
+            this.setState({lang:Spanish})
+        }else{
+            this.setState({lang:English})
+        }
 
     }
 
@@ -143,6 +154,7 @@ class AddHealthProfileView extends Component {
 
 
     render() {
+        const { lang } = this.state;
         const image = require('../../assets/img/img_loginback.png');
         const { loading, allhealthparameter } = this.props;
         let allhealthparameter_data = [];
@@ -166,7 +178,7 @@ class AddHealthProfileView extends Component {
                                 <View style={AddHealthProfilestyles.InnerTitle}>
                                     <View style={AddHealthProfilestyles.CustomerFeedLeft}>
                                         <Image source={require('../../assets/img/icon_healthttl.png')} resizeMode="contain" style={AddHealthProfilestyles.InnerTitleIcon} />
-                                        <Text style={AddHealthProfilestyles.InnerTitleText}>Add Health Profile</Text>
+                                        <Text style={AddHealthProfilestyles.InnerTitleText}>{lang.AddHealthProfile}</Text>
                                     </View>
                                 </View>
 
@@ -179,7 +191,7 @@ class AddHealthProfileView extends Component {
                                                     selectedValue={this.state.postData.healthparameter}
                                                     mode="dropdown"
                                                     iosIcon={<Icon name="ios-arrow-down" style={{fontSize:15, color:'#333333'}}/>}
-                                                    placeholder="Select Health Parameter"
+                                                    placeholder={lang.SelectHealthParameter}
                                                     onValueChange={(itemValue) => this.addhealthparameterName(itemValue)}
                                                 >
                                                     <Picker.Item value="" label="Select Health Parameter" />
@@ -191,7 +203,7 @@ class AddHealthProfileView extends Component {
                                         </View>
                                         <View style={[AddHealthProfilestyles.textBoxContent]}>
                                             {this.state.ispossibleValues == false &&
-                                                <TextBoxElement placeholder="Value"
+                                                <TextBoxElement placeholder={lang.Value}
                                                 style={[this.state.isValidhealthparametervalue ? AddHealthProfilestyles.BorderGrey : AddHealthProfilestyles.BorderRed]}
                                                 value={this.state.postData.healthparameterValue}
                                                 onChangeText={value => this.onValueChange("healthparameterValue", value)}
@@ -208,7 +220,7 @@ class AddHealthProfileView extends Component {
                                                         selectedValue={this.state.postData.healthparameterValue}
                                                         mode="dropdown"
                                                         iosIcon={<Icon name="ios-arrow-down" style={{fontSize:15, color:'#333333'}}/>}
-                                                        placeholder="Select Value"
+                                                        placeholder={lang.SelectValue}
                                                         onValueChange={(itemValue) => this.addhealthparameterValues(itemValue)}
                                                     >
                                                         <Picker.Item value="" label="Select Value" />
@@ -223,7 +235,7 @@ class AddHealthProfileView extends Component {
                                     </View>
                                     <View style={[AddHealthProfilestyles.flexBox, AddHealthProfilestyles.Mrtop20]}>
                                         <TouchableOpacity onPress={this.SubmitHealthParameter} style={[AddHealthProfilestyles.buttonStyle]}>
-                                            <Text style={[AddHealthProfilestyles.buttonStyleText]}>Add</Text>
+                                            <Text style={[AddHealthProfilestyles.buttonStyleText]}>{lang.Add}</Text>
                                         </TouchableOpacity>
                                     </View>
 

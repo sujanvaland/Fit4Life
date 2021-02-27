@@ -6,15 +6,16 @@ import { OverlayActivityIndicatorElement } from "../../components";
 import EditProfileImageStyles from './EditProfileImageStyles';
 import globalStyles from '../../assets/css/globalStyles';
 import PropTypes from 'prop-types';
-import Resource_EN from '../../config/Resource_EN';
 import { TextInput ,ScrollView} from 'react-native-gesture-handler';
 import ApiConstants from '../../api/ApiConstants';
 import Modal from "react-native-modal";
 var RNFS = require('react-native-fs');
 import ImagePicker from 'react-native-image-crop-picker';
 import * as navigationActions from 'app/actions/navigationActions';
-import AsyncStorage from '@react-native-community/async-storage';
 import Toast from 'react-native-simple-toast';
+import AsyncStorage from '@react-native-community/async-storage';
+import Resource_EN from '../../config/Resource_EN';
+const { English,Spanish } = Resource_EN;
 
 
 class EditProfileImageView extends Component {
@@ -27,7 +28,18 @@ class EditProfileImageView extends Component {
       captureOptionModal: false,
       uploadPer: 0,
       uploading: false,
-      tempLoading: false
+      tempLoading: false,
+      lang:{},
+    }
+  }
+
+  async componentDidMount() {
+    const language = await AsyncStorage.getItem('language');
+    //console.log(language);
+    if(language == "sp"){
+      this.setState({lang:Spanish})
+    }else{
+      this.setState({lang:English})
     }
   }
 
@@ -260,9 +272,8 @@ class EditProfileImageView extends Component {
 
 
   render() {
-
+    const { lang } = this.state;
     let { loading, personalinformation, customerimage } = this.props;
-    const {button} =Resource_EN;
     const { uploading } = this.state;
 
     let personalinformationdata = {};
@@ -302,7 +313,7 @@ class EditProfileImageView extends Component {
               </View>
               <TouchableOpacity disabled={this.submitted} style={EditProfileImageStyles.btnGreen} 
                 onPress={() => this.toggleModal("captureOption")}>
-                <Text style={EditProfileImageStyles.btnText}>Edit</Text>
+                <Text style={EditProfileImageStyles.btnText}>{lang.Edit}</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -320,7 +331,7 @@ class EditProfileImageView extends Component {
                       onPress={() => { this._onPresscaptureOption('takephoto') }}>
                       <Radio style={EditProfileImageStyles.radioListButton} />
                       <Text style={[EditProfileImageStyles.radioListText,
-                      EditProfileImageStyles.radioTextWidth, EditProfileImageStyles.radioListCenter]}>Take Photo..</Text>
+                      EditProfileImageStyles.radioTextWidth, EditProfileImageStyles.radioListCenter]}>{lang.TakePhoto}</Text>
                     </ListItem>
                     <ListItem key='2' style={[EditProfileImageStyles.radioList,
                     EditProfileImageStyles.radioListBorder,
@@ -328,7 +339,7 @@ class EditProfileImageView extends Component {
                       onPress={() => { this._onPresscaptureOption('chooseImage') }}>
                       <Radio style={EditProfileImageStyles.radioListButton} />
                       <Text style={[EditProfileImageStyles.radioListText,
-                      EditProfileImageStyles.radioTextWidth, EditProfileImageStyles.radioListCenter]}>Choose Image from Library..</Text>
+                      EditProfileImageStyles.radioTextWidth, EditProfileImageStyles.radioListCenter]}>{lang.ChooseImage}</Text>
                     </ListItem>
                   </View>
                 }

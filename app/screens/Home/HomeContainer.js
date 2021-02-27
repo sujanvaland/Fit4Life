@@ -85,7 +85,6 @@ function mapStateToProps(state) {
         pastevents:state.eventReducer.pastevents,
         loading: state.loadingReducer,
         login_token:state.loginReducer.login_token,
-        language:"sp",
     };
   }
 

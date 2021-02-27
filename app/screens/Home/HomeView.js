@@ -13,6 +13,7 @@ import * as navigationActions from '../../actions/navigationActions';
 import Modal from "react-native-modal";
 import Styles from '../../config/styles';
 import Toast from 'react-native-simple-toast';
+import AsyncStorage from '@react-native-community/async-storage';
 import Resource_EN from '../../config/Resource_EN';
 const { English,Spanish } = Resource_EN;
 
@@ -33,7 +34,7 @@ class HomeView extends Component {
         Max_Rating: 5,
         message: ''
       },
-      lang:English,
+      lang:{},
     }
 
     //Filled Star. You can also give the path from local
@@ -43,9 +44,15 @@ class HomeView extends Component {
   }
 
 
-  componentDidMount() {
+  async componentDidMount() {
     SplashScreen.hide();
-
+    const language = await AsyncStorage.getItem('language');
+    //console.log(language);
+    if(language == "sp"){
+      this.setState({lang:Spanish})
+    }else{
+      this.setState({lang:English})
+    }
   }
 
   navigateToEventDetail = (obj) => {
@@ -207,17 +214,6 @@ class HomeView extends Component {
     }
   };
 
-  componentDidUpdate(prevProps){
-    console.log(prevProps.language,this.props.language)
-    if(prevProps.language != this.props.language){
-      if(this.props.language == "en"){
-        this.setState({lang:English})
-      }else{
-        this.setState({lang:Spanish})
-      }
-    }
-  }
-
   UpdateRating(key) {
     this.setState(prevState => ({
       postSendFeedback: {                   // object that we want to update
@@ -230,9 +226,10 @@ class HomeView extends Component {
 
   render() {
 
+
     const { upcomingevents, pastevents, loading } = this.props;
     const { lang } = this.state;
-    console.log(lang.LoginUsername);
+    //console.log(lang);
     let upcomingeventsArr = [];
     let pasteventsArr = [];
     //console.log(upcomingevents);
@@ -243,10 +240,10 @@ class HomeView extends Component {
                 <View key={item.id} style={Homestyles.WhiteBox}>
                     <Text style={Homestyles.DateText}>{this.getParsedDate(item.startTime)}</Text>
                     <Text style={Homestyles.EventTitle}>{item.name}</Text>
-                    <Text style={Homestyles.EventLocation}>Coordinator: {item.coordinator.firstName} {item.coordinator.lastName}</Text>
+                    <Text style={Homestyles.EventLocation}>{lang.Coordinator}: {item.coordinator.firstName} {item.coordinator.lastName}</Text>
                     <View style={Homestyles.RedButtonBox}>
                         <TouchableOpacity style={Homestyles.RedButton} onPress={() => this.navigateToEventDetail({ eventid: item.id})}>
-                            <Text style={Homestyles.BtnText}>Detail</Text>
+                            <Text style={Homestyles.BtnText}>{lang.Detail}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -300,7 +297,7 @@ class HomeView extends Component {
           <View key={item.id} style={Homestyles.WhiteBox}>
             <Text style={Homestyles.LastEventText}>{this.getParsedTime(item.event.startTime)} {this.getParsedDate(item.event.startTime)}{'\n'}
               {item.event.name}{'\n'}
-                            Arrive time : {this.getParsedTime(item.customerArrivalTime)}</Text>
+              {lang.Arrivetime} : {this.getParsedTime(item.customerArrivalTime)}</Text>
             {
               item.evaluation != "" &&
               <View>
@@ -327,7 +324,7 @@ class HomeView extends Component {
               (item.evaluation == "" || item.evaluation == null) &&
               <View>
                 <TouchableOpacity style={Homestyles.RedButton} onPress={() => this.toggleModal("Sendfeedbacktoevent", item.id)}>
-                  <Text style={Homestyles.BtnText}>Get Evaluate</Text>
+                  <Text style={Homestyles.BtnText}>{lang.GetEvaluate}</Text>
                 </TouchableOpacity>
               </View>
             }
@@ -387,9 +384,9 @@ class HomeView extends Component {
                 <View style={Homestyles.InnerTitle}>
                   <View style={Homestyles.HomeLeft}>
                     <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={Homestyles.InnerTitleIcon} />
-                    <Text style={Homestyles.InnerTitleText}>Upcoming Events</Text>
+                    <Text style={Homestyles.InnerTitleText}>{lang.UpcomingEvents}</Text>
                   </View>
-                  <Text style={Homestyles.ResultText}>{upcomingevents?.length} Result</Text>
+                  <Text style={Homestyles.ResultText}>{upcomingevents?.length} {lang.Result}</Text>
                 </View>
                 {
                   upcomingeventsArr
@@ -401,9 +398,9 @@ class HomeView extends Component {
                 <View style={[Homestyles.InnerTitle, Homestyles.MarTopzero]}>
                   <View style={Homestyles.HomeLeft}>
                     <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={Homestyles.InnerTitleIcon} />
-                    <Text style={Homestyles.InnerTitleText}>Last Events</Text>
+                    <Text style={Homestyles.InnerTitleText}>{lang.LastEvents}</Text>
                   </View>
-                  <Text style={Homestyles.ResultText}>{pasteventsArr?.length} Result</Text>
+                  <Text style={Homestyles.ResultText}>{pasteventsArr?.length} {lang.Result}</Text>
                 </View>
               </View>
               {
@@ -428,8 +425,8 @@ class HomeView extends Component {
                   <ScrollView>
                     <View style={Homestyles.formSpace}>
                       <View style={Homestyles.MainContainer}>
-                        <Text style={Homestyles.textStyle}>How was your experience with us</Text>
-                        <Text style={Homestyles.textStyleSmall}>Please Rate Us</Text>
+                        <Text style={Homestyles.textStyle}>{lang.experiencewithus}</Text>
+                        <Text style={Homestyles.textStyleSmall}>{lang.RateUs}</Text>
                         {/*View to hold our Stars*/}
                         <View style={Homestyles.childView}>{React_Native_Rating_Bar}</View>
                         <Text style={Homestyles.textStyle}>
@@ -452,15 +449,15 @@ class HomeView extends Component {
                     <View style={[Styles.buttonBox, Styles.flexContent, Styles.contactBtn, Homestyles.pad15]}>
                       <TouchableOpacity activeOpacity={0.7} style={Homestyles.button}
                         onPress={() => this._onSendFeedback(this.state.postSendFeedback.eventAttendanceID)}>
-                        <Text style={Styles.textBtn}>Send</Text>
+                        <Text style={Styles.textBtn}>{lang.Send}</Text>
                       </TouchableOpacity>
                       <TouchableOpacity style={[Styles.btnWidthOne, Styles.borderLeft, Homestyles.ButtonMain]}
                         onPress={() => this._onResetSendFeedbackForm()}>
-                        <Text style={Homestyles.resetText}>Reset</Text>
+                        <Text style={Homestyles.resetText}>{lang.Reset}</Text>
                       </TouchableOpacity>
                       <TouchableOpacity style={[Styles.btnWidthOne, Styles.borderLeft, Homestyles.ButtonMainBlack]}
                         onPress={() => this._onCancelSendFeedbackForm()}>
-                        <Text style={[Styles.textBtn, Homestyles.resetText]}>Cancel</Text>
+                        <Text style={[Styles.textBtn, Homestyles.resetText]}>{lang.Cancel}</Text>
                       </TouchableOpacity>
                     </View>
                   </ScrollView>
