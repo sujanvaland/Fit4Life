@@ -14,6 +14,19 @@ export  function getUpcomingEvents(action) {
     );
   }
 
+  export  function getCoordinatorUpcomingEvents(action) {
+    var userId=action.action;
+    //console.log(userId);
+    var dateobj = new Date(); 
+    var isodate = dateobj.toISOString(); 
+    return Api(
+        ApiConstants.UPCOMING_COORDINATOREVENTLIST,
+        null,
+        'get',
+        null
+    );
+  }
+
 export  function getPastEvents(action) {
     var userId=action.action;
     //console.log(userId);
@@ -21,6 +34,18 @@ export  function getPastEvents(action) {
     var isodate = dateobj.toISOString(); 
     return Api(
         ApiConstants.EVENTLIST + '?userId.equals=' + userId +'&eventAttendance.event.startTime.lessThan=' + isodate,
+        null,
+        'get',
+        null
+    );
+}
+export  function getCoordinatorPastEvents(action) {
+    var userId=action.action;
+    //console.log(userId);
+    var dateobj = new Date(); 
+    var isodate = dateobj.toISOString(); 
+    return Api(
+        ApiConstants.LASTEVENTLIST+'?sort=id,desc',
         null,
         'get',
         null

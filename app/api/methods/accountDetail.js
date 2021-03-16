@@ -137,7 +137,8 @@ export  async function addtohealthparameter(action) {
 export  async function getContracts(action) {
   let userId =  await retrieveData("userId");
   return Api(
-      ApiConstants.CONTRACTS + '?userId.equals=' + userId,
+      //ApiConstants.CONTRACTS + '?userId.equals=' + userId,
+      ApiConstants.CONTRACTS + '/available',
       null,
       'get',
       null

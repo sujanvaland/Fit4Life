@@ -19,6 +19,7 @@ class AuthLoadingScreen extends React.Component {
   _bootstrapAsync = async () => {
     const loginuser = await AsyncStorage.getItem('loginuser');
     const password = await AsyncStorage.getItem('password');
+    const fbtoken = await AsyncStorage.getItem('fbtoken');
     const { onLogin,login_token } = this.props;
     if(loginuser && password){
       NetInfo.fetch().then(state => {
@@ -26,7 +27,12 @@ class AuthLoadingScreen extends React.Component {
           alert("No Internet connection");
         }
         else{
-          onLogin(loginuser,password);
+          if(fbtoken?.length > 0){
+            onLogin("","",fbtoken);
+          }else{
+            onLogin(loginuser,password);
+          }
+          
         }
       });
     }
@@ -55,7 +61,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onLoginResponse : (loginuser) => dispatch(loginActions.onLoginResponse(loginuser)),
-    onLogin: (un, pwd) => dispatch(loginActions.requestLogin(un, pwd))   
+    onLogin: (un, pwd,fbtoken) => dispatch(loginActions.requestLogin(un, pwd,fbtoken))   
   };
 }
 export default connect(

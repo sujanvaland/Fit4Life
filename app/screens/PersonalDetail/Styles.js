@@ -45,7 +45,7 @@ const PersonalDetailStyles = StyleSheet.create({
   },
   ProfilePic: {
     borderRadius: 100,
-    overflow: 'hidden'
+    //overflow: 'hidden'
   },
   ProfileEditSmall: {
     width: viewportWidth * 0.05

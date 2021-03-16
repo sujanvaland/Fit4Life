@@ -16,7 +16,8 @@ export const accountReducer = createReducer(initialState, {
             lastname:action.response.lastName,
             email:action.response.email,
             customerimage:action.response.imageUrl,
-            accountdetail:action.response
+            accountdetail:action.response,
+            userrole:(action.response?.authorities?.length > 0 ? action.response?.authorities[0] : "")
         };
     },
     [types.GETACCOUNT_FAILED](state) {

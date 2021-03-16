@@ -168,12 +168,12 @@ class ContractsView extends Component {
                         <Text style={Contractsstyles.BtnlinkText}>{lang.Detail}</Text>
                     </TouchableOpacity>
                     <View style={Contractsstyles.FlexRow}>
-                        { !item.signDate &&
+                        { !item.alreadySigned &&
                             <TouchableOpacity style={Contractsstyles.FillBtn} onPress={() => this.signContract(item.contract.id)}>
                                 <Text style={Contractsstyles.FillBtnlinkText}>{lang.SignContract}</Text>
                             </TouchableOpacity>
                         }
-                        { item.signDate &&
+                        { item.alreadySigned &&
                             <Text style={[Contractsstyles.EventDesc, globalStyles.FontRegular]}>{this.getParsedTime(item.signDate)} {this.getParsedDate(item.signDate)}</Text>
                         }
                     </View>

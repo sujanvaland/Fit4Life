@@ -11,6 +11,7 @@ import { get } from 'lodash';
 import { OverlayActivityIndicatorElement } from "../../components";
 import AsyncStorage from '@react-native-community/async-storage';
 import Resource_EN from '../../config/Resource_EN';
+import NavStyles from '../../navigation/NavigationStyle';
 const { English,Spanish } = Resource_EN;
 
 
@@ -20,6 +21,7 @@ class PersonalDetailView extends Component {
     super(props);
     this.state = {
       lang:{},
+      customerimage:"",
     }
   }
 
@@ -78,8 +80,6 @@ class PersonalDetailView extends Component {
       userplandata = userplan.length > 0 ? userplan[0] : {};
     }
 
-    //console.log(userplandata);
-
 
     return (
       <View style={PersonalDetailstyles.container}>
@@ -97,14 +97,12 @@ class PersonalDetailView extends Component {
                       <Image source={require('../../assets/img/img_avtar.jpg')} resizeMode="contain" style={PersonalDetailstyles.ProfilePic} />
                     </View>
                 }
-
                 {
                     (personalinformationdata.profilePictureURL != '' && personalinformationdata.profilePictureURL != undefined) &&
-                    <View style={PersonalDetailstyles.ProfileBox}>
-                      <Image source={{ uri: personalinformationdata.profilePictureURL }} resizeMode="contain" style={PersonalDetailstyles.ProfilePic} />
+                    <View style={NavStyles.ProfilePic}>
+                        <Image source={{ uri: personalinformationdata.profilePictureURL }} resizeMode="contain" style={NavStyles.PrifileImage} />
                     </View>
                 }
-                
                 <View style={PersonalDetailstyles.ProfileDetail}>
                   <Text style={[PersonalDetailstyles.NameBox, globalStyles.FontRegular]}>{personalinformationdata.user.firstName} {personalinformationdata.user.lastName}</Text>
                   {/* <Text style={[PersonalDetailstyles.LocationBox, globalStyles.FontRegular]}>San Francisco, CA</Text> */}

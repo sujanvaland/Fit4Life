@@ -217,21 +217,21 @@ class HeaderComponent extends Component {
                                 <View>
                                     <View>
                                         <TouchableOpacity onPress={() => this.navigateToHealthParameterPage()} style={NavStyles.MyAccountlinks}>
-                                            <Image source={require('../assets/img/icon_calendar_menu.png')} style={NavStyles.MenuIcon} />
+                                            <Image source={require('../assets/img/icon_healthprofile_menu.png')} style={NavStyles.MenuIcon} />
                                             <Text style={NavStyles.AccountTextLink}>{lang.HealthParameters}</Text>
                                         </TouchableOpacity>
                                     </View>  
 
                                     <View>
                                         <TouchableOpacity onPress={() => this.navigateToPayments()} style={NavStyles.MyAccountlinks}>
-                                            <Image source={require('../assets/img/icon_calendar_menu.png')} style={NavStyles.MenuIcon} />
+                                            <Image source={require('../assets/img/icon_peyments_menu.png')} style={NavStyles.MenuIcon} />
                                             <Text style={NavStyles.AccountTextLink}>{lang.Payments}</Text>
                                         </TouchableOpacity>
                                     </View>                     
 
                                     <View>
                                         <TouchableOpacity onPress={() => this.navigateToContracts()} style={NavStyles.MyAccountlinks}>
-                                            <Image source={require('../assets/img/icon_calendar_menu.png')} style={NavStyles.MenuIcon} />
+                                            <Image source={require('../assets/img/icon_contracts_menu.png')} style={NavStyles.MenuIcon} />
                                             <Text style={NavStyles.AccountTextLink}>{lang.Contracts}</Text>
                                         </TouchableOpacity>
                                     </View>

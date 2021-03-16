@@ -60,7 +60,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        onLogin: (un, pwd) => dispatch(loginActions.requestLogin(un, pwd))      
+        onLogin: (un, pwd,fbtoken) => dispatch(loginActions.requestLogin(un, pwd,fbtoken))   
     };
 }
 export default connect(

@@ -1,13 +1,24 @@
 import Api from 'app/api';
 import ApiConstants from '../ApiConstants';
 
-export default function loginUser(username, password) {
+export function loginUser(username, password) {
     return Api(
         ApiConstants.LOGINPATH,
         {
             username: username,
             password: password,
             rememberMe: false
+        },
+        'post',
+        null
+    );
+}
+
+export function FbloginUser(fbtoken) {
+    return Api(
+        ApiConstants.FBLOGINPATH,
+        {
+            access_token: fbtoken
         },
         'post',
         null

@@ -232,7 +232,7 @@ class HomeView extends Component {
     //console.log(lang);
     let upcomingeventsArr = [];
     let pasteventsArr = [];
-    //console.log(upcomingevents);
+    console.log(upcomingevents);
     if(upcomingevents && upcomingevents != undefined && upcomingevents.length > 0){
         //filteredupcomingevents = upcomingevents;
         upcomingevents.sort((a, b) => a.startTime > b.startTime ? 1 : -1).slice(0,2).map((item) =>{
@@ -295,8 +295,8 @@ class HomeView extends Component {
 
         pasteventsArr.push(
           <View key={item.id} style={Homestyles.WhiteBox}>
-            <Text style={Homestyles.LastEventText}>{this.getParsedTime(item.event.startTime)} {this.getParsedDate(item.event.startTime)}{'\n'}
-              {item.event.name}{'\n'}
+            <Text style={Homestyles.LastEventText}>{this.getParsedTime(item.startTime)} {this.getParsedDate(item.startTime)}{'\n'}
+              {item.name}{'\n'}
               {lang.Arrivetime} : {this.getParsedTime(item.customerArrivalTime)}</Text>
             {
               item.evaluation != "" &&

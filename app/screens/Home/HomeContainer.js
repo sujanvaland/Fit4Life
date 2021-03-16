@@ -85,13 +85,14 @@ function mapStateToProps(state) {
         pastevents:state.eventReducer.pastevents,
         loading: state.loadingReducer,
         login_token:state.loginReducer.login_token,
+        userrole : state.accountReducer.userrole,
     };
   }
 
 function mapDispatchToProps(dispatch) {
     return {
-        getUpcomingEvents: (userId) => dispatch(eventActions.getUpcomingEvents(userId)),
-        getPastEvents: (userId) => dispatch(eventActions.getPastEvents(userId)),
+        getUpcomingEvents: (userId,userrole) => dispatch(eventActions.getUpcomingEvents(userId,userrole)),
+        getPastEvents: (userId,userrole) => dispatch(eventActions.getPastEvents(userId,userrole)),
         sendFeedback: (feedbacktosend,eventAttendanceID) => dispatch(eventActions.sendFeedback(feedbacktosend,eventAttendanceID))
     };
 }

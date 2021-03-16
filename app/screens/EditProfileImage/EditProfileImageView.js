@@ -226,7 +226,8 @@ class EditProfileImageView extends Component {
         uploading: false,
         tempLoading: true
       });
-      //console.log(res);
+      console.log("upload response");
+      console.log(res);
       if (res?.status != "400") {
         Toast.show("Profile Image updated successfully.", Toast.LONG);
         this._storeData("customerimage",res.profilePictureURL);

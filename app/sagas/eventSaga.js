@@ -1,7 +1,8 @@
 import { put, call, select } from 'redux-saga/effects';
 import * as loginActions from 'app/actions/loginActions';
 import * as eventActions from 'app/actions/eventActions';
-import { getUpcomingEvents, getPastEvents, loadCustomerEventDetail, loadCoordinatorEventDetail, loadEventAttendances, sendFeedback, loadSubscribeNow} from 'app/api/methods/event';
+import AsyncStorage from '@react-native-community/async-storage';
+import { getUpcomingEvents,getCoordinatorUpcomingEvents, getPastEvents,getCoordinatorPastEvents, loadCustomerEventDetail, loadCoordinatorEventDetail, loadEventAttendances, sendFeedback, loadSubscribeNow} from 'app/api/methods/event';
 import * as navigationActions from 'app/actions/navigationActions';
 import { Alert } from 'react-native';
 
@@ -9,7 +10,15 @@ import { Alert } from 'react-native';
 
 function* getUpcomingEventsAsync(action) {
   yield put(loginActions.enableLoader());
-  const response = yield call(getUpcomingEvents,action);
+  let response=null;
+  
+  if(action.userrole == 'ROLE_USER'){
+    console.log("calling user view")
+    response = yield call(getUpcomingEvents,action);
+  }else{
+    console.log("calling coordinator view")
+    response = yield call(getCoordinatorUpcomingEvents,action);
+  }
   if (response) {
       yield put(eventActions.ongetUpcomingEventsResponse(response));
       yield put(loginActions.disableLoader({}));
@@ -21,7 +30,15 @@ function* getUpcomingEventsAsync(action) {
 
 function* getPastEventsAsync(action) {
   yield put(loginActions.enableLoader());
-  const response = yield call(getPastEvents,action);
+  let response=null;
+  if(action.userrole == 'ROLE_USER'){
+    console.log("calling past user view")
+    response = yield call(getPastEvents,action);
+  }else{
+    console.log("calling past coordinator view")
+    response = yield call(getCoordinatorPastEvents,action);
+  }
+  console.log(response);
   if (response) {
       yield put(eventActions.ongetPastEventsResponse(response));
       yield put(loginActions.disableLoader({}));
@@ -30,6 +47,17 @@ function* getPastEventsAsync(action) {
       yield put(loginActions.disableLoader({}));
   }
 }
+
+_retrieveData = async (key) => {
+  try {
+    const value = await AsyncStorage.getItem(key);
+    if (value !== null) {
+      return value
+    }
+  } catch (error) {
+    // Error retrieving data
+  }
+};
 
 function* loadcustomereventdetailAsync(action) {
     
