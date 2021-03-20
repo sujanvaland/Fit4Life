@@ -227,12 +227,11 @@ class HomeView extends Component {
   render() {
 
 
-    const { upcomingevents, pastevents, loading } = this.props;
+    const { upcomingevents, pastevents, loading,userrole } = this.props;
     const { lang } = this.state;
     //console.log(lang);
     let upcomingeventsArr = [];
     let pasteventsArr = [];
-    console.log(upcomingevents);
     if(upcomingevents && upcomingevents != undefined && upcomingevents.length > 0){
         //filteredupcomingevents = upcomingevents;
         upcomingevents.sort((a, b) => a.startTime > b.startTime ? 1 : -1).slice(0,2).map((item) =>{
@@ -254,85 +253,109 @@ class HomeView extends Component {
     //console.log(pastevents);
 
     if (pastevents && pastevents != undefined && pastevents.length > 0) {
-      pastevents.map((item) => {
+      if(userrole == 'ROLE_USER'){
+        pastevents.map((item) => {
 
-        let default_rating = 0;
-        if (item.evaluation == "ONE") {
-          default_rating = 1;
-        }
-        if (item.evaluation == "TWO") {
-          default_rating = 2;
-        }
-        if (item.evaluation == "THREE") {
-          default_rating = 3;
-        }
-        if (item.evaluation == "FOUR") {
-          default_rating = 4;
-        }
-        if (item.evaluation == "FIVE") {
-          default_rating = 5;
-        }
-
-        let React_Native_Rating_Bar = [];
-        //Array to hold the filled or empty Stars
-        for (var i = 1; i <= 5; i++) {
-          React_Native_Rating_Bar.push(
-            <TouchableOpacity
-              activeOpacity={0.7}
-              key={i}
-            >
-              <Image
-                style={Homestyles.StarImage}
-                source={
-                  i <= default_rating
-                    ? { uri: this.Star }
-                    : { uri: this.Star_With_Border }
-                }
-              />
-            </TouchableOpacity>
-          );
-        }
-
-        pasteventsArr.push(
-          <View key={item.id} style={Homestyles.WhiteBox}>
-            <Text style={Homestyles.LastEventText}>{this.getParsedTime(item.startTime)} {this.getParsedDate(item.startTime)}{'\n'}
-              {item.name}{'\n'}
-              {lang.Arrivetime} : {this.getParsedTime(item.customerArrivalTime)}</Text>
-            {
-              item.evaluation != "" &&
-              <View>
-                <View style={Homestyles.RatingBox}>
-                  {React_Native_Rating_Bar}
-                  {/* <Rating
-                                        type='custom'
-                                        ratingImage={WATER_IMAGE}
-                                        ratingColor='#c5353f'
-                                        ratingBackgroundColor='#d9d9d9'
-                                        ratingCount={5}
-                                        imageSize={18}
-                                        onFinishRating={this.ratingCompleted}
-                                        style={{ paddingVertical: 8 }}
-                                    /> */}
+          let default_rating = 0;
+          if (item.evaluation == "ONE") {
+            default_rating = 1;
+          }
+          if (item.evaluation == "TWO") {
+            default_rating = 2;
+          }
+          if (item.evaluation == "THREE") {
+            default_rating = 3;
+          }
+          if (item.evaluation == "FOUR") {
+            default_rating = 4;
+          }
+          if (item.evaluation == "FIVE") {
+            default_rating = 5;
+          }
+  
+          let React_Native_Rating_Bar = [];
+          //Array to hold the filled or empty Stars
+          for (var i = 1; i <= 5; i++) {
+            React_Native_Rating_Bar.push(
+              <TouchableOpacity
+                activeOpacity={0.7}
+                key={i}
+              >
+                <Image
+                  style={Homestyles.StarImage}
+                  source={
+                    i <= default_rating
+                      ? { uri: this.Star }
+                      : { uri: this.Star_With_Border }
+                  }
+                />
+              </TouchableOpacity>
+            );
+          }
+  
+          pasteventsArr.push(
+            <View key={item.id} style={Homestyles.WhiteBox}>
+              <Text style={Homestyles.LastEventText}>{this.getParsedTime(item.startTime)} {this.getParsedDate(item.startTime)}{'\n'}
+                {item.name}{'\n'}
+                {lang.Arrivetime} : {this.getParsedTime(item.customerArrivalTime)}</Text>
+              {
+                item.evaluation != "" &&
+                <View>
+                  <View style={Homestyles.RatingBox}>
+                    {React_Native_Rating_Bar}
+                    {/* <Rating
+                                          type='custom'
+                                          ratingImage={WATER_IMAGE}
+                                          ratingColor='#c5353f'
+                                          ratingBackgroundColor='#d9d9d9'
+                                          ratingCount={5}
+                                          imageSize={18}
+                                          onFinishRating={this.ratingCompleted}
+                                          style={{ paddingVertical: 8 }}
+                                      /> */}
+                  </View>
+                  <View>
+                    <Text style={Homestyles.LastEventText}>{item.observation}</Text>
+                  </View>
                 </View>
+              }
+  
+              {
+                (item.evaluation == "" || item.evaluation == null) &&
+                <View>
+                  <TouchableOpacity style={Homestyles.RedButton} onPress={() => this.toggleModal("Sendfeedbacktoevent", item.id)}>
+                    <Text style={Homestyles.BtnText}>{lang.GetEvaluate}</Text>
+                  </TouchableOpacity>
+                </View>
+              }
+  
+            </View>
+  
+          )
+        });
+      }else{
+        pastevents.map((item) => {
+          pasteventsArr.push(
+            <View key={item.id} style={Homestyles.WhiteBox}>
+              <Text style={Homestyles.LastEventText}>{this.getParsedTime(item.startTime)} {this.getParsedDate(item.startTime)}{'\n'}
+                {item.name}{'\n'}
+              </Text>
+              {
+                item.evaluation != "" &&
                 <View>
                   <Text style={Homestyles.LastEventText}>{item.observation}</Text>
+                  <View style={Homestyles.RedButtonBox}>
+                    <TouchableOpacity style={Homestyles.RedButton} onPress={() => this.navigateToEventDetail({ eventid: item.id})}>
+                        <Text style={Homestyles.BtnText}>{lang.Detail}</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
-              </View>
-            }
-
-            {
-              (item.evaluation == "" || item.evaluation == null) &&
-              <View>
-                <TouchableOpacity style={Homestyles.RedButton} onPress={() => this.toggleModal("Sendfeedbacktoevent", item.id)}>
-                  <Text style={Homestyles.BtnText}>{lang.GetEvaluate}</Text>
-                </TouchableOpacity>
-              </View>
-            }
-
-          </View>
-
-        )
-      });
+              }
+            </View>
+          )
+        });
+      }
+      
     }
     const image = require('../../assets/img/img_loginback.png');
     const WATER_IMAGE = require('../../assets/img/water.png');

@@ -35,12 +35,16 @@ function mapStateToProps(state) {
         scheduleevents:state.eventReducer.upcomingevents,
         loading: state.loadingReducer,
         login_token:state.loginReducer.login_token,
+        monthevents:state.eventReducer.monthevents,
+        dateevents:state.eventReducer.dateevents,
     };
 }
 
 
 function mapDispatchToProps(dispatch) {
     return {
+      ongeteventsByMonth:(month,year) => dispatch(eventActions.ongeteventsByMonth(month,year)),
+      ongeteventsByDate:(date) => dispatch(eventActions.ongeteventsByDate(date)),
       loadSubscribeNow : (EventId) => dispatch(eventActions.loadSubscribeNowRequest(EventId))
     };
 }

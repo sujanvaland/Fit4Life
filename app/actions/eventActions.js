@@ -152,4 +152,44 @@ export function FailedLoadingSubscribeNow(response) {
     };
 }
 
+export function ongeteventsByMonth(month,year) {
+    return {
+        type: types.GETEVENTSBYMONTH_REQUEST,
+        month,
+        year
+    };
+}
+
+export function ongeteventsByMonthResponse(response) {
+    return {
+        type: types.GETEVENTSBYMONTH_RESPONSE,
+        response
+    };
+}
+export function ongeteventsByMonthFailedResponse(response) {
+    return {
+        type: types.GETEVENTSBYMONTHFAILED_RESPONSE,
+        response
+    };
+}
+
+export function ongeteventsByDate(date) {
+    return {
+        type: types.GETEVENTSBYDATE_REQUEST,
+        date
+    };
+}
+export function ongeteventsByDateResponse(response) {
+    return {
+        type: types.GETEVENTSBYDATE_RESPONSE,
+        response
+    };
+}
+export function ongeteventsByDateFailedResponse(response) {
+    return {
+        type: types.GETEVENTSBYDATEFAILED_RESPONSE,
+        response
+    };
+}
+
 //Subscribe Now Request Response End

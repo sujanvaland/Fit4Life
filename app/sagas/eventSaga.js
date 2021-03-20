@@ -2,7 +2,7 @@ import { put, call, select } from 'redux-saga/effects';
 import * as loginActions from 'app/actions/loginActions';
 import * as eventActions from 'app/actions/eventActions';
 import AsyncStorage from '@react-native-community/async-storage';
-import { getUpcomingEvents,getCoordinatorUpcomingEvents, getPastEvents,getCoordinatorPastEvents, loadCustomerEventDetail, loadCoordinatorEventDetail, loadEventAttendances, sendFeedback, loadSubscribeNow} from 'app/api/methods/event';
+import { eventsByMonth,eventsByDate,getUpcomingEvents,getCoordinatorUpcomingEvents, getPastEvents,getCoordinatorPastEvents, loadCustomerEventDetail, loadCoordinatorEventDetail, loadEventAttendances, sendFeedback, loadSubscribeNow} from 'app/api/methods/event';
 import * as navigationActions from 'app/actions/navigationActions';
 import { Alert } from 'react-native';
 
@@ -118,7 +118,31 @@ function* sendFeedbackAsync(action) {
       yield put(loginActions.disableLoader({}));
   }
 }
+// get events by month
+function* eventsByMonthAsync(action) {
+  yield put(loginActions.enableLoader());
+  let response = yield call(eventsByMonth,action);
+  if (response) {
+      yield put(eventActions.ongeteventsByMonthResponse(response));
+      yield put(loginActions.disableLoader({}));
+  } else {
+      yield put(eventActions.ongeteventsByMonthResponse(response));
+      yield put(loginActions.disableLoader({}));
+  }
+}
 
+// get events by date
+function* eventsByDateAsync(action) {
+  yield put(loginActions.enableLoader());
+  let response = yield call(eventsByDate,action);
+  if (response) {
+      yield put(eventActions.ongeteventsByDateResponse(response));
+      yield put(loginActions.disableLoader({}));
+  } else {
+      yield put(eventActions.ongeteventsByDateResponse(response));
+      yield put(loginActions.disableLoader({}));
+  }
+}
 // Subscribe Now
 function* loadsubscribenowAsync(action) {
     
@@ -136,4 +160,4 @@ function* loadsubscribenowAsync(action) {
   }
 }
 
-export { getUpcomingEventsAsync, getPastEventsAsync, loadcustomereventdetailAsync, loadcoordinatoreventdetailAsync, loadeventattendancesAsync, sendFeedbackAsync, loadsubscribenowAsync}
+export { eventsByMonthAsync,eventsByDateAsync,getUpcomingEventsAsync, getPastEventsAsync, loadcustomereventdetailAsync, loadcoordinatoreventdetailAsync, loadeventattendancesAsync, sendFeedbackAsync, loadsubscribenowAsync}

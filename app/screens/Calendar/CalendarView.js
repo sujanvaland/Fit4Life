@@ -75,6 +75,7 @@ class CalendarView extends Component {
     {
       let timestamp = new Date(day.timestamp);
       this.setState({ activedate: timestamp });
+      this.props.ongeteventsByDate(getYMDParsedDate(timestamp.toISOString()))
     }
 
     _onsubscribeNow = (EventId,lang) => {
@@ -100,23 +101,42 @@ class CalendarView extends Component {
 
     render() {
         const { lang } = this.state;
-        const { scheduleevents,loading } = this.props;
+        const { scheduleevents,loading,dateevents } = this.props;
         
+        // let scheduleeventsArr = [];
+        // //console.log(scheduleevents);
+        // if(scheduleevents && scheduleevents != undefined && scheduleevents.length > 0){
+        //     //filteredscheduleevents = scheduleevents;
+        //     let activedate = this.state.activedate;
+        //     //console.log(activedate);
+        //     let isodate = activedate.toISOString();
+        //     let YMDactivedate = this.getYMDParsedDate(isodate);
+        //     //console.log(YMDactivedate);
+        //     scheduleevents.filter(x => this.getYMDParsedDate(x.startTime) == YMDactivedate).map((item) =>{
+        //         scheduleeventsArr.push(
+        //             <View key={item.id} style={Calendarstyles.WhiteBox}>
+        //                 <Text style={Calendarstyles.DateText}>7/20</Text>
+        //                 <Text style={Calendarstyles.EventLocation}>Anteayer, {this.getParsedDate(item.startTime)}{'\n'}
+        //                 Clase de musculación{'\n'}Cristian Arriagada</Text>
+        //                 <View style={Calendarstyles.RedButtonBox}>
+        //                     <TouchableOpacity style={Calendarstyles.RedButton} onPress={() => this._onsubscribeNow(item.id,lang)}>
+        //                         <Text style={Calendarstyles.BtnText}>{lang.Subscribe}</Text>
+        //                     </TouchableOpacity>
+        //                 </View>
+        //             </View>
+        //         );
+        //     });
+        // }
+
         let scheduleeventsArr = [];
-        //console.log(scheduleevents);
-        if(scheduleevents && scheduleevents != undefined && scheduleevents.length > 0){
-            //filteredscheduleevents = scheduleevents;
-            let activedate = this.state.activedate;
-            //console.log(activedate);
-            let isodate = activedate.toISOString();
-            let YMDactivedate = this.getYMDParsedDate(isodate);
-            //console.log(YMDactivedate);
-            scheduleevents.filter(x => this.getYMDParsedDate(x.startTime) == YMDactivedate).map((item) =>{
+        if(dateevents && dateevents != undefined && dateevents.length > 0){
+            dateevents.map((item) =>{
                 scheduleeventsArr.push(
                     <View key={item.id} style={Calendarstyles.WhiteBox}>
-                        <Text style={Calendarstyles.DateText}>7/20</Text>
-                        <Text style={Calendarstyles.EventLocation}>Anteayer, {this.getParsedDate(item.startTime)}{'\n'}
-                        Clase de musculación{'\n'}Cristian Arriagada</Text>
+                        <Text style={Calendarstyles.DateText}>{item.attendances +"/" + item.capacity}</Text>
+                        <Text style={Calendarstyles.EventLocation}>{this.getParsedDate(item.startTime)}{'\n'}
+                        {item.name}</Text>
+                        <Text style={Calendarstyles.EventLocation}>{lang.Coordinator}: {item.coordinatorFullName}</Text>
                         <View style={Calendarstyles.RedButtonBox}>
                             <TouchableOpacity style={Calendarstyles.RedButton} onPress={() => this._onsubscribeNow(item.id,lang)}>
                                 <Text style={Calendarstyles.BtnText}>{lang.Subscribe}</Text>

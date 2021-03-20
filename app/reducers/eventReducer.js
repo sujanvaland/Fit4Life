@@ -102,4 +102,27 @@ export const eventReducer = createReducer(initialState, {
             ...state
         };
     },
+
+    [types.GETEVENTSBYMONTH_RESPONSE](state,action) {
+        return {
+            ...state,
+            monthevents:action.response
+        };
+    },
+    [types.GETEVENTSBYMONTHFAILED_RESPONSE](state) {
+        return {
+            ...state
+        };
+    },
+    [types.GETEVENTSBYDATE_RESPONSE](state,action) {
+        return {
+            ...state,
+            dateevents:action.response
+        };
+    },
+    [types.GETEVENTSBYMONTHFAILED_RESPONSE](state) {
+        return {
+            ...state
+        };
+    },
 });

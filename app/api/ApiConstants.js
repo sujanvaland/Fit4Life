@@ -13,7 +13,7 @@ const ApiConstants = {
     USERPLAN:'user-plans',
     UPDATEUSERPROFILE:'personal-information/',
     UPDATEPROFILEIMAGE:'personal-information',
-    PAYMENTS:'payments',
+    PAYMENTS:'payments/my-payments',
     CONTRACTS:'user-contracts',
     SIGNCONTRACT:'user-contracts/sign',
     HEALTHPARAMETERS:'user-health-parameters',
@@ -28,8 +28,8 @@ const ApiConstants = {
     EVALUATEEVENT:'event-attendances/evaluate',
     EVENTATTENDANCES:'event-attendances',
     SUBSCRIBENOW:'event-attendances/suscribe',
-    
-
+    EVENTSBYMONTH:'events/feed/month',
+    EVENTSBYDATE:'events/by-date',
     // Update before build
     BUILDNO: "b01",
     VERSION: "1.0.0"
