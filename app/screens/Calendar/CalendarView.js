@@ -75,7 +75,7 @@ class CalendarView extends Component {
     {
       let timestamp = new Date(day.timestamp);
       this.setState({ activedate: timestamp });
-      this.props.ongeteventsByDate(getYMDParsedDate(timestamp.toISOString()))
+      this.props.ongeteventsByDate(this.getYMDParsedDate(timestamp.toISOString()))
     }
 
     _onsubscribeNow = (EventId,lang) => {
