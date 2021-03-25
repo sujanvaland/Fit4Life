@@ -182,7 +182,7 @@ class EditProfileImageView extends Component {
     var uploadUrl = URL + "/" + ApiConstants.UPDATEPROFILEIMAGE;
     var files = [
       {
-        name: 'profilePictureURL',
+        name: 'profilePictureFile',
         filename: this.state.fileName,
         filepath: imagePath,
         filetype: this.state.fileType
@@ -245,6 +245,7 @@ class EditProfileImageView extends Component {
       }
     })
       .catch((err) => {
+        console.log("123");
         console.log(err);
         Toast.show("Failed uploading file", Toast.SHORT);
         this.deleteFile();
