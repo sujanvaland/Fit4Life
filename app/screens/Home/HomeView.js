@@ -295,7 +295,7 @@ class HomeView extends Component {
   
           pasteventsArr.push(
             <View key={item.id} style={Homestyles.WhiteBox}>
-              <Text style={Homestyles.LastEventText}>{this.getParsedTime(item.startTime)} {this.getParsedDate(item.startTime)}{'\n'}
+              <Text style={Homestyles.LastEventText}>{item.startTime}{'\n'}
                 {item.name}{'\n'}
                 {lang.Arrivetime} : {this.getParsedTime(item.customerArrivalTime)}</Text>
               {
@@ -337,7 +337,7 @@ class HomeView extends Component {
         pastevents.map((item) => {
           pasteventsArr.push(
             <View key={item.id} style={Homestyles.WhiteBox}>
-              <Text style={Homestyles.LastEventText}>{this.getParsedTime(item.startTime)} {this.getParsedDate(item.startTime)}{'\n'}
+              <Text style={Homestyles.LastEventText}>{item.startTime}{'\n'}
                 {item.name}{'\n'}
               </Text>
               {

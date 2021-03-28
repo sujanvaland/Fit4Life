@@ -10,7 +10,7 @@ import { getAccountDetailAsync,getPersonalInformationAsync,getUserPlanAsync,getP
 import { getUpcomingEventsAsync, getPastEventsAsync, loadcustomereventdetailAsync, loadcoordinatoreventdetailAsync, 
     loadeventattendancesAsync, 
     sendFeedbackAsync,
-    loadsubscribenowAsync} from './eventSaga';
+    loadsubscribenowAsync,eventsByDateAsync,eventsByMonthAsync} from './eventSaga';
 
 export default function* watch() {
     yield all([takeEvery(types.LOGIN_REQUEST, loginAsync)]);
@@ -39,4 +39,6 @@ export default function* watch() {
     yield all([takeEvery(types.LOADEVENTATTENDANCES_REQUEST, loadeventattendancesAsync)]);
     yield all([takeEvery(types.SENDFEEDBACK_REQUEST, sendFeedbackAsync)]);
     yield all([takeEvery(types.LOADSUBSCRIBENOW_REQUEST, loadsubscribenowAsync)]);
+    yield all([takeEvery(types.GETEVENTSBYDATE_REQUEST, eventsByDateAsync)]);
+    yield all([takeEvery(types.GETEVENTSBYMONTH_REQUEST,eventsByMonthAsync)]);
 }

@@ -55,7 +55,8 @@ function mapStateToProps(state) {
         coordinatorEventDetail : state.eventReducer.coordinatoreventdetail,
         eventAttendancesList : state.eventReducer.eventattendances,
         loading: state.loadingReducer,
-        login_token:state.loginReducer.login_token
+        login_token:state.loginReducer.login_token,
+        userrole : state.accountReducer.userrole,
     };
   }
 

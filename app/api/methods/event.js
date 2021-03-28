@@ -125,7 +125,7 @@ export function eventsByMonth(action) {
     return Api(
         ApiConstants.EVENTSBYMONTH + '/'+action.month+'/year/'+action.year,
         null,
-        'post',
+        'get',
         null
     );
 }
@@ -134,7 +134,7 @@ export function eventsByDate(action) {
     return Api(
         ApiConstants.EVENTSBYDATE + '/'+action.date,
         null,
-        'post',
+        'get',
         null
     );
 }
