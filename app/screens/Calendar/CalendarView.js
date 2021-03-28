@@ -23,6 +23,7 @@ class CalendarView extends Component {
             mindate: new Date(),
             activedate: new Date(),
             lang:{},
+            markedEvents:{},
         }
     }
 
@@ -36,6 +37,26 @@ class CalendarView extends Component {
         }else{
             this.setState({lang:English})
         }
+
+        var dateObj = new Date();
+        var month = dateObj.getUTCMonth() + 1;
+        var year = dateObj.getUTCFullYear();
+        this.props.ongeteventsByMonth(month,year);
+
+        const { monthevents } = this.props;
+        if(monthevents && monthevents?.length > 0){
+            const nextDays = monthevents.map(a => a.startTime);
+            let markedEvents = {};
+            nextDays.forEach((day) => {
+                markedEvents[day.split('T')[0]] = {
+                    selected: true,
+                    marked: true,
+                    selectedColor: 'red'
+                };
+            });
+            this.setState({markedEvents:markedEvents})
+        }
+      
     }
 
     getParsedDate(strDate) {//get date formate
@@ -100,9 +121,6 @@ class CalendarView extends Component {
       };
 
       navigateToEventDetail = (obj) => {
-          console.log("navigate to detail")
-        console.log(obj);
-        console.log(this.props.userrole);
         if (this.props.userrole == "ROLE_USER") {
           navigationActions.navigateToCustomerDetailEvent(obj);
         }
@@ -116,7 +134,6 @@ class CalendarView extends Component {
         const { lang } = this.state;
         const { scheduleevents,loading,dateevents,userrole } = this.props;
         
-
         let scheduleeventsArr = [];
         if(dateevents && dateevents != undefined && dateevents.length > 0){
             dateevents.map((item) =>{
@@ -148,7 +165,6 @@ class CalendarView extends Component {
         }
 
         const image = require('../../assets/img/img_loginback.png');
-        
         return (
             <View style={Calendarstyles.container}>
                 {
@@ -180,7 +196,7 @@ class CalendarView extends Component {
                                         }}
                                         onDayPress={(day) => this.setsearchdate(day)}
                                         onDayLongPress={(day) => this.setsearchdate(day)}
-
+                                        markedDates={this.state.markedEvents}
                                     />
                                 </View>
                             </View>

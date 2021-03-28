@@ -37,7 +37,7 @@ function mapStateToProps(state) {
         login_token:state.loginReducer.login_token,
         monthevents:state.eventReducer.monthevents,
         dateevents:state.eventReducer.dateevents,
-        userrole : state.accountReducer.userrole,
+        userrole : state.loginReducer.userrole,
     };
 }
 

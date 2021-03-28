@@ -18,10 +18,11 @@ export function loginFailed() {
     };
 }
 
-export function onLoginResponse(response) {
+export function onLoginResponse(response,decoded) {
     return {
         type: types.LOGIN_RESPONSE,
-        response
+        response,
+        decoded
     };
 }
 

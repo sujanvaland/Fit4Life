@@ -12,6 +12,8 @@ import {loginUser,FbloginUser} from 'app/api/methods/loginUser';
 import * as loginActions from 'app/actions/loginActions';
 import * as accountActions from 'app/actions/accountActions';
 import * as navigationActions from 'app/actions/navigationActions';
+import jwt_decode from "jwt-decode";
+ 
 
 // Our worker Saga that logins the user
 function* loginAsync(action) {
@@ -22,7 +24,9 @@ function* loginAsync(action) {
       //console.log("123");
       //console.log(response);
       if (response.id_token != "" && response.id_token != undefined) {
-          yield put(loginActions.onLoginResponse(response));
+          var token = response.id_token;
+          var decoded = jwt_decode(token);
+          yield put(loginActions.onLoginResponse(response,decoded));
           _storeData("login_token",response.id_token);
           _storeData("loginuser",action.username);
           _storeData("password",action.password);
@@ -36,7 +40,7 @@ function* loginAsync(action) {
     }else{
       const response = yield call(FbloginUser, action.fbtoken);
       if (response.id_token != "" && response.id_token != undefined) {
-          yield put(loginActions.onLoginResponse(response));
+          yield put(loginActions.onLoginResponse(response,{}));
           _storeData("login_token",response.id_token);
           _storeData("fbtoken",action.fbtoken);
           yield put(accountActions.getAccountDetail());

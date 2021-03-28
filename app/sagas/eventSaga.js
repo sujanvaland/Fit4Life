@@ -13,10 +13,8 @@ function* getUpcomingEventsAsync(action) {
   let response=null;
   
   if(action.userrole == 'ROLE_USER'){
-    console.log("calling user view")
     response = yield call(getUpcomingEvents,action);
   }else{
-    console.log("calling coordinator view")
     response = yield call(getCoordinatorUpcomingEvents,action);
   }
   if (response) {
@@ -32,10 +30,8 @@ function* getPastEventsAsync(action) {
   yield put(loginActions.enableLoader());
   let response=null;
   if(action.userrole == 'ROLE_USER'){
-    console.log("calling past user view")
     response = yield call(getPastEvents,action);
   }else{
-    console.log("calling past coordinator view")
     response = yield call(getCoordinatorPastEvents,action);
   }
   console.log(response);
