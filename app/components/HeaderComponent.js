@@ -96,6 +96,7 @@ class HeaderComponent extends Component {
         this._storeData("firstname", "");
         this._storeData("lastname", "");
         this._storeData("customerimage", "");
+        this._storeData("UserRoleUserId", "");
         navigationActions.navigateToLogin();
         this.setState({ isModalVisible: !this.state.isModalVisible });
     }

@@ -6,11 +6,12 @@ import * as types from '../actions/types';
 import { loginAsync } from './loginSaga';
 import { signupAsync } from './signupSaga';
 import { getAccountDetailAsync,getPersonalInformationAsync,getUserPlanAsync,getPaymentsAsync,getHealthparametersAsync,
-    updateDeviceTokenAsync,changePasswordAsync, loadprofileimageAsync, updateUserProfileAsync,loadAllHealthparameterAsync, addToHealthParameterAsync, getContractsAsync, signContractAsync } from './accountSaga';
+    updateDeviceTokenAsync,changePasswordAsync, loadprofileimageAsync, updateUserProfileAsync,loadAllHealthparameterAsync, addToHealthParameterAsync, getContractsAsync, signContractAsync, getUserRolePersonalInformationAsync } from './accountSaga';
 import { getUpcomingEventsAsync, getPastEventsAsync, loadcustomereventdetailAsync, loadcoordinatoreventdetailAsync, 
     loadeventattendancesAsync, 
     sendFeedbackAsync,
-    loadsubscribenowAsync,eventsByDateAsync,eventsByMonthAsync} from './eventSaga';
+    loadsubscribenowAsync,eventsByDateAsync, eventsByMonthAsync,
+    sendArrivalConfirmationAsync, cancelArrivalConfirmationAsync} from './eventSaga';
 
 export default function* watch() {
     yield all([takeEvery(types.LOGIN_REQUEST, loginAsync)]);
@@ -31,6 +32,8 @@ export default function* watch() {
     yield all([takeEvery(types.GETCONTRACTS_REQUEST, getContractsAsync)]);
     yield all([takeEvery(types.SIGNCONTRACT_REQUEST, signContractAsync)]);
 
+    yield all([takeEvery(types.GETUSERROLEPERSONALINFORMATION_REQUEST, getUserRolePersonalInformationAsync)]);
+
     //Event Saga
     yield all([takeEvery(types.GETUPCOMINGEVENTS_REQUEST, getUpcomingEventsAsync)]);
     yield all([takeEvery(types.GETPASTEVENTS_REQUEST, getPastEventsAsync)]);
@@ -40,5 +43,7 @@ export default function* watch() {
     yield all([takeEvery(types.SENDFEEDBACK_REQUEST, sendFeedbackAsync)]);
     yield all([takeEvery(types.LOADSUBSCRIBENOW_REQUEST, loadsubscribenowAsync)]);
     yield all([takeEvery(types.GETEVENTSBYDATE_REQUEST, eventsByDateAsync)]);
-    yield all([takeEvery(types.GETEVENTSBYMONTH_REQUEST,eventsByMonthAsync)]);
+    yield all([takeEvery(types.GETEVENTSBYMONTH_REQUEST, eventsByMonthAsync)]);
+    yield all([takeEvery(types.SENDARRIVALCONFIRMATION_REQUEST, sendArrivalConfirmationAsync)]);
+    yield all([takeEvery(types.CANCELARRIVALCONFIRMATION_REQUEST, cancelArrivalConfirmationAsync)]);
 }

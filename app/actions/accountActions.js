@@ -263,3 +263,24 @@ export function onsignContractFailedResponse(response) {
         response
     };
 }
+
+export function getUserRolePersonalInformation(userId) {
+    return {
+        type: types.GETUSERROLEPERSONALINFORMATION_REQUEST,
+        userId
+    };
+}
+
+export function ongetUserRolePersonalInformationResponse(response) {
+    return {
+        type: types.GETUSERROLEPERSONALINFORMATION_RESPONSE,
+        response
+    };
+}
+
+export function getUserRolePersonalInformationFailed(response) {
+    return {
+        type: types.GETUSERROLEPERSONALINFORMATION_FAILED,
+        response
+    };
+}

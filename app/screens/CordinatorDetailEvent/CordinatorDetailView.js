@@ -59,6 +59,18 @@ class CordinatorDetailView extends Component {
         }
         return "";
     }
+
+    navigateToUserHealthProfileDetail = (obj) => {
+        navigationActions.navigateToUserHealthProfileDetail(obj);
+    };
+
+    sendArrivalConfirmation = (eventAttendanceID) => {
+        this.props.sendArrivalConfirmation(eventAttendanceID);
+    };
+
+    cancelArrivalConfirmation = (eventAttendanceID) => {
+        this.props.cancelArrivalConfirmation(eventAttendanceID);
+    };
     
     render() {
         const { lang } = this.state;
@@ -77,8 +89,12 @@ class CordinatorDetailView extends Component {
                 eventAttendancesListArr.push(
                     <View key={item.id} style={CordinatorDetailstyles.GrayBox}>
                         <View style={CordinatorDetailstyles.FlexGrayBox}>
-                            <Text style={CordinatorDetailstyles.FlexGrayBoxText1}>{item.user.firstName} {item.user.lastName}</Text>
-                            <Text style={CordinatorDetailstyles.TimerBox}>{this.getParsedTime(item.coordinatorArrivalTime)}</Text>
+                            <TouchableOpacity onPress={() => this.navigateToUserHealthProfileDetail({ userId: item.user.id})}>
+                                <Text style={CordinatorDetailstyles.FlexGrayBoxText1}>{item.user.firstName} {item.user.lastName}</Text>
+                            </TouchableOpacity>
+                            { item.customerArrivalTime &&
+                                <Text style={CordinatorDetailstyles.TimerBox}>{this.getParsedTime(item.customerArrivalTime)}</Text>
+                            }
                         </View>
                         <View style={CordinatorDetailstyles.TouchPinBox}>
                             {
@@ -90,9 +106,17 @@ class CordinatorDetailView extends Component {
                                     <Text style={CordinatorDetailstyles.NewRoutine}>{lang.NewRoutine}</Text>
                                 </View>
                             }
-                            {/* <TouchableOpacity style={CordinatorDetailstyles.ButtionMaron}>
-                                <Text style={CordinatorDetailstyles.ButtonMaronText}>Register</Text>
-                            </TouchableOpacity> */}
+                            { !item.customerArrivalTime &&
+                                <TouchableOpacity style={CordinatorDetailstyles.ButtionMaron} onPress={() => this.sendArrivalConfirmation(item.id)}>
+                                    <Text style={CordinatorDetailstyles.ButtonMaronText}>Register</Text>
+                                </TouchableOpacity>
+                            }
+
+                            { item.customerArrivalTime &&
+                                <TouchableOpacity style={CordinatorDetailstyles.ButtionMaron} onPress={() => this.cancelArrivalConfirmation(item.id)}>
+                                    <Text style={CordinatorDetailstyles.ButtonMaronText}>Cancel</Text>
+                                </TouchableOpacity>
+                            }
                         </View>
                     </View>
                 )

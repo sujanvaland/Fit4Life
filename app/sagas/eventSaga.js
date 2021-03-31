@@ -2,7 +2,7 @@ import { put, call, select } from 'redux-saga/effects';
 import * as loginActions from 'app/actions/loginActions';
 import * as eventActions from 'app/actions/eventActions';
 import AsyncStorage from '@react-native-community/async-storage';
-import { eventsByMonth,eventsByDate,getUpcomingEvents,getCoordinatorUpcomingEvents, getPastEvents,getCoordinatorPastEvents, loadCustomerEventDetail, loadCoordinatorEventDetail, loadEventAttendances, sendFeedback, loadSubscribeNow} from 'app/api/methods/event';
+import { eventsByMonth,eventsByDate,getUpcomingEvents,getCoordinatorUpcomingEvents, getPastEvents,getCoordinatorPastEvents, loadCustomerEventDetail, loadCoordinatorEventDetail, loadEventAttendances, sendFeedback, loadSubscribeNow, sendArrivalConfirmation, cancelArrivalConfirmation} from 'app/api/methods/event';
 import * as navigationActions from 'app/actions/navigationActions';
 import { Alert } from 'react-native';
 
@@ -156,4 +156,36 @@ function* loadsubscribenowAsync(action) {
   }
 }
 
-export { eventsByMonthAsync,eventsByDateAsync,getUpcomingEventsAsync, getPastEventsAsync, loadcustomereventdetailAsync, loadcoordinatoreventdetailAsync, loadeventattendancesAsync, sendFeedbackAsync, loadsubscribenowAsync}
+// Send ArrivalConfirmation
+function* sendArrivalConfirmationAsync(action) {
+  yield put(loginActions.enableLoader());
+  //how to call api
+  let response = yield call(sendArrivalConfirmation,action);
+  console.log(response);
+  if (response) {
+      yield put(eventActions.loadEventAttendancesRequest(response.event.id));
+      yield put(eventActions.sendArrivalConfirmationResponse(response));
+      yield put(loginActions.disableLoader({}));
+  } else {
+      yield put(eventActions.sendArrivalConfirmationFailed(response));
+      yield put(loginActions.disableLoader({}));
+  }
+}
+
+// Cancel ArrivalConfirmation
+function* cancelArrivalConfirmationAsync(action) {
+  yield put(loginActions.enableLoader());
+  //how to call api
+  let response = yield call(cancelArrivalConfirmation,action);
+  console.log(response);
+  if (response) {
+      yield put(eventActions.loadEventAttendancesRequest(response.event.id));
+      yield put(eventActions.cancelArrivalConfirmationResponse(response));
+      yield put(loginActions.disableLoader({}));
+  } else {
+      yield put(eventActions.cancelArrivalConfirmationFailed(response));
+      yield put(loginActions.disableLoader({}));
+  }
+}
+
+export { eventsByMonthAsync,eventsByDateAsync,getUpcomingEventsAsync, getPastEventsAsync, loadcustomereventdetailAsync, loadcoordinatoreventdetailAsync, loadeventattendancesAsync, sendFeedbackAsync, loadsubscribenowAsync, sendArrivalConfirmationAsync, cancelArrivalConfirmationAsync}

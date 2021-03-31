@@ -24,6 +24,7 @@ import CustomerDetailEvent from 'app/screens/CustomerDetailEvent';
 import CordinatorDetailEvent from 'app/screens/CordinatorDetailEvent';
 import UpdateProfile from 'app/screens/UpdateProfile';
 import EditProfileImage from '../screens/EditProfileImage';
+import UserHealthProfile from 'app/screens/UserHealthProfile';
 
 const AuthStack = createStackNavigator({
     Login: {
@@ -217,6 +218,18 @@ const RNApp = createStackNavigator(
                 return {
                     header: () => (
                         <HeaderComponent navigation={navigation} backbutton={false} menu={true} pagetitle={true} title="Fit4Life" user={false} />
+                    ),
+                    gestureEnabled: true,
+                };
+            },
+        },
+
+        UserHealthProfile: {
+            screen: UserHealthProfile,
+            navigationOptions: ({ navigation }) => {
+                return {
+                    header: () => (
+                        <HeaderComponent navigation={navigation} backbutton={true} menu={false} pagetitle={true} title="User Health Profile" user={false} />
                     ),
                     gestureEnabled: true,
                 };

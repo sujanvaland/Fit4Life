@@ -193,3 +193,45 @@ export function ongeteventsByDateFailedResponse(response) {
 }
 
 //Subscribe Now Request Response End
+
+//Send ArrivalConfirmation
+export function sendArrivalConfirmation(action) {
+    return {
+        type: types.SENDARRIVALCONFIRMATION_REQUEST,
+        action
+    };
+}
+
+export function sendArrivalConfirmationResponse(data) {
+    return {
+        type: types.SENDARRIVALCONFIRMATION_RESPONSE,
+        data
+    };
+}
+
+export function sendArrivalConfirmationFailed() {
+    return {
+        type: types.SENDARRIVALCONFIRMATION_FAILED
+    };
+}
+
+//Cancel ArrivalConfirmation
+export function cancelArrivalConfirmation(action) {
+    return {
+        type: types.CANCELARRIVALCONFIRMATION_REQUEST,
+        action
+    };
+}
+
+export function cancelArrivalConfirmationResponse(data) {
+    return {
+        type: types.CANCELARRIVALCONFIRMATION_RESPONSE,
+        data
+    };
+}
+
+export function cancelArrivalConfirmationFailed() {
+    return {
+        type: types.CANCELARRIVALCONFIRMATION_FAILED
+    };
+}

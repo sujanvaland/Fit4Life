@@ -1,6 +1,7 @@
 import Api from 'app/api';
 import ApiConstants from '../ApiConstants';
 import AsyncStorage from '@react-native-community/async-storage';
+import { exists } from 'react-native-fs';
 
 retrieveData = async (key) => {
   try {
@@ -54,7 +55,7 @@ export  async function getPayments(action) {
 }
 
 export  async function getHealthparameters(action) {
-  let userId =  await retrieveData("userId");
+  let userId =  await retrieveData("UserRoleUserId");
   return Api(
       ApiConstants.HEALTHPARAMETERS + '?userId.equals=' + userId,
       null,
@@ -121,7 +122,9 @@ export  function loadAllHealthparameter(action) {
 }
 
 export  async function addtohealthparameter(action) {
-  let userId =  await retrieveData("userId");
+  let userId=await retrieveData("UserRoleUserId");
+  //console.log(userId); exist;
+  //let userId =  await retrieveData("userId");
   return Api(
       ApiConstants.ADDTOHEALTHPARAMETER,
       {
@@ -150,6 +153,16 @@ export  async function signcontract(action) {
       ApiConstants.SIGNCONTRACT + '/' + action.contractID,
       null,
       'post',
+      null
+  );
+}
+
+export  async function getUserRolePersonalInformation(action) {
+  let userId =  action.userId;
+  return Api(
+      ApiConstants.PERSONALINFORMATION + '?userId.equals=' + userId,
+      null,
+      'get',
       null
   );
 }

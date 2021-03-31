@@ -125,4 +125,28 @@ export const eventReducer = createReducer(initialState, {
             ...state
         };
     },
+
+    // Send ArrivalConfirmation
+    [types.SENDARRIVALCONFIRMATION_FAILED](state) {
+        return {
+            ...state
+        };
+    },
+    [types.SENDARRIVALCONFIRMATION_RESPONSE](state,action) {
+        return {
+            ...state
+        };
+    },
+
+    // Cancel ArrivalConfirmation
+    [types.CANCELARRIVALCONFIRMATION_FAILED](state) {
+        return {
+            ...state
+        };
+    },
+    [types.CANCELARRIVALCONFIRMATION_RESPONSE](state,action) {
+        return {
+            ...state
+        };
+    },
 });

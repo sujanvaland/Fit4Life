@@ -138,7 +138,7 @@ class PersonalDetailView extends Component {
                   }
                 </View>
               </View>
-              { accountdetail.authorities[0]=="ROLE_COORDINATOR" &&
+              {/* { accountdetail.authorities[0]=="ROLE_COORDINATOR" &&
                 <View style={[PersonalDetailstyles.FullWidthTitleBack]}>
                   <View style={[PersonalDetailstyles.InnerTitle, PersonalDetailstyles.MarTopzero]}>
                     <View style={PersonalDetailstyles.CustomerFeedLeft}>
@@ -150,7 +150,7 @@ class PersonalDetailView extends Component {
                     </TouchableOpacity>
                   </View>
                 </View>
-              }
+              } */}
 
               <View style={PersonalDetailstyles.Spacer}></View>
 

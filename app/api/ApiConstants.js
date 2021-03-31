@@ -30,6 +30,9 @@ const ApiConstants = {
     SUBSCRIBENOW:'event-attendances/suscribe',
     EVENTSBYMONTH:'events/feed/month',
     EVENTSBYDATE:'events/by-date',
+    ARRIVALCONFIRMATION:'event-attendances/customer-arrival-confirmation',
+    CANCELARRIVALCONFIRMATION:'event-attendances/cancel',
+
     // Update before build
     BUILDNO: "b01",
     VERSION: "1.0.0"

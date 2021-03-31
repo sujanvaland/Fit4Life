@@ -181,5 +181,18 @@ export const accountReducer = createReducer(initialState, {
             signcontractstatus:null
         };
     },
+
+    [types.GETUSERROLEPERSONALINFORMATION_RESPONSE](state,action) {
+        return {
+            ...state,
+            userrolepersonalinformation:action.response
+        };
+    },
+    [types.GETUSERROLEPERSONALINFORMATION_FAILED](state) {
+        return {
+            ...state,
+            userrolepersonalinformation:null
+        };
+    },
     
 });

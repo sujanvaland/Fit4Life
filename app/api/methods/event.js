@@ -138,3 +138,21 @@ export function eventsByDate(action) {
         null
     );
 }
+
+export function sendArrivalConfirmation(action) {
+    return Api(
+        ApiConstants.ARRIVALCONFIRMATION + '/' + action.action,
+        null,
+        'post',
+        null
+    );
+}
+
+export function cancelArrivalConfirmation(action) {
+    return Api(
+        ApiConstants.CANCELARRIVALCONFIRMATION + '/' + action.action,
+        null,
+        'post',
+        null
+    );
+}

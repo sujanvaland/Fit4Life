@@ -67,3 +67,7 @@ export function navigateToEditProfileImage(params) {
 export function navigateToContracts(params) {
     NavigationService.navigate('Contracts', params);
 }
+
+export function navigateToUserHealthProfileDetail(params) {
+    NavigationService.navigate('UserHealthProfile', params);
+}

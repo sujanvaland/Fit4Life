@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 import * as loginActions from 'app/actions/loginActions';
 import * as accountActions from 'app/actions/accountActions';
 import {getAccountDetail,getPersonalInformation,getUserPlan,getPayments,getHealthparameters,updateDeviceToken,changePassword,
-  loadProfileImage,updateUserProfile,loadAllHealthparameter, addtohealthparameter, getContracts, signcontract} from 'app/api/methods/accountDetail';
+  loadProfileImage,updateUserProfile,loadAllHealthparameter, addtohealthparameter, getContracts, signcontract,getUserRolePersonalInformation} from 'app/api/methods/accountDetail';
 import * as navigationActions from 'app/actions/navigationActions';
 import AsyncStorage from '@react-native-community/async-storage';
 import Toast from 'react-native-simple-toast';
@@ -18,6 +18,7 @@ function* getAccountDetailAsync(action) {
       yield put(accountActions.ongetAccountDetailResponse(response));
       _storeData("userId",response.id.toString());
       _storeData("login_role",response.authorities[0]);
+      _storeData("UserRoleUserId",response.id.toString());
       yield put(accountActions.getPersonalInformation());
       yield put(loginActions.disableLoader({}));
   } else {
@@ -246,6 +247,20 @@ function* signContractAsync(action) {
   }
 }
 
+function* getUserRolePersonalInformationAsync(action) {
+  yield put(loginActions.enableLoader());
+  const response = yield call(getUserRolePersonalInformation,action);
+  //console.log(response);
+  if (response[0]?.id > 0) {
+      yield put(accountActions.ongetUserRolePersonalInformationResponse(response));
+      _storeData("UserRoleUserId",response[0].user.id.toString());
+      yield put(loginActions.disableLoader({}));
+  } else {
+      yield put(accountActions.getUserRolePersonalInformationFailed(response));
+      yield put(loginActions.disableLoader({}));
+  }
+};
+
 const _storeData = async (key,value) => {
   try {
     await AsyncStorage.setItem(key, value);
@@ -280,5 +295,6 @@ export {
   loadAllHealthparameterAsync,
   addToHealthParameterAsync,
   getContractsAsync,
-  signContractAsync
+  signContractAsync,
+  getUserRolePersonalInformationAsync
 }

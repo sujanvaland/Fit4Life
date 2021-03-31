@@ -11,7 +11,7 @@ import NetInfo from "@react-native-community/netinfo";
 import { ScrollView } from 'react-native-gesture-handler';
 import {NavigationEvents} from 'react-navigation';
 import Resource_EN from '../../config/Resource_EN';
-import { LoginButton, AccessToken } from 'react-native-fbsdk';
+// import { LoginButton, AccessToken } from 'react-native-fbsdk';
 
 const { English,Spanish } = Resource_EN;
 class LoginView extends Component {
@@ -238,21 +238,21 @@ class LoginView extends Component {
                       style={loginStyles.loginButton}
                     />
                   </View>
-                  <View style={loginStyles.SocialButton}>
+                  {/* <View style={loginStyles.SocialButton}>
                   <LoginButton
                     onLoginFinished={
                       (error, result) => this.onFacebookLogin(error,result)
                     }
                     onLogoutFinished={() => console.log("logout.")}/>
-                    {/* <TouchableOpacity style={[loginStyles.BtnFacebook, loginStyles.SocialComonBtn]}>
+                    <TouchableOpacity style={[loginStyles.BtnFacebook, loginStyles.SocialComonBtn]}>
                       <Image source={require('../../assets/img/icon_facebook.png')} resizeMode="contain" style={loginStyles.SocialIcon} />
                       <Text style={loginStyles.BtnText}>{lang.Facebok}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={[loginStyles.BtnInsta, loginStyles.SocialComonBtn]}>
                       <Image source={require('../../assets/img/icon_insta.png')} resizeMode="contain" style={loginStyles.SocialIcon} />
                       <Text style={loginStyles.BtnText}>{lang.Instagram}</Text>
-                    </TouchableOpacity> */}
-                  </View>
+                    </TouchableOpacity> 
+                  </View> */}
 
                   <View style={loginStyles.NewRegistration}>
                     <Text style={loginStyles.accountText}>{lang.NewRegistration}</Text>
