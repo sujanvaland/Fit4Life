@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, StatusBar, ScrollView, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import { get } from 'lodash';
-import { OverlayActivityIndicatorElement } from "../../components";
+import { TextBoxElement, OverlayActivityIndicatorElement } from "../../components";
+
 import CordinatorDetailstyles from './styles';
 import { SliderBox } from "react-native-image-slider-box";
 import { Avatar, Button, IconButton, Card, Title, Paragraph, List } from 'react-native-paper';
@@ -13,6 +14,9 @@ import { Rating, AirbnbRating } from 'react-native-ratings';
 import AsyncStorage from '@react-native-community/async-storage';
 import Resource_EN from '../../config/Resource_EN';
 const { English,Spanish } = Resource_EN;
+import Modal from "react-native-modal";
+import Styles from '../../config/styles';
+import Toast from 'react-native-simple-toast';
 
 
 
@@ -20,6 +24,14 @@ class CordinatorDetailView extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isModalVisible: false,
+            showcheckuserForm: false,
+            isValidEmail: true,
+            errorMessagesEmail: false,
+            postCheckUserEmail: {
+                eventID: '',
+                email: ''
+            },
             lang:{},
         }
     }
@@ -34,6 +46,29 @@ class CordinatorDetailView extends Component {
         }else{
           this.setState({lang:English})
         }
+    }
+
+    toggleModal(fieldName,eventID) {
+        console.log(eventID);
+        this.setState({ isModalVisible: !this.state.isModalVisible });
+        this.setState({ eventID: eventID });
+        if (fieldName == 'Checkuseremail') {
+            this.setState({ showcheckuserForm: true });
+            this.setState(prevState => ({
+                postCheckUserEmail: {                   // object that we want to update
+                ...prevState.postCheckUserEmail, // keep all other key-value pairs
+                eventID: eventID
+                }
+            }), function () {
+            });
+        }
+        else {
+        this.setState({ showcheckuserForm: false });
+        }
+    }
+    
+    closeModal = () => {
+        this.setState({ isModalVisible: false });
     }
 
     getParsedDate(strDate) {
@@ -71,6 +106,108 @@ class CordinatorDetailView extends Component {
     cancelArrivalConfirmation = (eventAttendanceID) => {
         this.props.cancelArrivalConfirmation(eventAttendanceID);
     };
+
+    // Check User Email Code Start
+
+    onEmailValueChange = (fieldName, value) => {
+        this.setState(prevState => ({
+        postCheckUserEmail: {                   // object that we want to update
+            ...prevState.postCheckUserEmail, // keep all other key-value pairs
+            [fieldName]: value
+        }
+        }), function () {
+        });
+    }
+
+    _onResetCheckUserEmailForm = () => {
+        this.setState({
+        postCheckUserEmail: {
+            email: ''
+        }
+        });
+    };
+
+    _onCancelCheckUserEmailForm = () => {
+        this.setState({
+        postCheckUserEmail: {
+            email: ''
+        }
+        });
+        this.closeModal();
+    };
+
+    _onCheckUserEmail = () => {
+        console.log(this.state.postCheckUserEmail);
+        if (this.validateCheckUserEmail()) {
+            //console.log(this.state.postCheckUserEmail);
+            this.props.checkUserByEmail(this.state.postCheckUserEmail);
+            this.setState({
+            postCheckUserEmail: {
+                email: ''
+            }
+            });
+            this.closeModal();
+        }
+    };
+
+    validateCheckUserEmail = () => {
+        //====== title ======//
+        let isValidEmail;
+        let allCheckUserEmailInputsValidated;
+
+        
+        if (this.state.postCheckUserEmail.email == '') {
+            isValidEmail = false;
+        }
+        else {
+            if (this.validateEmail(this.state.postCheckUserEmail.email)) {
+                isValidEmail = true;
+              }
+              else {
+                Toast.show("Invalid Email", Toast.SHORT);
+                isValidEmail = false;
+              } 
+        }
+
+        if (isValidEmail) {
+        allCheckUserEmailInputsValidated = true;
+        }
+        else {
+        Toast.show("Please check all fields", Toast.SHORT);
+        }
+
+        this.setState({
+        isValidEmail: isValidEmail,
+        errorMessagesEmail: !isValidEmail
+        });
+
+        return allCheckUserEmailInputsValidated;
+    }
+
+    validateInputs = (fieldName) => {
+
+        if (fieldName == "email") {
+            if (this.state.postCheckUserEmail.email == "") {
+              this.setState({ isValidEmail: false });
+            }
+            else {
+              if (this.validateEmail(this.state.postCheckUserEmail.email)) {
+                this.setState({ isValidEmail: true });
+              }
+              else {
+                Toast.show("Invalid Email", Toast.SHORT);
+                this.setState({ isValidEmail: false });
+              }
+            }
+          }
+    };
+
+    validateEmail = (value) => {
+        if (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g.test(value)) {
+          return true;
+        }
+        return false;
+      }
     
     render() {
         const { lang } = this.state;
@@ -184,7 +321,7 @@ class CordinatorDetailView extends Component {
                                     </View>
                                     <View style={CordinatorDetailstyles.countPlus}>
                                         <Text style={CordinatorDetailstyles.ResultText}>{eventAttendancesListArr.length}/{coordinatoreventdata.capacity}</Text>
-                                        <TouchableOpacity style={CordinatorDetailstyles.BtnPlus}>
+                                        <TouchableOpacity style={CordinatorDetailstyles.BtnPlus} onPress={() => this.toggleModal("Checkuseremail", coordinatoreventdata.id)}>
                                             <Image source={require('../../assets/img/icon_plus.png')} resizeMode="contain" style={CordinatorDetailstyles.BtnPlusIcon} />
                                         </TouchableOpacity>
                                     </View>
@@ -204,6 +341,52 @@ class CordinatorDetailView extends Component {
                         </View>
                     </ScrollView>
                 </ImageBackground>
+                <Modal onBackdropPress={() => this.closeModal()}
+                    isVisible={this.state.isModalVisible}
+                    onBackButtonPress={() => this.closeModal()}>
+                    <View style={[CordinatorDetailstyles.modalDocument]}>
+                        <ScrollView>
+                        {
+                            this.state.showcheckuserForm &&
+                            <View>
+                            <ScrollView>
+                                <View style={CordinatorDetailstyles.formSpace}>
+                                <View style={CordinatorDetailstyles.formInput}>
+                                    <TextBoxElement
+                                        placeholder={lang.Email}
+                                        value={this.state.postCheckUserEmail.email}
+                                        autoCapitalize={'none'}
+                                        onChangeText={value => this.onEmailValueChange("email", value)}
+                                        isvalidInput={this.state.isValidEmail}
+                                        onEndEditing={() => this.validateInputs("email")}
+                                        maxLength={200}
+                                        caretHidden
+                                        autoCorrect={false}
+                                        keyboardType='email-address'
+                                        autoCompleteType='email'
+                                    />
+                                </View>
+                                </View>
+                                <View style={[Styles.buttonBox, Styles.flexContent, Styles.contactBtn, CordinatorDetailstyles.pad15]}>
+                                <TouchableOpacity activeOpacity={0.7} style={CordinatorDetailstyles.button}
+                                    onPress={() => this._onCheckUserEmail()}>
+                                    <Text style={Styles.textBtn}>{lang.CheckEmail}</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[Styles.btnWidthOne, Styles.borderLeft, CordinatorDetailstyles.ButtonMain]}
+                                    onPress={() => this._onResetCheckUserEmailForm()}>
+                                    <Text style={CordinatorDetailstyles.resetText}>{lang.Reset}</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[Styles.btnWidthOne, Styles.borderLeft, CordinatorDetailstyles.ButtonMainBlack]}
+                                    onPress={() => this._onCancelCheckUserEmailForm()}>
+                                    <Text style={[Styles.textBtn, CordinatorDetailstyles.resetText]}>{lang.Cancel}</Text>
+                                </TouchableOpacity>
+                                </View>
+                            </ScrollView>
+                            </View>
+                        }
+                        </ScrollView>
+                    </View>
+                </Modal>
             </View >
         );
     }

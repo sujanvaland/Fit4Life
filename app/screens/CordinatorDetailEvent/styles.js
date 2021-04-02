@@ -297,6 +297,60 @@ const CordinatorDetailstyles = StyleSheet.create({
     TouchPin: {
         width: viewportWidth * 0.05,
         marginRight: viewportWidth * 0.012
+    },
+    modalDocument: {
+        backgroundColor: color.COLOR_WHITE,
+        borderRadius: viewportWidth * 0.018,
+        marginVertical: viewportWidth * 0.1
+    },
+    titleModal: {
+        paddingTop: viewportWidth * 0.04,
+        paddingLeft: viewportWidth * 0.04,
+        paddingBottom: viewportWidth * 0.02
+    },
+    formSpace: {
+        paddingHorizontal: viewportWidth * 0.02
+    },
+    BorderGrey: {
+        borderWidth: 1,
+        borderColor: '#cccccc'
+    },
+    formInput: {
+        paddingHorizontal: 10,
+    },
+    BorderRed: {
+        borderWidth: 1,
+        borderColor: '#ff0000'
+    },
+    pad15: {
+        paddingHorizontal: 15,
+        marginBottom: 20,
+    },
+    button: {
+        justifyContent: 'center',
+        flexDirection: 'row',
+        marginTop: 30,
+        padding: 15,
+        backgroundColor: '#8ad24e',
+    },
+    ButtonMain: {
+        width: '100%',
+        textAlign: 'center',
+        backgroundColor: color.COLOR_DARKBLUE,
+        paddingVertical: viewportWidth * 0.035,
+        marginTop: viewportWidth * 0.01,
+    },
+    resetText: {
+        color: color.COLOR_WHITE,
+        width: '100%',
+        textAlign: 'center'
+    },
+    ButtonMainBlack: {
+        width: '100%',
+        textAlign: 'center',
+        backgroundColor: color.COLOR_BLACK,
+        paddingVertical: viewportWidth * 0.035,
+        marginTop: viewportWidth * 0.01,
     }
 
 });

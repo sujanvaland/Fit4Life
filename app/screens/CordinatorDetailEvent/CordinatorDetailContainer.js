@@ -65,7 +65,8 @@ function mapDispatchToProps(dispatch) {
         loadCoordinatorEventDetail:(eventid) => dispatch(eventActions.loadCoordinatorEventDetailRequest(eventid)),
         loadEventAttendances:(eventid) => dispatch(eventActions.loadEventAttendancesRequest(eventid)),
         sendArrivalConfirmation: (eventAttendanceID) => dispatch(eventActions.sendArrivalConfirmation(eventAttendanceID)),
-        cancelArrivalConfirmation: (eventAttendanceID) => dispatch(eventActions.cancelArrivalConfirmation(eventAttendanceID))
+        cancelArrivalConfirmation: (eventAttendanceID) => dispatch(eventActions.cancelArrivalConfirmation(eventAttendanceID)),
+        checkUserByEmail: (UserEmailtosend) => dispatch(eventActions.checkUserByEmail(UserEmailtosend))
     };
 }
 

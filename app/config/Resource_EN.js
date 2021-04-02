@@ -60,6 +60,7 @@ let AppResources = {
         Link:"Link",
         Go:"Go",
         Assistants:"Assistants",
+        CheckEmail:"Check Email",
 
         //Profile Image Screen
         TakePhoto:"Take Photo..",
@@ -158,6 +159,7 @@ let AppResources = {
         Link:"Link_SP",
         Go:"Go_SP",
         Assistants:"Assistants_SP",
+        CheckEmail:"Check Email_SP",
 
         //Profile Image Screen
         TakePhoto:"Take Photo.._SP",

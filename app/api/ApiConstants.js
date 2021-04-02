@@ -27,11 +27,12 @@ const ApiConstants = {
     COORDINATOREVENTDETAIL: 'events',
     EVALUATEEVENT:'event-attendances/evaluate',
     EVENTATTENDANCES:'event-attendances',
-    SUBSCRIBENOW:'event-attendances/suscribe',
+    SUBSCRIBENOW:'event-attendances/subscribe',
     EVENTSBYMONTH:'events/feed/month',
     EVENTSBYDATE:'events/by-date',
     ARRIVALCONFIRMATION:'event-attendances/customer-arrival-confirmation',
     CANCELARRIVALCONFIRMATION:'event-attendances/cancel',
+    CHECKUSERBYEMAIL:'users/by-email',
 
     // Update before build
     BUILDNO: "b01",

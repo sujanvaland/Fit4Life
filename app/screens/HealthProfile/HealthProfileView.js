@@ -73,9 +73,10 @@ class HealthProfileView extends Component {
                     get(loading, 'isLoading') && <OverlayActivityIndicatorElement />
                 }
                 <ImageBackground source={image} style={HealthProfilestyles.ImageBack} resizeMode="cover">
-                    <ScrollView refreshControl={
+                    {/* <ScrollView refreshControl={
                         <RefreshControl onRefresh={() => { this._refreshHealthparameters() }} />
-                        }>
+                        }> */}
+                    <ScrollView>
                         <View style={HealthProfilestyles.InnerContainer}>
                             <View style={[HealthProfilestyles.ContainerMargin, HealthProfilestyles.MarBtm20]}>
                                 <View style={HealthProfilestyles.InnerTitle}>

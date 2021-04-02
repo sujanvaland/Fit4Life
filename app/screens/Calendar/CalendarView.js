@@ -37,10 +37,17 @@ class CalendarView extends Component {
         }else{
             this.setState({lang:English})
         }
-
+        
         var dateObj = new Date();
         var month = dateObj.getUTCMonth() + 1;
         var year = dateObj.getUTCFullYear();
+
+        this.getMonthEvents({year:year,month:month});
+    }
+
+    getMonthEvents(value){
+        var year = value.year;
+        var month = value.month;
         this.props.ongeteventsByMonth(month,year);
 
         const { monthevents } = this.props;
@@ -48,17 +55,17 @@ class CalendarView extends Component {
             const nextDays = monthevents.map(a => a.startTime);
             let markedEvents = {};
             nextDays.forEach((day) => {
-                markedEvents[day.split('T')[0]] = {
-                    selected: true,
-                    marked: true,
-                    selectedColor: 'red'
-                };
+                if(new Date(day) >= this.state.mindate){
+                    markedEvents[day.split('T')[0]] = {
+                        selected: true,
+                        marked: true,
+                        selectedColor: 'red'
+                    };
+                }
             });
-            this.setState({markedEvents:markedEvents})
+            this.setState({markedEvents:markedEvents});
         }
-      
     }
-
     getParsedDate(strDate) {//get date formate
         if (strDate != "") {
           let month_names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -185,6 +192,7 @@ class CalendarView extends Component {
                                     <Calendar
                                         minDate={this.state.mindate}
                                         disableTouchEvent={false}
+                                        onMonthChange={(month) => this.getMonthEvents(month)}
                                         theme={{
                                             selectedDayBackgroundColor: '#db5059',
                                             selectedDayTextColor: '#ffffff',

@@ -235,3 +235,24 @@ export function cancelArrivalConfirmationFailed() {
         type: types.CANCELARRIVALCONFIRMATION_FAILED
     };
 }
+
+//Check User By Email
+export function checkUserByEmail(action) {
+    return {
+        type: types.CHECKUSERBYEMAIL_REQUEST,
+        action
+    };
+}
+
+export function checkUserByEmailResponse(data) {
+    return {
+        type: types.CHECKUSERBYEMAIL_RESPONSE,
+        data
+    };
+}
+
+export function checkUserByEmailFailed() {
+    return {
+        type: types.CHECKUSERBYEMAIL_FAILED
+    };
+}

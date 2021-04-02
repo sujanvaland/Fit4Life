@@ -20,6 +20,7 @@ class CustomerDetailEventView extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            lang:{},
         }
     }
 
@@ -75,7 +76,11 @@ class CustomerDetailEventView extends Component {
                     <View key={item.id} style={CustomerDetailEventstyles.GrayBox}>
                         <View style={CustomerDetailEventstyles.FlexGrayBox}>
                             <Text style={CustomerDetailEventstyles.FlexGrayBoxText1}>{item.user.firstName} {item.user.lastName}</Text>
-                            <Text style={CustomerDetailEventstyles.TimerBox}>{this.getParsedTime(item.customerArrivalTime)}</Text>
+                            {
+                                item.customerArrivalTime &&
+                                <Text style={CustomerDetailEventstyles.TimerBox}>{this.getParsedTime(item.customerArrivalTime)}</Text>
+                            }
+                            
                         </View>
 
                         {
@@ -151,7 +156,7 @@ class CustomerDetailEventView extends Component {
                                 <View style={[CustomerDetailEventstyles.InnerTitle, CustomerDetailEventstyles.MarTopzero]}>
                                     <View style={CustomerDetailEventstyles.CustomerDetailEventLeft}>
                                         <Image source={require('../../assets/images/icon_calendar.png')} resizeMode="contain" style={CustomerDetailEventstyles.InnerTitleIcon} />
-                                        <Text style={CustomerDetailEventstyles.InnerTitleText}>{lang.Assistants}</Text>
+                                        <Text style={CustomerDetailEventstyles.InnerTitleText}>{lang?.Assistants}</Text>
                                     </View>
                                     <View style={CustomerDetailEventstyles.countPlus}>
                                         <Text style={CustomerDetailEventstyles.ResultText}>{eventAttendancesListArr.length}/{customereventdata.capacity}</Text>

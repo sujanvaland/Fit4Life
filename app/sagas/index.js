@@ -11,7 +11,7 @@ import { getUpcomingEventsAsync, getPastEventsAsync, loadcustomereventdetailAsyn
     loadeventattendancesAsync, 
     sendFeedbackAsync,
     loadsubscribenowAsync,eventsByDateAsync, eventsByMonthAsync,
-    sendArrivalConfirmationAsync, cancelArrivalConfirmationAsync} from './eventSaga';
+    sendArrivalConfirmationAsync, cancelArrivalConfirmationAsync, checkUserByEmailAsync,} from './eventSaga';
 
 export default function* watch() {
     yield all([takeEvery(types.LOGIN_REQUEST, loginAsync)]);
@@ -46,4 +46,5 @@ export default function* watch() {
     yield all([takeEvery(types.GETEVENTSBYMONTH_REQUEST, eventsByMonthAsync)]);
     yield all([takeEvery(types.SENDARRIVALCONFIRMATION_REQUEST, sendArrivalConfirmationAsync)]);
     yield all([takeEvery(types.CANCELARRIVALCONFIRMATION_REQUEST, cancelArrivalConfirmationAsync)]);
+    yield all([takeEvery(types.CHECKUSERBYEMAIL_REQUEST, checkUserByEmailAsync)]);
 }

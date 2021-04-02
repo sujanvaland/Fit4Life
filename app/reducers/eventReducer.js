@@ -149,4 +149,16 @@ export const eventReducer = createReducer(initialState, {
             ...state
         };
     },
+
+    // Check User By Email
+    [types.CHECKUSERBYEMAIL_FAILED](state) {
+        return {
+            ...state
+        };
+    },
+    [types.CHECKUSERBYEMAIL_RESPONSE](state,action) {
+        return {
+            ...state
+        };
+    },
 });

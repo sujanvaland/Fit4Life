@@ -28,12 +28,14 @@ export  function getUpcomingEvents(action) {
   }
 
 export  function getPastEvents(action) {
-    var userId=action.action;
+    var userId=action.userid;
     //console.log(userId);
     var dateobj = new Date(); 
     var isodate = dateobj.toISOString(); 
+    //console.log(isodate);
     return Api(
-        ApiConstants.EVENTLIST + '?userId.equals=' + userId +'&eventAttendance.event.startTime.lessThan=' + isodate,
+        //ApiConstants.EVENTLIST + '?userId.equals=' + userId +'&eventAttendance.event.startTime.lessThan=' + isodate,
+        ApiConstants.EVENTLIST + '?startTime.lessThan='+isodate+'&userId.equals=' + userId,
         null,
         'get',
         null
@@ -45,7 +47,7 @@ export  function getCoordinatorPastEvents(action) {
     var dateobj = new Date(); 
     var isodate = dateobj.toISOString(); 
     return Api(
-        ApiConstants.LASTEVENTLIST+'?sort=id,desc',
+        ApiConstants.LASTEVENTLIST+'?sort=id,desc&number=2',
         null,
         'get',
         null
@@ -151,6 +153,25 @@ export function sendArrivalConfirmation(action) {
 export function cancelArrivalConfirmation(action) {
     return Api(
         ApiConstants.CANCELARRIVALCONFIRMATION + '/' + action.action,
+        null,
+        'post',
+        null
+    );
+}
+
+export function checkUserByEmail(action) {
+    return Api(
+      ApiConstants.CHECKUSERBYEMAIL + '/' + action.action.email,
+      null,
+      'get',
+      null
+  );
+}
+
+export function loadSubscribeUserNow(action) {
+    console.log(action)
+    return Api(
+        ApiConstants.SUBSCRIBENOW + '/' + action.eventID + '/' + action.userId,
         null,
         'post',
         null

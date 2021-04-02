@@ -295,24 +295,14 @@ class HomeView extends Component {
   
           pasteventsArr.push(
             <View key={item.id} style={Homestyles.WhiteBox}>
-              <Text style={Homestyles.LastEventText}>{item.startTime}{'\n'}
-                {item.name}{'\n'}
+              <Text style={Homestyles.LastEventText}>{item.event?.startTime}{'\n'}
+                {item.event?.name}{'\n'}
                 {lang.Arrivetime} : {this.getParsedTime(item.customerArrivalTime)}</Text>
               {
-                item.evaluation != "" &&
+                (item.evaluation != "" && item.evaluation != null) &&
                 <View>
                   <View style={Homestyles.RatingBox}>
                     {React_Native_Rating_Bar}
-                    {/* <Rating
-                                          type='custom'
-                                          ratingImage={WATER_IMAGE}
-                                          ratingColor='#c5353f'
-                                          ratingBackgroundColor='#d9d9d9'
-                                          ratingCount={5}
-                                          imageSize={18}
-                                          onFinishRating={this.ratingCompleted}
-                                          style={{ paddingVertical: 8 }}
-                                      /> */}
                   </View>
                   <View>
                     <Text style={Homestyles.LastEventText}>{item.observation}</Text>
@@ -340,8 +330,6 @@ class HomeView extends Component {
               <Text style={Homestyles.LastEventText}>{item.startTime}{'\n'}
                 {item.name}{'\n'}
               </Text>
-              {
-                item.evaluation != "" &&
                 <View>
                   <Text style={Homestyles.LastEventText}>{item.observation}</Text>
                   <View style={Homestyles.RedButtonBox}>
@@ -350,7 +338,6 @@ class HomeView extends Component {
                     </TouchableOpacity>
                   </View>
                 </View>
-              }
             </View>
           )
         });

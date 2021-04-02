@@ -23,11 +23,12 @@ class HomeContainer extends Component {
         // });
         
         let userId=this.props.accountdetail.id;
+        let userrole=this.props.userrole;
         const { getUpcomingEvents, getPastEvents } = this.props;
-        if(userId > 0)
+        if(userId > 0 && userrole!='' && userrole!= undefined)
         {
-          getUpcomingEvents(userId);
-          getPastEvents(userId);
+          getUpcomingEvents(userId,userrole);
+          getPastEvents(userId,userrole);
         }
         
       }

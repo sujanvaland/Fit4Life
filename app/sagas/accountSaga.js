@@ -72,7 +72,7 @@ function* getPaymentsAsync(action) {
 function* getHealthparametersAsync(action) {
   yield put(loginActions.enableLoader());
   const response = yield call(getHealthparameters,action);
-  //console.log(response);
+  console.log(response);
   if (response.length > 0) {
       yield put(accountActions.ongetHealthparametersResponse(response));
       yield put(loginActions.disableLoader({}));
@@ -206,7 +206,8 @@ function* loadAllHealthparameterAsync(action) {
 function* addToHealthParameterAsync(action) {
   yield put(loginActions.enableLoader());
   const response = yield call(addtohealthparameter,action);
-  console.log(response);
+  //console.log("Hello");
+  //console.log(response);
   if (response) {
       yield put(accountActions.getHealthparameters());
       yield put(accountActions.onaddToHealthParameterResponse(response));
