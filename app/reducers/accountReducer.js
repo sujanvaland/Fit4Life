@@ -194,5 +194,30 @@ export const accountReducer = createReducer(initialState, {
             userrolepersonalinformation:null
         };
     },
+
+    [types.GETUSERCOMMENTARIES_RESPONSE](state,action) {
+        return {
+            ...state,
+            usercommentaries:action.response
+        };
+    },
+    [types.GETUSERCOMMENTARIES_FAILED](state) {
+        return {
+            ...state,
+            usercommentaries:null
+        };
+    },
+
+    // Send Comment
+    [types.SENDCOMMENT_FAILED](state) {
+        return {
+            ...state
+        };
+    },
+    [types.SENDCOMMENT_RESPONSE](state,action) {
+        return {
+            ...state
+        };
+    },
     
 });

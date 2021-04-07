@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StatusBar, ScrollView, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import { get } from 'lodash';
 import { TextBoxElement, OverlayActivityIndicatorElement } from "../../components";
-
+import { ListItem, Radio } from "native-base";
 import CordinatorDetailstyles from './styles';
 import { SliderBox } from "react-native-image-slider-box";
 import { Avatar, Button, IconButton, Card, Title, Paragraph, List } from 'react-native-paper';
@@ -11,12 +11,16 @@ import Icon from 'react-native-ionicons';
 import SplashScreen from 'react-native-splash-screen';
 import * as navigationActions from '../../actions/navigationActions';
 import { Rating, AirbnbRating } from 'react-native-ratings';
+import ApiConstants from '../../api/ApiConstants';
 import AsyncStorage from '@react-native-community/async-storage';
 import Resource_EN from '../../config/Resource_EN';
 const { English,Spanish } = Resource_EN;
 import Modal from "react-native-modal";
 import Styles from '../../config/styles';
 import Toast from 'react-native-simple-toast';
+var RNFS = require('react-native-fs');
+import ImagePicker from 'react-native-image-crop-picker';
+const downloadManager = require("react-native-simple-download-manager");
 
 
 
@@ -26,12 +30,16 @@ class CordinatorDetailView extends Component {
         this.state = {
             isModalVisible: false,
             showcheckuserForm: false,
+            captureOptionModal: false,
             isValidEmail: true,
             errorMessagesEmail: false,
             postCheckUserEmail: {
                 eventID: '',
                 email: ''
             },
+            uploadPer: 0,
+            uploading: false,
+            tempLoading: false,
             lang:{},
         }
     }
@@ -46,6 +54,17 @@ class CordinatorDetailView extends Component {
         }else{
           this.setState({lang:English})
         }
+    }
+
+    DownloadFile = (downloadurl) =>{
+        console.log(downloadurl);
+        downloadManager.download(downloadurl)
+        .then(response => {
+          alert("Download success!");
+        })
+        .catch(err => {
+          alert("Download failed!");
+        });
     }
 
     toggleModal(fieldName,eventID) {
@@ -64,6 +83,17 @@ class CordinatorDetailView extends Component {
         }
         else {
         this.setState({ showcheckuserForm: false });
+        }
+    }
+
+    toggleModal_new(fieldName,eventAttendanceId) {
+        //console.log(eventAttendanceId);
+        this.setState({ isModalVisible: !this.state.isModalVisible });
+        this.setState({ eventAttendanceId: eventAttendanceId });
+        if (fieldName == 'captureOption') {
+          this.setState({ captureOptionModal: true });
+        } else {
+          this.setState({ captureOptionModal: false });
         }
     }
     
@@ -209,8 +239,210 @@ class CordinatorDetailView extends Component {
         return false;
       }
     
+
+    // Capture Code Start
+      static getDerivedStateFromProps(Props, state) {
+        let { loading } = Props;
+    
+        let loadingflag = true;
+        if (!get(loading, 'isLoading')) {
+          loadingflag = false;
+        }
+    
+        return {
+          tempLoading: loadingflag
+        }
+      }
+    
+      _onPresscaptureOption = (optionvalue) => {
+    
+        this.setState({ isModalVisible: false });
+    
+        if (optionvalue == 'takephoto') {
+          ImagePicker.openCamera({
+            width: 400,
+            height: 400,
+            cropping: true,
+          }).then(image => {
+            //console.log(image);
+            this._setCapturePhotoDetails(image);
+          }).catch((error) => {
+            console.log(error);
+            Toast.show("User cancelled document picker", Toast.LONG);
+          });
+        }
+    
+        if (optionvalue == 'chooseImage') {
+          ImagePicker.openPicker({
+            width: 400,
+            height: 400,
+            cropping: true
+          }).then(image => {
+            //console.log(image);
+            this._setCapturePhotoDetails(image);
+          }).catch((error) => {
+            Toast.show("User cancelled document picker", Toast.LONG);
+          });
+        }
+    
+        // if(optionvalue=='chooseFile')
+        // {
+        //   this.SelectFile();
+        // }
+      };
+    
+      _setCapturePhotoDetails = (image) => {
+        if (image.mime == "image/png" || image.mime == "image/jpeg"
+          || image.mime == "image/gif"
+          || image.mime == "image/jpeg"
+          || image.mime == "image/pjpeg"
+        ) {
+          if ((image.size / 1000000) > 10) {
+            Toast.show("Photo should be of maximum 10 MB", Toast.SHORT);
+            this.setState({
+              fileDetail: false,
+              fileName: '',
+              fileType: '',
+              fileSize: 0
+            })
+          }
+          else {
+    
+            const splitdata = image.path.split('Pictures/');
+            let getfileName = splitdata[1];
+            this.setState({
+              fileDetail: true,
+              fileName: getfileName,
+              fileUrl: image.path,
+              fileType: image.mime,
+              fileSize: image.size,
+              selectedFile: getfileName
+            });
+    
+            this.TryUploadFile();
+          }
+        }
+        else {
+          Toast.show("Invalid Photo Type", Toast.LONG);
+        }
+      }
+    
+      TryUploadFile = async () => {
+    
+        const { login_token, coordinatorEventDetail } = this.props;
+        
+        let coordinatoreventdata = {};
+        if (coordinatorEventDetail) {
+            coordinatoreventdata = coordinatorEventDetail.length > 0 ? coordinatorEventDetail[0] : {};
+        }
+        
+        let eventAttendanceId = this.state.eventAttendanceId;
+        let filtoupload = this.state.fileUrl;
+    
+        const imagePath = `${RNFS.DocumentDirectoryPath}/${new Date().toISOString()}.jpg`.replace(/:/g, '-');
+    
+        if (Platform.OS === 'ios') {
+          RNFS.copyAssetsFileIOS(filtoupload, imagePath, 0, 0)
+            .then(res => { })
+            .catch(err => {
+              console.log('ERROR: image file write failed!!!');
+              console.log(err.message, err.code);
+            });
+        } else if (Platform.OS === 'android') {
+          RNFS.copyFile(filtoupload, imagePath)
+            .then(res => { })
+            .catch(err => {
+              console.log('ERROR: image file write failed!!!');
+              console.log(err.message, err.code);
+            });
+        }
+    
+        const split = this.state.fileName.split('.');
+        let FileNameextention = split[1];
+        const URL = ApiConstants.BASE_URL;
+        var uploadUrl = URL + "/" + ApiConstants.APPENDROUTINE;
+        var files = [
+          {
+            name: 'routineFile',
+            filename: this.state.fileName,
+            filepath: imagePath,
+            filetype: this.state.fileType
+          }
+        ];
+    
+        var uploadBegin = (response) => {
+          this.setState({
+            uploading: true,
+            tempLoading: false,
+          })
+        };
+    
+        var uploadProgress = (response) => {
+          var percentage = Math.floor((response.totalBytesSent / response.totalBytesExpectedToSend) * 100);
+          this.setState({ uploadPer: percentage });//Progress percentage
+        };
+    
+      
+        //console.log(eventAttendanceId);
+        //upload files
+        RNFS.uploadFiles({
+          toUrl: uploadUrl,
+          files: files,
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer '+login_token,
+          },
+          fields: {
+            'eventAttendanceId':eventAttendanceId.toString()
+          },
+          begin: uploadBegin,
+          progress: uploadProgress
+        }).promise.then((response) => {
+          let res = JSON.parse(response.body);
+          this.setState({
+            uploading: false,
+            tempLoading: true
+          });
+          console.log("upload response");
+          console.log(res);
+          if (res?.status != "400") {
+            Toast.show("Append Routine successfully.", Toast.LONG);
+            this.setState({
+              uploadPer: 0,
+              uploading: false,
+              tempLoading: true
+            });
+            this.deleteFile();
+            this.props.loadCoordinatorEventDetail(coordinatoreventdata.id);
+            this.props.loadEventAttendances(coordinatoreventdata.id);
+            navigationActions.navigateToCordinatorDetailEvent({ eventid: coordinatoreventdata.id});
+          }
+          else {
+            Toast.show(res.Message, Toast.LONG);
+            this.deleteFile();
+          }
+        })
+          .catch((err) => {
+            console.log("123");
+            console.log(err);
+            Toast.show("Failed uploading file", Toast.SHORT);
+            this.deleteFile();
+          });
+      }
+    
+      deleteFile = () => {
+        this.setState({
+          fileDetail: false,
+          fileUrl: '',
+          fileName: '',
+          fileSize: 0
+        })
+        this.setState({ uploading: false, tempLoading: true })
+      }
+    
     render() {
-        const { lang } = this.state;
+        const { lang, uploading } = this.state;
         let { loading, coordinatorEventDetail,eventAttendancesList } = this.props;
         let coordinatoreventdata = {};
         
@@ -234,15 +466,22 @@ class CordinatorDetailView extends Component {
                             }
                         </View>
                         <View style={CordinatorDetailstyles.TouchPinBox}>
-                            {
-                                item.fileUrl !=null &&
-                                <View>
-                                    <TouchableOpacity style={CordinatorDetailstyles.NewRoutineIcon}>
+                            
+                            <View>
+                                {
+                                    item.fileUrl ==null &&
+                                    <TouchableOpacity style={CordinatorDetailstyles.NewRoutineIcon} onPress={() => this.toggleModal_new("captureOption",item.id)}>
                                         <Image source={require('../../assets/img/icon_touchpin.png')} resizeMode='contain' style={CordinatorDetailstyles.TouchPin} />
                                     </TouchableOpacity>
-                                    <Text style={CordinatorDetailstyles.NewRoutine}>{lang.NewRoutine}</Text>
-                                </View>
-                            }
+                                }
+                                {
+                                    item.fileUrl !=null &&
+                                    <TouchableOpacity onPress={() => this.DownloadFile(item.fileUrl)}>
+                                        <Text style={CordinatorDetailstyles.NewRoutine}>{lang.NewRoutine}</Text>
+                                    </TouchableOpacity>
+                                }
+                            </View>
+
                             { !item.customerArrivalTime &&
                                 <TouchableOpacity style={CordinatorDetailstyles.ButtionMaron} onPress={() => this.sendArrivalConfirmation(item.id)}>
                                     <Text style={CordinatorDetailstyles.ButtonMaronText}>Register</Text>
@@ -266,7 +505,7 @@ class CordinatorDetailView extends Component {
         return (
             <View style={CordinatorDetailstyles.container}>
                 {
-                    get(loading, 'isLoading') && <OverlayActivityIndicatorElement />
+                    (get(loading, 'isLoading') || uploading) && <OverlayActivityIndicatorElement />
                 }
                 <StatusBar
                     barStyle="light-content"
@@ -330,6 +569,12 @@ class CordinatorDetailView extends Component {
                             {
                                 eventAttendancesListArr.length > 0 &&
                                 <View style={CordinatorDetailstyles.ContainerMargin}>
+                                    <View style={CordinatorDetailstyles.flexBox}>
+                                        {
+                                            this.state.uploading &&
+                                            <Text style={CordinatorDetailstyles.selectText}>{this.state.uploadPer}%</Text>
+                                        }
+                                    </View>
                                     <View style={CordinatorDetailstyles.WhiteBox}>
                                         {
                                             eventAttendancesListArr
@@ -384,6 +629,26 @@ class CordinatorDetailView extends Component {
                             </ScrollView>
                             </View>
                         }
+                        {
+                            this.state.captureOptionModal == true &&
+                            <View style={CordinatorDetailstyles.listRadio}>
+                                <ListItem key='1' style={[CordinatorDetailstyles.radioList,
+                                CordinatorDetailstyles.radioListStyle]}
+                                onPress={() => { this._onPresscaptureOption('takephoto') }}>
+                                <Radio style={CordinatorDetailstyles.radioListButton} />
+                                <Text style={[CordinatorDetailstyles.radioListText,
+                                CordinatorDetailstyles.radioTextWidth, CordinatorDetailstyles.radioListCenter]}>{lang.TakePhoto}</Text>
+                                </ListItem>
+                                <ListItem key='2' style={[CordinatorDetailstyles.radioList,
+                                CordinatorDetailstyles.radioListBorder,
+                                CordinatorDetailstyles.radioListStyle]}
+                                onPress={() => { this._onPresscaptureOption('chooseImage') }}>
+                                <Radio style={CordinatorDetailstyles.radioListButton} />
+                                <Text style={[CordinatorDetailstyles.radioListText,
+                                CordinatorDetailstyles.radioTextWidth, CordinatorDetailstyles.radioListCenter]}>{lang.ChooseImage}</Text>
+                                </ListItem>
+                            </View>
+                            }
                         </ScrollView>
                     </View>
                 </Modal>

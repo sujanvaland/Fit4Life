@@ -166,3 +166,25 @@ export  async function getUserRolePersonalInformation(action) {
       null
   );
 }
+
+export  async function getUserCommentaries(action) {
+  let userId =  action.userId;
+  return Api(
+      ApiConstants.COMMENTARIES + '?userid.equals=' + userId,
+      null,
+      'get',
+      null
+  );
+}
+
+export function sendComment(action) {
+  return Api(
+    ApiConstants.COMMENTARIES,
+    {
+      comment:action.action.message,
+      user:{id:action.userId}
+    },
+    'post',
+    null
+);
+}

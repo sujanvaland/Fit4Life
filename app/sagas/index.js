@@ -6,7 +6,8 @@ import * as types from '../actions/types';
 import { loginAsync } from './loginSaga';
 import { signupAsync } from './signupSaga';
 import { getAccountDetailAsync,getPersonalInformationAsync,getUserPlanAsync,getPaymentsAsync,getHealthparametersAsync,
-    updateDeviceTokenAsync,changePasswordAsync, loadprofileimageAsync, updateUserProfileAsync,loadAllHealthparameterAsync, addToHealthParameterAsync, getContractsAsync, signContractAsync, getUserRolePersonalInformationAsync } from './accountSaga';
+    updateDeviceTokenAsync,changePasswordAsync, loadprofileimageAsync, updateUserProfileAsync,loadAllHealthparameterAsync, addToHealthParameterAsync, getContractsAsync, signContractAsync, getUserRolePersonalInformationAsync, getUserCommentariesAsync, 
+    sendCommentAsync } from './accountSaga';
 import { getUpcomingEventsAsync, getPastEventsAsync, loadcustomereventdetailAsync, loadcoordinatoreventdetailAsync, 
     loadeventattendancesAsync, 
     sendFeedbackAsync,
@@ -31,8 +32,10 @@ export default function* watch() {
     yield all([takeEvery(types.ADDTOHEALTHPARAMETER_REQUEST, addToHealthParameterAsync)]);
     yield all([takeEvery(types.GETCONTRACTS_REQUEST, getContractsAsync)]);
     yield all([takeEvery(types.SIGNCONTRACT_REQUEST, signContractAsync)]);
+    yield all([takeEvery(types.SENDCOMMENT_REQUEST, sendCommentAsync)]);
 
     yield all([takeEvery(types.GETUSERROLEPERSONALINFORMATION_REQUEST, getUserRolePersonalInformationAsync)]);
+    yield all([takeEvery(types.GETUSERCOMMENTARIES_REQUEST, getUserCommentariesAsync)]);
 
     //Event Saga
     yield all([takeEvery(types.GETUPCOMINGEVENTS_REQUEST, getUpcomingEventsAsync)]);

@@ -17,11 +17,12 @@ class UserHealthProfileContainer extends Component {
     // define a separate function to get triggered on focus
     async onFocusFunction () {
       // do some stuff on every screen focus
-      const { getUserRolePersonalInformation } = this.props;
+      const { getUserRolePersonalInformation, getUserCommentaries } = this.props;
       const { params } = this.props.navigation.state;
       const userId = params ? params.userId : null;
       //console.log(userId);
       getUserRolePersonalInformation(userId);
+      getUserCommentaries(userId);
     }
 
     // and don't forget to remove the listener
@@ -59,12 +60,15 @@ function mapStateToProps(state) {
       loading: state.loadingReducer,
       login_token:state.loginReducer.login_token,
       userrolepersonalinformation : state.accountReducer.userrolepersonalinformation,
+      usercommentaries : state.accountReducer.usercommentaries,
       userplan : state.accountReducer.userplan
   };
 }
 function mapDispatchToProps(dispatch) {
     return {
-      getUserRolePersonalInformation:(userId) => dispatch(accountActions.getUserRolePersonalInformation(userId))
+      getUserRolePersonalInformation:(userId) => dispatch(accountActions.getUserRolePersonalInformation(userId)),
+      getUserCommentaries:(userId) => dispatch(accountActions.getUserCommentaries(userId)),
+      sendComment: (commenttosend,userId) => dispatch(accountActions.sendComment(commenttosend,userId))
     };
 }
 export default connect(

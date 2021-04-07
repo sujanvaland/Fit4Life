@@ -33,6 +33,8 @@ const ApiConstants = {
     ARRIVALCONFIRMATION:'event-attendances/customer-arrival-confirmation',
     CANCELARRIVALCONFIRMATION:'event-attendances/cancel',
     CHECKUSERBYEMAIL:'users/by-email',
+    COMMENTARIES:'commentaries',
+    APPENDROUTINE:'event-attendances/append-routine',
 
     // Update before build
     BUILDNO: "b01",

@@ -284,3 +284,48 @@ export function getUserRolePersonalInformationFailed(response) {
         response
     };
 }
+
+export function getUserCommentaries(userId) {
+    return {
+        type: types.GETUSERCOMMENTARIES_REQUEST,
+        userId
+    };
+}
+
+export function ongetUserCommentariesResponse(response) {
+    return {
+        type: types.GETUSERCOMMENTARIES_RESPONSE,
+        response
+    };
+}
+
+export function getUserCommentariesFailed(response) {
+    return {
+        type: types.GETUSERCOMMENTARIES_FAILED,
+        response
+    };
+}
+
+
+
+//Send Comment
+export function sendComment(action,userId) {
+    return {
+        type: types.SENDCOMMENT_REQUEST,
+        action,
+        userId
+    };
+}
+
+export function sendCommentResponse(data) {
+    return {
+        type: types.SENDCOMMENT_RESPONSE,
+        data
+    };
+}
+
+export function sendCommentFailed() {
+    return {
+        type: types.SENDCOMMENT_FAILED
+    };
+}

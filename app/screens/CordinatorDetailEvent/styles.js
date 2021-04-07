@@ -351,8 +351,62 @@ const CordinatorDetailstyles = StyleSheet.create({
         backgroundColor: color.COLOR_BLACK,
         paddingVertical: viewportWidth * 0.035,
         marginTop: viewportWidth * 0.01,
+    },
+    radioListCenter:{
+        textAlign:"center",
+        fontSize:Typography.FONT_SIZE18,
+        paddingTop:0,
+        marginTop:0
+    },
+    radioListBorder:{
+        borderTopWidth:1,
+        borderBottomWidth:1,
+    },
+    radioListStyle:{
+        paddingTop:viewportWidth*0.035,
+        paddingBottom:viewportWidth*0.035
+    },
+    modalStyle:{
+        backgroundColor:color.COLOR_WHITE,
+        paddingHorizontal:viewportWidth*0.04,
+        paddingTop:viewportWidth*0.03,
+        paddingBottom:viewportWidth*0.06,
+        borderRadius:viewportWidth*0.018,
+        marginVertical:viewportWidth*0.1
+    },
+    radioList: { 
+        borderWidth: 0, 
+        borderBottomWidth: 0, 
+        padding:0,
+        margin:0,
+        marginLeft:0,
+        paddingBottom:0
+    },
+    radioListButton: {
+        display:'none'
+    },
+    radioListText: {
+        display: "flex", 
+        flexDirection: "row", 
+        fontSize: Typography.FONT_SIZE, 
+        fontFamily:Typography.FONT_MEDIUM, 
+        color: color.COLOR_TEXT
+     },
+    radioTextWidth:{
+       width:'100%'
+    },
+    flexBox:{
+        display:"flex",
+        flexDirection:'row',
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    selectText:{
+        fontSize:Typography.FONT_SIZE12,
+        fontFamily:Typography.FONT_MEDIUM,
+        color:color.COLOR_GREYTHREE,
+        paddingTop:viewportWidth*0.015
     }
-
 });
 
 export default CordinatorDetailstyles;

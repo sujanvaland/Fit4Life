@@ -13,6 +13,7 @@ import { Rating, AirbnbRating } from 'react-native-ratings';
 import AsyncStorage from '@react-native-community/async-storage';
 import Resource_EN from '../../config/Resource_EN';
 const { English,Spanish } = Resource_EN;
+const downloadManager = require("react-native-simple-download-manager");
 
 
 
@@ -34,6 +35,17 @@ class CustomerDetailEventView extends Component {
         }else{
           this.setState({lang:English})
         }
+    }
+
+    DownloadFile = (downloadurl) =>{
+        console.log(downloadurl);
+        downloadManager.download(downloadurl)
+        .then(response => {
+          alert("Download success!");
+        })
+        .catch(err => {
+          alert("Download failed!");
+        });
     }
 
     getParsedDate(strDate) {
@@ -86,10 +98,13 @@ class CustomerDetailEventView extends Component {
                         {
                             item.fileUrl !=null &&
                             <View style={CustomerDetailEventstyles.TouchPinBox}>
-                                <TouchableOpacity style={CustomerDetailEventstyles.NewRoutineIcon}>
+                                {/* <TouchableOpacity style={CustomerDetailEventstyles.NewRoutineIcon}>
                                     <Image source={require('../../assets/img/icon_touchpin.png')} resizeMode='contain' style={CustomerDetailEventstyles.TouchPin} />
+                                </TouchableOpacity> */}
+                                <TouchableOpacity onPress={() => this.DownloadFile(item.fileUrl)}>
+                                    <Text style={CustomerDetailEventstyles.NewRoutine}>{lang.NewRoutine}</Text>
                                 </TouchableOpacity>
-                                <Text style={CustomerDetailEventstyles.NewRoutine}>{lang.NewRoutine}</Text>
+                                
                             </View>
                         }
                         

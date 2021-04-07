@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 import * as loginActions from 'app/actions/loginActions';
 import * as accountActions from 'app/actions/accountActions';
 import {getAccountDetail,getPersonalInformation,getUserPlan,getPayments,getHealthparameters,updateDeviceToken,changePassword,
-  loadProfileImage,updateUserProfile,loadAllHealthparameter, addtohealthparameter, getContracts, signcontract,getUserRolePersonalInformation} from 'app/api/methods/accountDetail';
+  loadProfileImage,updateUserProfile,loadAllHealthparameter, addtohealthparameter, getContracts, signcontract, getUserRolePersonalInformation, getUserCommentaries, sendComment} from 'app/api/methods/accountDetail';
 import * as navigationActions from 'app/actions/navigationActions';
 import AsyncStorage from '@react-native-community/async-storage';
 import Toast from 'react-native-simple-toast';
@@ -262,6 +262,38 @@ function* getUserRolePersonalInformationAsync(action) {
   }
 };
 
+function* getUserCommentariesAsync(action) {
+  yield put(loginActions.enableLoader());
+  const response = yield call(getUserCommentaries,action);
+  //console.log(response);
+  if (response[0]?.id > 0) {
+      yield put(accountActions.ongetUserCommentariesResponse(response));
+      yield put(loginActions.disableLoader({}));
+  } else {
+      yield put(accountActions.getUserCommentariesFailed(response));
+      yield put(loginActions.disableLoader({}));
+  }
+};
+
+// Send Comment
+function* sendCommentAsync(action) {
+  yield put(loginActions.enableLoader());
+  //how to call api
+  let response = yield call(sendComment,action);
+  //console.log(action)
+  //console.log(response);
+  if (response) {
+      yield put(accountActions.getUserRolePersonalInformation(action.userId));
+      yield put(accountActions.getUserCommentaries(action.userId));
+      yield put(accountActions.sendCommentResponse(response));
+      yield put(loginActions.disableLoader({}));
+      navigationActions.navigateToUserHealthProfileDetail({ userId: action.userId});
+  } else {
+      yield put(accountActions.sendCommentFailed(response));
+      yield put(loginActions.disableLoader({}));
+  }
+}
+
 const _storeData = async (key,value) => {
   try {
     await AsyncStorage.setItem(key, value);
@@ -297,5 +329,7 @@ export {
   addToHealthParameterAsync,
   getContractsAsync,
   signContractAsync,
-  getUserRolePersonalInformationAsync
+  getUserRolePersonalInformationAsync,
+  getUserCommentariesAsync, 
+  sendCommentAsync
 }
