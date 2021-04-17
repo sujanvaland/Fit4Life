@@ -133,6 +133,7 @@ export function eventsByMonth(action) {
 }
 
 export function eventsByDate(action) {
+    //console.log(action.date);
     return Api(
         ApiConstants.EVENTSBYDATE + '/'+action.date,
         null,

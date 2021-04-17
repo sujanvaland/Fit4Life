@@ -151,7 +151,7 @@ class CalendarView extends Component {
                         {item.name}</Text>
                         <Text style={Calendarstyles.EventLocation}>{lang.Coordinator}: {item.coordinatorFullName}</Text>
                         {
-                            userrole == 'ROLE_USER' &&
+                            userrole == 'ROLE_USER' && !item.mine &&
                             <View style={Calendarstyles.RedButtonBox}>
                                 <TouchableOpacity style={Calendarstyles.RedButton} onPress={() => this._onsubscribeNow(item.id,lang)}>
                                     <Text style={Calendarstyles.BtnText}>{lang.Subscribe}</Text>

@@ -38,7 +38,7 @@ class CustomerDetailEventView extends Component {
     }
 
     DownloadFile = (downloadurl) =>{
-        console.log(downloadurl);
+        //console.log(downloadurl);
         downloadManager.download(downloadurl)
         .then(response => {
           alert("Download success!");
