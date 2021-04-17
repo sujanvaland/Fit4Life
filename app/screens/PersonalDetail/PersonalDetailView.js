@@ -92,19 +92,19 @@ class PersonalDetailView extends Component {
             <View style={PersonalDetailstyles.InnerContainer}>
               <View style={PersonalDetailstyles.MyprofileBox}>
                 {
-                    (personalinformationdata.profilePictureURL == '' || personalinformationdata.profilePictureURL == undefined) &&
+                    (personalinformationdata?.profilePictureURL == '' || personalinformationdata?.profilePictureURL == undefined) &&
                     <View style={PersonalDetailstyles.ProfileBox}>
                       <Image source={require('../../assets/img/img_avtar.jpg')} resizeMode="contain" style={PersonalDetailstyles.ProfilePic} />
                     </View>
                 }
                 {
-                    (personalinformationdata.profilePictureURL != '' && personalinformationdata.profilePictureURL != undefined) &&
+                    (personalinformationdata?.profilePictureURL != '' && personalinformationdata?.profilePictureURL != undefined) &&
                     <View style={NavStyles.ProfilePic}>
-                        <Image source={{ uri: personalinformationdata.profilePictureURL }} resizeMode="contain" style={NavStyles.PrifileImage} />
+                        <Image source={{ uri: personalinformationdata?.profilePictureURL }} resizeMode="contain" style={NavStyles.PrifileImage} />
                     </View>
                 }
                 <View style={PersonalDetailstyles.ProfileDetail}>
-                  <Text style={[PersonalDetailstyles.NameBox, globalStyles.FontRegular]}>{personalinformationdata.user.firstName} {personalinformationdata.user.lastName}</Text>
+                  <Text style={[PersonalDetailstyles.NameBox, globalStyles.FontRegular]}>{personalinformationdata?.user.firstName} {personalinformationdata?.user.lastName}</Text>
                   {/* <Text style={[PersonalDetailstyles.LocationBox, globalStyles.FontRegular]}>San Francisco, CA</Text> */}
                 </View>
 
@@ -119,15 +119,15 @@ class PersonalDetailView extends Component {
                   </TouchableOpacity>
                   <View style={PersonalDetailstyles.ProfileContactdetal}>
                     <Image source={require('../../assets/img/icon_email.png')} resizeMode="contain" style={PersonalDetailstyles.IconAddress} />
-                    <Text style={[PersonalDetailstyles.EmailText, globalStyles.FontRegular]}>{personalinformationdata.user.email}</Text>
+                    <Text style={[PersonalDetailstyles.EmailText, globalStyles.FontRegular]}>{personalinformationdata?.user.email}</Text>
                   </View>
                   <View style={PersonalDetailstyles.ProfileContactdetal}>
                     <Image source={require('../../assets/img/icon_phone.png')} resizeMode="contain" style={PersonalDetailstyles.IconAddress} />
-                    <Text style={[PersonalDetailstyles.EmailText, globalStyles.FontRegular]}>{personalinformationdata.phoneNumber}</Text>
+                    <Text style={[PersonalDetailstyles.EmailText, globalStyles.FontRegular]}>{personalinformationdata?.phoneNumber}</Text>
                   </View>
                   <View style={PersonalDetailstyles.ProfileContactdetal}>
                     <Image source={require('../../assets/img/icon_address.png')} resizeMode="contain" style={PersonalDetailstyles.IconAddress} />
-                    <Text style={[PersonalDetailstyles.EmailTex, globalStyles.FontRegular]}>{personalinformationdata.address}</Text>
+                    <Text style={[PersonalDetailstyles.EmailTex, globalStyles.FontRegular]}>{personalinformationdata?.address}</Text>
                   </View>
 
                   {userplan?.length > 0 &&
@@ -154,7 +154,7 @@ class PersonalDetailView extends Component {
 
               <View style={PersonalDetailstyles.Spacer}></View>
 
-              { accountdetail.authorities[0]=="ROLE_COORDINATOR" &&
+              {/* { accountdetail.authorities[0]=="ROLE_COORDINATOR" &&
                 <View style={[PersonalDetailstyles.FullWidthTitleBack, PersonalDetailstyles.PadTop5]}>
                   <View style={[PersonalDetailstyles.InnerTitle, PersonalDetailstyles.MarTopzero]}>
                     <View style={PersonalDetailstyles.CustomerFeedLeft}>
@@ -181,7 +181,7 @@ class PersonalDetailView extends Component {
                     <Text style={PersonalDetailstyles.DateText}>Morning 09/11/2020</Text>
                   </View>
                 </View>
-              }
+              } */}
             </View>
 
           </ScrollView>

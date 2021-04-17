@@ -69,7 +69,7 @@ let AppResources = {
         // Forgot Password Screen
         forgotyourpassword:"forgot your password?",
         EnterUsername:"Enter Username",
-        forgotpasswordmessage:"We send you a email successfully, please confirm the link.",
+        forgotpasswordmessage:"We send you a email, please confirm the link.",
         SendConfirmation:"Send Confirmation",
 
         // Health Profile Screen
@@ -168,7 +168,7 @@ let AppResources = {
         // Forgot Password Screen
         forgotyourpassword:"forgot your password_SP?",
         EnterUsername:"Enter Username_SP",
-        forgotpasswordmessage:"We send you a email successfully, please confirm the link_SP.",
+        forgotpasswordmessage:"We send you a email, please confirm the link_SP.",
         SendConfirmation:"Send Confirmation_SP",
 
         // Health Profile Screen

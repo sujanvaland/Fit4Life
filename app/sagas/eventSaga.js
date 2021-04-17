@@ -148,8 +148,8 @@ function* loadsubscribenowAsync(action) {
   yield put(loginActions.enableLoader());
   //how to call api
   const response = yield call(loadSubscribeNow,action);
-  //console.log(response);
-  if (response?.status!='400') {
+  console.log(response);
+  if (response?.status!='400' && response?.status!='500') {
       yield put(eventActions.getUpcomingEvents());
       navigationActions.navigateToHome();
       yield put(eventActions.onSubscribeNowLoadedResponse(response));
@@ -157,7 +157,7 @@ function* loadsubscribenowAsync(action) {
   } else {
       Alert.alert(
         'Fail',
-        response.title,
+        response.detail,
         [
           {text: 'OK'},
         ]
