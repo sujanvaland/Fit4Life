@@ -104,7 +104,7 @@ class PersonalDetailView extends Component {
                     </View>
                 }
                 <View style={PersonalDetailstyles.ProfileDetail}>
-                  <Text style={[PersonalDetailstyles.NameBox, globalStyles.FontRegular]}>{personalinformationdata.user.firstName} {personalinformationdata.user.lastName}</Text>
+                  <Text style={[PersonalDetailstyles.NameBox, globalStyles.FontRegular]}>{personalinformationdata?.user?.firstName} {personalinformationdata?.user?.lastName}</Text>
                   {/* <Text style={[PersonalDetailstyles.LocationBox, globalStyles.FontRegular]}>San Francisco, CA</Text> */}
                 </View>
 
@@ -119,7 +119,7 @@ class PersonalDetailView extends Component {
                   </TouchableOpacity>
                   <View style={PersonalDetailstyles.ProfileContactdetal}>
                     <Image source={require('../../assets/img/icon_email.png')} resizeMode="contain" style={PersonalDetailstyles.IconAddress} />
-                    <Text style={[PersonalDetailstyles.EmailText, globalStyles.FontRegular]}>{personalinformationdata.user.email}</Text>
+                    <Text style={[PersonalDetailstyles.EmailText, globalStyles.FontRegular]}>{personalinformationdata?.user?.email}</Text>
                   </View>
                   <View style={PersonalDetailstyles.ProfileContactdetal}>
                     <Image source={require('../../assets/img/icon_phone.png')} resizeMode="contain" style={PersonalDetailstyles.IconAddress} />
